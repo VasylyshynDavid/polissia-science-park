@@ -37,12 +37,10 @@
         </section>
 
         <section id="opportunities" style="margin:34px 0;background:#ffffff;border-radius:12px;padding:18px;box-shadow:0 6px 18px rgba(0,0,0,0.06)">
-            <h4 style="margin-top:0;color:var(--accent)">Наші можливості — прев'ю</h4>
-            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:12px">
-                <div style="background:#f7fff6;padding:12px;border-radius:10px">Інкубатор стартапів</div>
-                <div style="background:#f7fff6;padding:12px;border-radius:10px">Освітні програми</div>
-                <div style="background:#f7fff6;padding:12px;border-radius:10px">Дослідження та лабораторії</div>
-                <div style="background:#f7fff6;padding:12px;border-radius:10px">Інвестиційна підтримка</div>
+            <h4 style="margin-top:0;color:var(--accent)">Наші можливості</h4>
+            @include('partials.opportunities-grid', ['opportunities' => $opportunities])
+            <div style="margin-top:12px;text-align:right">
+                <a href="{{ route('opportunities.index') }}" class="btn">Усі можливості</a>
             </div>
         </section>
 

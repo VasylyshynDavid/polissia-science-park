@@ -100,6 +100,44 @@
             color:var(--muted);
             font-size:.88rem;
         }
+
+        /* Opportunities styles (shared) */
+        .opportunities-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+            gap:16px;
+            margin-top:12px;
+        }
+
+        .opportunity-card{
+            background:var(--card);
+            padding:14px;
+            border-radius:10px;
+            box-shadow:0 6px 18px rgba(18,36,24,0.06);
+            display:flex;
+            align-items:flex-start;
+            gap:12px;
+        }
+
+        .opportunity-card img{
+            width:52px;
+            height:52px;
+            object-fit:cover;
+            border-radius:8px;
+            flex:0 0 52px;
+            background:#f4fbf6;
+        }
+
+        .opportunity-card .ua-text{
+            font-weight:700;
+            color:var(--accent);
+            margin-bottom:6px;
+        }
+
+        .opportunity-card .en-text{
+            color:var(--muted);
+            font-size:.92rem;
+        }
     </style>
     @yield('head')
 </head>

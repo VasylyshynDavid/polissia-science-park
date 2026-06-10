@@ -22,6 +22,9 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Seed activities
-        $this->call([ActivitySeeder::class]);
+        $this->call([
+            ActivitySeeder::class,
+            OpportunitySeeder::class,
+        ]);
     }
 }
