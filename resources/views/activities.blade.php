@@ -71,19 +71,20 @@
     <h2 class="section-title">Напрями діяльності</h2>
 
     <div class="activities-grid">
-        
         @foreach($activities as $activity)
             <div class="card">
-                <h3>{{ $activity->title_ua }}</h3>
-                <p class="en-title">{{ $activity->title_en }}</p>
-                
-                <hr style="border: 0; height: 1px; background: #e0e0e0; width: 100%; margin-bottom: 15px;">
-                
-                <p>{{ $activity->description_ua }}</p>
-                <p class="en-desc">{{ $activity->description_en }}</p>
+                <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+                    <img src="/{{ $activity->image_path }}" alt="icon" style="width:56px;height:56px;border-radius:8px;background:#E8F6F0;padding:8px;"/>
+                    <div>
+                        <h3>{{ $activity->title_ua }}</h3>
+                        <div class="en-title">{{ $activity->title_en }}</div>
+                    </div>
+                </div>
+
+                <p style="margin-bottom:8px;">{{ $activity->description_ua }}</p>
+                <div class="en-desc">{{ $activity->description_en }}</div>
             </div>
         @endforeach
-        
     </div>
 
 </body>

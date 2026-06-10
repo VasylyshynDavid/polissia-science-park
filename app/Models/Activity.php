@@ -6,5 +6,27 @@ use Illuminate\Database\Eloquent\Model;
 
 class Activity extends Model
 {
-    //
+    protected $fillable = [
+        'title_ua',
+        'title_en',
+        'description_ua',
+        'description_en',
+        'image_path',
+        'sort_order',
+        'is_active',
+    ];
+
+    protected $casts = [
+        'is_active' => 'boolean',
+    ];
+
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', true);
+    }
+
+    public function scopeOrdered($query)
+    {
+        return $query->orderBy('sort_order', 'asc')->orderBy('id', 'asc');
+    }
 }

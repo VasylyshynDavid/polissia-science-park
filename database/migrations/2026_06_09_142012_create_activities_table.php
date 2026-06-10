@@ -18,7 +18,13 @@ return new class extends Migration
             $table->string('description_ua', 180);  // Опис напряму (макс. 180 символів)
             $table->string('description_en', 180);  // Опис англійською (макс. 180 символів)
             $table->string('image_path');           // Шлях до іконки
+            $table->unsignedTinyInteger('sort_order')->default(0);
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
+        });
+
+        Schema::table('activities', function (Blueprint $table) {
+            $table->index(['is_active', 'sort_order']);
         });
     }
 
