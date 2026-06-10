@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Activity;
 
+/**
+ * Controller for listing activities.
+ */
 class ActivityController extends Controller
 {
     public function index()
