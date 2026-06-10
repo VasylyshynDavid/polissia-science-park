@@ -21,10 +21,11 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
-        // Seed activities
+        // Seed activities and other modules
         $this->call([
             ActivitySeeder::class,
             OpportunitySeeder::class,
+            SliderSeeder::class,
         ]);
     }
 }

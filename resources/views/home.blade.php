@@ -16,8 +16,36 @@
                 </div>
             </div>
 
-            <div style="background:#eaf6ee;border-radius:12px;padding:18px;display:flex;align-items:center;justify-content:center;min-height:220px;">
-                <div style="width:320px;height:180px;background:linear-gradient(180deg,#dff3e8,#bfe9d0);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:700">Візуальний блок</div>
+            <div>
+                @if(isset($sliders) && count($sliders))
+                    <div class="hero-slider" id="heroSlider">
+                        @foreach($sliders as $idx => $slide)
+                            <div class="slide{{ $idx === 0 ? ' active' : '' }}" data-index="{{ $idx }}">
+                                <img class="slide-image" src="{{ asset($slide->image_path) }}" alt="{{ $slide->title_ua }}">
+                                <div class="slide-content">
+                                    <h3>{{ $slide->title_ua }}</h3>
+                                    <div class="en-title">{{ $slide->title_en }}</div>
+                                    <p class="slide-desc">{{ $slide->description_ua }}</p>
+                                </div>
+                            </div>
+                        @endforeach
+
+                        <div class="slider-controls">
+                            <button class="prev">Prev</button>
+                            <button class="next">Next</button>
+                        </div>
+
+                        <div class="slider-dots">
+                            @foreach($sliders as $idx => $slide)
+                                <button class="slider-dot{{ $idx === 0 ? ' active' : '' }}" data-index="{{ $idx }}"></button>
+                            @endforeach
+                        </div>
+                    </div>
+                @else
+                    <div style="background:#eaf6ee;border-radius:12px;padding:18px;display:flex;align-items:center;justify-content:center;min-height:220px;">
+                        <div style="width:320px;height:180px;background:linear-gradient(180deg,#dff3e8,#bfe9d0);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:700">Візуальний блок</div>
+                    </div>
+                @endif
             </div>
         </section>
 
@@ -50,4 +78,42 @@
             <p style="margin:6px 0">Address: 10008, Україна, Житомирська область, м. Житомир, Старий бульвар, 7</p>
         </section>
     </div>
+@endsection
+
+@section('head')
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            const slider = document.getElementById('heroSlider');
+            if(!slider) return;
+
+            const slides = Array.from(slider.querySelectorAll('.slide'));
+            const dots = Array.from(slider.querySelectorAll('.slider-dot'));
+            const prevBtn = slider.querySelector('.prev');
+            const nextBtn = slider.querySelector('.next');
+            let current = slides.findIndex(s => s.classList.contains('active')) || 0;
+            let interval = null;
+
+            function show(index){
+                slides.forEach((s,i)=> s.classList.toggle('active', i===index));
+                dots.forEach((d,i)=> d.classList.toggle('active', i===index));
+                current = index;
+            }
+
+            function next(){
+                show((current + 1) % slides.length);
+            }
+
+            function prev(){
+                show((current - 1 + slides.length) % slides.length);
+            }
+
+            if(nextBtn) nextBtn.addEventListener('click', ()=>{ next(); reset(); });
+            if(prevBtn) prevBtn.addEventListener('click', ()=>{ prev(); reset(); });
+            dots.forEach(d => d.addEventListener('click', (e)=>{ show(Number(e.currentTarget.dataset.index)); reset(); }));
+
+            function start(){ interval = setInterval(next, 4500); }
+            function reset(){ clearInterval(interval); start(); }
+            if(slides.length>1) start();
+        });
+    </script>
 @endsection
