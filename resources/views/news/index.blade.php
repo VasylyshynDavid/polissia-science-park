@@ -24,12 +24,12 @@
             </select>
 
             <button class="btn" type="submit">Знайти</button>
-            <a href="{{ route('news.index') }}" class="btn" style="background:#fff;color:var(--accent);border:1px solid #e3efe6">Скинути</a>
+            <a href="{{ route('news.index') }}" class="btn-outline">Скинути</a>
         </form>
 
         <div style="margin-bottom:12px;display:flex;gap:8px;flex-wrap:wrap">
             @foreach($categories as $cat)
-                <a href="{{ route('news.index', ['category' => $cat->slug]) }}" class="btn" style="background: {{ (request('category') == $cat->slug) ? 'var(--accent)' : '#fff' }}; color: {{ (request('category') == $cat->slug) ? '#fff' : 'var(--accent)' }}; border:1px solid #e3efe6">{{ $cat->name_ua }}</a>
+                <a href="{{ route('news.index', ['category' => $cat->slug]) }}" class="btn" style="background: {{ (request('category') == $cat->slug) ? 'var(--gold)' : 'transparent' }}; color: {{ (request('category') == $cat->slug) ? 'var(--dark)' : '#fff' }}; border:1px solid rgba(255,255,255,0.08)">{{ $cat->name_ua }}</a>
             @endforeach
         </div>
 
