@@ -13,6 +13,7 @@
             --container: 1200px;
         }
         html,body{height:100%;}
+        html{scroll-behavior: smooth;}
         body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:#123;padding-bottom:40px}
         .container{max-width:var(--container);margin:0 auto;padding:20px}
         header{background:transparent;padding:14px 0}
@@ -163,11 +164,11 @@
         <div class="container" style="display:flex;align-items:center;justify-content:space-between;">
             <div class="site-brand">Науковий парк «Поліський університет»</div>
             <nav>
-                <a href="#">Новини</a>
-                <a href="#about">Про нас</a>
-                <a href="#activities">Напрями діяльності</a>
-                <a href="#opportunities">Наші можливості</a>
-                <a href="#contacts">Контакти</a>
+                <a href="{{ route('news.index') }}">Новини</a>
+                <a href="{{ route('home') }}#about">Про нас</a>
+                <a href="{{ route('home') }}#activities">Напрями діяльності</a>
+                <a href="{{ route('home') }}#opportunities">Наші можливості</a>
+                <a href="{{ route('home') }}#contacts">Контакти</a>
                 <div style="width:8px"></div>
                 <div style="padding:6px 8px;border-radius:6px;background:#e9f4ec;color:var(--accent);font-weight:600">UA / EN</div>
             </nav>

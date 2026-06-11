@@ -26,6 +26,8 @@ class DatabaseSeeder extends Seeder
             ActivitySeeder::class,
             OpportunitySeeder::class,
             SliderSeeder::class,
+            \Database\Seeders\NewsCategorySeeder::class,
+            \Database\Seeders\NewsSeeder::class,
         ]);
     }
 }

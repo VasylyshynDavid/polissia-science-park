@@ -12,7 +12,7 @@
 
                 <div style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap">
                     <a href="#about" class="btn">Дізнатись більше</a>
-                    <a href="#" class="btn" style="background:#fff;color:var(--accent);border:1px solid #e3efe6;">Останні новини</a>
+                    <a href="#news" class="btn" style="background:#fff;color:var(--accent);border:1px solid #e3efe6;">Останні новини</a>
                 </div>
             </div>
 
@@ -48,6 +48,8 @@
                 @endif
             </div>
         </section>
+
+        @include('partials.home-news')
 
         <section id="about" style="margin:34px 0;padding:20px;background:#ffffff;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,0.06)">
             <h3 style="margin-top:0;color:var(--accent)">Інновації для розвитку Полісся та України</h3>
