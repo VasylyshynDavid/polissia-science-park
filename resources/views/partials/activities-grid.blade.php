@@ -1,6 +1,6 @@
 <div class="activities-grid">
     @foreach($activities as $activity)
-        <article class="card activity-card">
+        <article id="activity-{{ $activity->id }}" class="card activity-card">
             <div style="display:flex;justify-content:center;margin-bottom:12px">
                 <div class="icon-circle">
                     @if($loop->index == 0)

@@ -230,6 +230,17 @@
         }
         .opportunities-grid{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
         .opportunities-section{background:linear-gradient(135deg,var(--dark),var(--green));border-radius:18px;padding:18px}
+        /* Dropdown styles for activities menu */
+        .has-dropdown{position:relative}
+        .has-dropdown .chev svg{transition:transform .18s ease}
+        .dropdown{position:absolute;top:100%;left:0;min-width:280px;background:var(--dark);border:1px solid rgba(199,168,74,.3);border-radius:0 0 10px 10px;box-shadow:0 12px 30px rgba(0,0,0,.35);padding:8px 0;opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .2s, transform .2s;z-index:50}
+        .has-dropdown:hover .dropdown{opacity:1;visibility:visible;transform:translateY(0)}
+        .dropdown a{display:block;padding:10px 18px;color:#fff;font-size:15px;text-decoration:none}
+        .dropdown a:hover{color:var(--gold);background:rgba(255,255,255,.05)}
+
+        /* mobile open via .open class */
+        .has-dropdown.open .dropdown{position:static;opacity:1;visibility:visible;transform:none}
+        .has-dropdown.open .chev svg{transform:rotate(180deg)}
     </style>
     @yield('head')
 </head>
@@ -249,7 +260,16 @@
             <nav>
                 <a href="{{ route('news.index') }}">Новини</a>
                 <a href="{{ route('home') }}#about">Про нас</a>
-                <a href="{{ route('activities.index') }}">Напрями діяльності</a>
+                <div class="nav-item has-dropdown">
+                    <a href="{{ route('activities.index') }}">Напрями діяльності <span class="chev">@include('partials.icons.chev')</span></a>
+                    <div class="dropdown">
+                        @if(isset($menuActivities))
+                            @foreach($menuActivities as $item)
+                                <a href="{{ route('activities.index') }}#activity-{{ $item->id }}">{{ $item->title_ua }}</a>
+                            @endforeach
+                        @endif
+                    </div>
+                </div>
                 <a href="{{ route('opportunities.index') }}">Наші можливості</a>
                 <a href="{{ route('home') }}#contacts">Контакти</a>
 
@@ -306,4 +326,25 @@
         </div>
     </footer>
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', function(){
+        function isMobile(){ return window.innerWidth < 900 }
+        document.querySelectorAll('.has-dropdown').forEach(function(el){
+            el.addEventListener('click', function(e){
+                if(!isMobile()) return; // only intercept on mobile
+                // toggle open state
+                e.preventDefault();
+                el.classList.toggle('open');
+            });
+        });
+
+        // close dropdowns when clicking outside on mobile
+        document.addEventListener('click', function(e){
+            if(!isMobile()) return;
+            document.querySelectorAll('.has-dropdown.open').forEach(function(el){
+                if(!el.contains(e.target)) el.classList.remove('open');
+            });
+        });
+    });
+</script>
 </html>
