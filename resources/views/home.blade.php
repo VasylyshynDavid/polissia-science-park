@@ -54,24 +54,32 @@
         </div>
     </section>
 
-    <div class="container">
-
-        <section id="about">
+    <!-- About section full-bleed: content stays within .container but background spans full width -->
+    <section id="about" class="about-full-bleed">
+        <div class="container">
             <div class="about-inner">
                 <div>
                     <div class="small-label">ПРО НАС</div>
                     <h3>Інновації для розвитку Полісся та України</h3>
                 </div>
                 <div>
-                    <p>Науковий парк створює умови для комерціалізації наукових розробок, підтримки стартапів, розвитку талантів та співпраці з громадами і підприємствами. Ми працюємо над проєктами у сфері цифрових технологій, агротехнологій, екології та освіти.</p>
+                    <p>Науковий парк «Поліський університет» — це інноваційна платформа
+для розвитку науки, технологій та підприємництва. Ми об'єднуємо науковців, студентів,
+бізнес, громади та державні інституції для створення і впровадження сучасних рішень
+у сферах цифрової трансформації, екології, біоекономіки та сталого розвитку.</p>
 
                     <div class="goal-card">
                         <strong style="color:var(--gold);">Наша мета:</strong>
-                        <p style="margin:8px 0 0 0;color:var(--cream)">Створити екосистему, де наука, бізнес та громади співпрацюють для сталого розвитку регіону.</p>
+                        <p style="margin:8px 0 0 0;color:var(--cream)">Формування сучасної інноваційної екосистеми, у якій наука,
+освіта та бізнес спільно створюють цифрові та «зелені» рішення для сталого
+розвитку Полісся та України.</p>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
+
+    <div class="container">
 
         <section id="activities" style="margin:34px 0">
             <h3 class="section-title" style="color:var(--gold);text-transform:uppercase">НАПРЯМИ ДІЯЛЬНОСТІ</h3>
@@ -95,15 +103,16 @@
 
 @section('head')
     <style>
-        .hero-full{width:100%;background:var(--dark);padding:40px 0;color:#fff}
+        /* Hero should be full width with distinct gradient from header */
+        .hero-full{width:100%;background:linear-gradient(135deg, #06351F 0%, #0A4A33 100%);padding:48px 0;color:#fff}
         .hero-inner{display:grid;grid-template-columns:1fr 480px;gap:28px;align-items:center}
         .hero-left{padding:20px}
-        .hero-title{font-family:Montserrat, sans-serif;font-weight:800;font-size:56px;margin:0;color:#fff}
+        .hero-title{font-family:Montserrat, sans-serif;font-weight:800;font-size:64px;margin:0;color:#fff}
         .hero-subtitle{display:inline-block;margin-top:12px;background:var(--gold);color:var(--dark);padding:8px 12px;border-radius:18px;font-weight:600}
         .hero-lead{margin-top:14px;color:var(--cream);opacity:.95;max-width:560px}
         @media(max-width:800px){
             .hero-inner{grid-template-columns:1fr}
-            .hero-title{font-size:32px}
+            .hero-title{font-size:36px}
         }
 
         .hero-right .hero-slider{background:transparent;padding:0;min-height:260px}
@@ -120,13 +129,13 @@
         .slider-dot{width:10px;height:10px;border-radius:50%;background:var(--gold);opacity:.5;border:none}
         .slider-dot.active{opacity:1}
 
-        /* About section */
-        #about{background:linear-gradient(180deg,var(--dark),var(--green));color:#fff;padding:36px;border-radius:12px;margin-top:28px}
-        #about .about-inner{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+        /* About section full-bleed background; content inside .container */
+        .about-full-bleed{width:100%;background:var(--dark);color:#fff;padding:36px 0;margin-top:28px}
+        .about-full-bleed .about-inner{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start;max-width:var(--container);margin:0 auto;padding:0 20px}
         #about .small-label{color:var(--gold);letter-spacing:2px;font-family:Montserrat, sans-serif;font-weight:700}
         #about h3{font-family:Montserrat, sans-serif;font-weight:700;font-size:36px;margin-top:6px}
         #about p{color:var(--cream);opacity:.95}
-        .goal-card{background:rgba(255,255,255,.06);border-left:3px solid var(--gold);padding:12px;border-radius:8px;margin-top:12px}
+        .goal-card{background:rgba(255,255,255,.06);border-left:3px solid var(--gold);padding:12px;border-radius:0;margin-top:12px}
     </style>
 
     <script>

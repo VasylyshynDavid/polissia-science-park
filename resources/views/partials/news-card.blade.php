@@ -10,7 +10,7 @@
             @endif
             <a href="{{ route('news.index', ['category' => $news->category?->slug]) }}" class="btn btn-outline" style="padding:6px 10px;font-weight:600">{{ $news->category?->name_ua }}</a>
         </div>
-        <div style="color:rgba(255,255,255,0.75);font-size:.9rem">{{ $news->published_at?->format('d.m.Y') }}</div>
+        <div style="color:rgba(255,255,255,0.75);font-size:.9rem">{{ $news->published_at?->translatedFormat('j F Y') }}</div>
     </div>
 
 

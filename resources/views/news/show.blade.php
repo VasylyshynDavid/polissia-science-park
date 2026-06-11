@@ -23,7 +23,7 @@
 
         <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px">
             <a href="{{ route('news.index', ['category' => $news->category?->slug]) }}" class="btn btn-outline">{{ $news->category?->name_ua }}</a>
-            <div style="color:var(--muted)">{{ $news->published_at?->format('d.m.Y') }}</div>
+            <div style="color:var(--muted)">{{ $news->published_at?->translatedFormat('j F Y') }}</div>
         </div>
 
         <h1 style="margin:0">{{ $news->title_ua }}</h1>

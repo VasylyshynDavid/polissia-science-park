@@ -26,7 +26,8 @@
         .container{max-width:var(--container);margin:0 auto;padding:20px}
 
         /* Header */
-        header{background:var(--dark);position:sticky;top:0;z-index:50}
+        /* Use literal darkest header color and thin gold bottom border to separate header from hero */
+        header{background:#042C22;border-bottom:1px solid rgba(199,168,74,.35);position:sticky;top:0;z-index:50}
         .header-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
         .logo-wrap{display:flex;align-items:center;gap:12px}
         .monogram{width:56px;height:56px;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;border-radius:6px;color:var(--gold);font-weight:800;font-family:Montserrat, sans-serif}
@@ -62,7 +63,7 @@
 
         /* Activities / cards shared styles (used by home and /activities) */
         .section-title{
-            font-size:1.35rem;
+            font-size:40px;
             color:var(--green);
             margin:36px 0 16px;
             text-align:center;
@@ -115,7 +116,7 @@
 
         .card h3{
             margin:0;
-            font-size:1.05rem;
+            font-size:22px;
             color:var(--green);
             line-height:1.15;
             font-family:Montserrat, sans-serif;
@@ -271,7 +272,7 @@
                     </div>
                 </div>
                 <a href="{{ route('opportunities.index') }}">Наші можливості</a>
-                <a href="{{ route('home') }}#contacts">Контакти</a>
+                <a href="{{ route('home') }}#contacts">Наші контакти</a>
 
                 <div style="width:8px"></div>
 
@@ -303,24 +304,34 @@
                 </div>
 
                 <div class="footer-right">
-                    <div><strong>Email:</strong> <a href="mailto:naukpark@polissiauniver.edu.ua" style="color:#fff">naukpark@polissiauniver.edu.ua</a></div>
-                    <div><strong>Address:</strong> 10008, Україна, Житомирська область, м. Житомир, Старий бульвар, 7</div>
+                    <div><strong>Електронна пошта:</strong> <a href="mailto:naukpark@polissiauniver.edu.ua" style="color:#fff">naukpark@polissiauniver.edu.ua</a></div>
+                    <div><strong>Адреса:</strong> 10008, Україна, Житомирська область, м. Житомир, Старий бульвар, 7</div>
 
-                    <div style="display:flex;align-items:center;gap:12px;margin-top:8px">
-                        <div class="socials">
-                            <a href="#" aria-label="Facebook">
-                                <svg width="16" height="16" viewBox="0 0 24 24"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7H8v-3h2.5V9.5c0-2.5 1.5-3.9 3.7-3.9 1.1 0 2.3.2 2.3.2v2.5h-1.3c-1.3 0-1.7.8-1.7 1.6V12H20l-1 3h-2v7A10 10 0 0 0 22 12z"/></svg>
-                            </a>
-                            <a href="#" aria-label="LinkedIn">
-                                <svg width="16" height="16" viewBox="0 0 24 24"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM0 8h5v16H0zM7.5 8h4.8v2.2h.1c.7-1.3 2.4-2.6 4.9-2.6C22.8 7.6 24 10 24 14.4V24h-5v-8.6c0-2.1 0-4.8-3-4.8-3 0-3.5 2.4-3.5 4.7V24h-5V8z"/></svg>
-                            </a>
-                            <a href="#" aria-label="Telegram">
-                                <svg width="16" height="16" viewBox="0 0 24 24"><path d="M21.5 3.2L2.6 9.2c-.8.3-.8 1.2.1 1.5l4.4 1.4 1.6 5.1c.2.7 1.1.8 1.5.2L12 15l6.2 3.6c.6.3 1.4-.1 1.5-.8l2.1-18c.1-.7-.6-1.2-1.3-.9z"/></svg>
-                            </a>
+                        <div style="display:flex;align-items:center;gap:12px;margin-top:8px">
+                            <div class="socials">
+                                <a href="#" aria-label="Facebook">
+                                    <svg width="16" height="16" viewBox="0 0 24 24"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7H8v-3h2.5V9.5c0-2.5 1.5-3.9 3.7-3.9 1.1 0 2.3.2 2.3.2v2.5h-1.3c-1.3 0-1.7.8-1.7 1.6V12H20l-1 3h-2v7A10 10 0 0 0 22 12z"/></svg>
+                                </a>
+                                <a href="#" aria-label="LinkedIn">
+                                    <svg width="16" height="16" viewBox="0 0 24 24"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM0 8h5v16H0zM7.5 8h4.8v2.2h.1c.7-1.3 2.4-2.6 4.9-2.6C22.8 7.6 24 10 24 14.4V24h-5v-8.6c0-2.1 0-4.8-3-4.8-3 0-3.5 2.4-3.5 4.7V24h-5V8z"/></svg>
+                                </a>
+                                <a href="#" aria-label="Telegram">
+                                    <svg width="16" height="16" viewBox="0 0 24 24"><path d="M21.5 3.2L2.6 9.2c-.8.3-.8 1.2.1 1.5l4.4 1.4 1.6 5.1c.2.7 1.1.8 1.5.2L12 15l6.2 3.6c.6.3 1.4-.1 1.5-.8l2.1-18c.1-.7-.6-1.2-1.3-.9z"/></svg>
+                                </a>
+                            </div>
+
+                            <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+                                <!-- Inline SVG QR placeholder 90x90 -->
+                                <svg width="90" height="90" viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="QR placeholder">
+                                    <rect width="90" height="90" fill="#fff" rx="6"/>
+                                    <rect x="8" y="8" width="20" height="20" fill="#e6e6e6"/>
+                                    <rect x="62" y="8" width="20" height="20" fill="#e6e6e6"/>
+                                    <rect x="8" y="62" width="20" height="20" fill="#e6e6e6"/>
+                                    <rect x="32" y="32" width="26" height="26" fill="#f4f4f4"/>
+                                </svg>
+                                <div style="font-size:12px;color:#fff">Скануйте для додаткової інформації</div>
+                            </div>
                         </div>
-
-                        <div class="qr-placeholder">QR</div>
-                    </div>
                 </div>
             </div>
         </div>

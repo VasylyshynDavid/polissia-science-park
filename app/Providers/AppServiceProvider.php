@@ -21,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        \Illuminate\Support\Carbon::setLocale('uk');
         View::composer('layouts.app', function ($view) {
             $view->with('menuActivities', Activity::query()->active()->ordered()->limit(10)->get());
         });
