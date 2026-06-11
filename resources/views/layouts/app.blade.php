@@ -228,6 +228,7 @@
             .activities-grid{grid-template-columns:repeat(5,1fr)}
             .opportunities-grid{grid-template-columns:repeat(6,1fr)}
         }
+        .opportunities-grid{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
         .opportunities-section{background:linear-gradient(135deg,var(--dark),var(--green));border-radius:18px;padding:18px}
     </style>
     @yield('head')

@@ -55,7 +55,6 @@
     </section>
 
     <div class="container">
-        @include('partials.home-news')
 
         <section id="about">
             <div class="about-inner">
@@ -77,18 +76,14 @@
         <section id="activities" style="margin:34px 0">
             <h3 class="section-title" style="color:var(--gold);text-transform:uppercase">НАПРЯМИ ДІЯЛЬНОСТІ</h3>
             @include('partials.activities-grid', ['activities' => $activities])
-            <div style="margin-top:12px;text-align:right">
-                <a href="{{ route('activities.index') }}" class="btn">Усі напрями</a>
-            </div>
         </section>
 
         <section id="opportunities" class="opportunities-section" style="margin:34px 0;padding:18px;">
             <h3 class="section-title" style="color:var(--gold);text-transform:uppercase">НАШІ МОЖЛИВОСТІ</h3>
             @include('partials.opportunities-grid', ['opportunities' => $opportunities])
-            <div style="margin-top:12px;text-align:right">
-                <a href="{{ route('opportunities.index') }}" class="btn">Усі можливості</a>
-            </div>
         </section>
+
+        @include('partials.home-news')
 
         <section id="contacts" style="margin:34px 0;padding:18px;background:#ffffff;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,0.06)">
             <h4 style="margin-top:0;color:var(--green)">Контакти</h4>
