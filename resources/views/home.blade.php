@@ -64,6 +64,9 @@
         <section id="activities" style="margin:34px 0">
             <h3 style="color:var(--accent);">Напрями діяльності</h3>
             @include('partials.activities-grid', ['activities' => $activities])
+            <div style="margin-top:12px;text-align:right">
+                <a href="{{ route('activities.index') }}" class="btn">Усі напрями</a>
+            </div>
         </section>
 
         <section id="opportunities" style="margin:34px 0;background:#ffffff;border-radius:12px;padding:18px;box-shadow:0 6px 18px rgba(0,0,0,0.06)">

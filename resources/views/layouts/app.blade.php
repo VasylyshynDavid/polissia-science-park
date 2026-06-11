@@ -166,8 +166,8 @@
             <nav>
                 <a href="{{ route('news.index') }}">Новини</a>
                 <a href="{{ route('home') }}#about">Про нас</a>
-                <a href="{{ route('home') }}#activities">Напрями діяльності</a>
-                <a href="{{ route('home') }}#opportunities">Наші можливості</a>
+                <a href="{{ route('activities.index') }}">Напрями діяльності</a>
+                <a href="{{ route('opportunities.index') }}">Наші можливості</a>
                 <a href="{{ route('home') }}#contacts">Контакти</a>
                 <div style="width:8px"></div>
                 <div style="padding:6px 8px;border-radius:6px;background:#e9f4ec;color:var(--accent);font-weight:600">UA / EN</div>
