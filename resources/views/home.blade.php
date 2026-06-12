@@ -64,22 +64,26 @@
                     <p class="about-text">Науковий парк «Поліський університет» — це інноваційна платформа для розвитку науки, технологій та підприємництва. Ми об'єднуємо науковців, студентів, бізнес, громади та державні інституції для створення і впровадження сучасних рішень у сферах цифрової трансформації, екології, біоекономіки та сталого розвитку.</p>
 
                     <div class="goal-card">
-                        <h4 class="goal-title">Наша мета:</h4>
-                        <p class="goal-text">Формування сучасної інноваційної екосистеми, у якій наука, освіта та бізнес спільно створюють цифрові та «зелені» рішення для сталого розвитку Полісся та України.</p>
+                        <div class="goal-title">Наша мета:</div>
+                        <div class="goal-text">Формування сучасної інноваційної екосистеми, у якій наука, освіта та бізнес спільно створюють цифрові та «зелені» рішення для сталого розвитку Полісся та України.</div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+    <!-- Activities section full-bleed light background -->
+    <section class="activities-bleed" style="background:var(--bg);width:100%;">
+        <div class="container">
+            <section id="activities">
+                <h3 class="section-title" style="text-transform:uppercase">НАПРЯМИ ДІЯЛЬНОСТІ</h3>
+                @include('partials.activities-grid', ['activities' => $activities])
+            </section>
+        </div>
+    </section>
 
     <div class="container">
-        <section id="activities">
-            <h3 class="section-title" style="color:var(--gold);text-transform:uppercase">НАПРЯМИ ДІЯЛЬНОСТІ</h3>
-            @include('partials.activities-grid', ['activities' => $activities])
-        </section>
-
         <section id="opportunities" class="opportunities-section" style="padding:18px;">
-            <h3 class="section-title" style="color:var(--gold);text-transform:uppercase">НАШІ МОЖЛИВОСТІ</h3>
+            <h3 class="section-title" style="text-transform:uppercase">НАШІ МОЖЛИВОСТІ</h3>
             @include('partials.opportunities-grid', ['opportunities' => $opportunities])
         </section>
 
@@ -100,7 +104,7 @@
         .hero-inner{display:grid;grid-template-columns:1fr 480px;gap:28px;align-items:center}
         .hero-left{padding:20px}
         .hero-title{font-family:Montserrat, sans-serif;font-weight:800;font-size:64px;margin:0;color:#fff}
-        .hero-subtitle{display:inline-block;margin-top:12px;background:var(--gold);color:var(--dark);padding:8px 12px;border-radius:18px;font-weight:600}
+        .hero-subtitle{display:inline-block;margin-top:12px;background:rgba(255,255,255,.12);color:#fff;padding:8px 12px;border-radius:18px;font-weight:600;border:1px solid rgba(255,255,255,.25)}
         .hero-lead{margin-top:14px;color:var(--cream);opacity:.95;max-width:560px}
         
         @media(max-width:800px){
@@ -117,22 +121,29 @@
         .slide-title{color:#fff;margin:0;font-family:Montserrat, sans-serif}
 
         .slider-controls{position:absolute;left:8px;right:8px;top:50%;transform:translateY(-50%);display:flex;justify-content:space-between;z-index:10}
-        .slider-controls button{width:44px;height:44px;border-radius:50%;background:var(--gold);color:var(--dark);border:none;font-size:22px;cursor:pointer}
+        .slider-controls button{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.12);color:#fff;border:none;font-size:22px;cursor:pointer}
         .slider-dots{position:absolute;left:50%;transform:translateX(-50%);bottom:12px;display:flex;gap:8px;z-index:10}
-        .slider-dot{width:10px;height:10px;border-radius:50%;background:var(--gold);opacity:.5;border:none;cursor:pointer}
+        .slider-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.35);opacity:.6;border:none;cursor:pointer}
         .slider-dot.active{opacity:1}
+
+        /* News index category button: use green for active state instead of gold */
+        .news-index .category-btn.active{background:var(--green);color:#fff}
 
         /* About section per updated spec: single clean definition */
         .about-full-bleed{width:100%;background:var(--dark);color:#fff;padding:64px 0;font-family:'Montserrat', sans-serif}
         .about-full-bleed .about-inner{display:grid;grid-template-columns:1fr 1.1fr;gap:60px;align-items:start;max-width:1200px;margin:0 auto;padding:0 20px}
 
-        .about-left .small-label{color:var(--gold);font-weight:600;font-size:14px;letter-spacing:3px;margin-bottom:12px;display:block;text-transform:uppercase}
+        .about-left .small-label{color:#fff;opacity:.7;font-weight:600;font-size:14px;letter-spacing:3px;margin-bottom:12px;display:block;text-transform:uppercase}
         .about-title{color:#fff;font-weight:700;font-size:40px;line-height:1.25;margin:0}
         .about-text{color:var(--cream);font-size:17px;line-height:1.75;opacity:.95;margin-top:0}
 
-        .goal-card{background:rgba(255,255,255,.04);border-left:3px solid var(--gold);border-radius:0;padding:18px 22px;margin-top:0}
-        .goal-title{color:var(--gold);font-weight:600;font-size:18px;margin:0 0 8px 0}
+        .goal-card{background:transparent;border:0;border-left:0;border-radius:0;padding:0;margin-top:0}
+        .goal-title{color:#fff;font-family:Montserrat, sans-serif;font-weight:600;font-size:18px;margin:0 0 8px 0}
         .goal-text{color:var(--cream);font-size:16px;line-height:1.7;margin:0}
+
+        /* Section title color overrides depending on background */
+        .about-full-bleed .section-title{color:#fff}
+        .activities-bleed .section-title{color:var(--green)}
 
         @media(max-width:900px){
             .about-full-bleed{padding:40px 0}

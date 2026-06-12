@@ -30,8 +30,8 @@
         .container > section{margin:0}
 
         /* Header */
-        /* Use literal darkest header color and thin gold bottom border to separate header from hero */
-        header{background:#042C22;border-bottom:1px solid rgba(199,168,74,.35);position:sticky;top:0;z-index:50}
+        /* Use literal darkest header color and subtle bottom border */
+        header{background:#042C22;border-bottom:1px solid rgba(255,255,255,.08);position:sticky;top:0;z-index:50}
         .header-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
         .logo-wrap{display:flex;align-items:center;gap:12px}
         .monogram{width:56px;height:56px;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;border-radius:6px;color:var(--gold);font-weight:800;font-family:Montserrat, sans-serif}
@@ -41,18 +41,18 @@
 
         nav{display:flex;gap:20px;align-items:center}
         nav a{color:#fff;text-decoration:none;font-family:Montserrat, sans-serif;font-weight:600}
-        nav a:hover{color:var(--gold)}
+        nav a:hover{color:var(--olive-light);text-decoration:underline}
 
         .locale-switch{padding:6px 8px;border-radius:6px;background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.08);font-family:Montserrat, sans-serif}
-        .locale-switch .active{color:var(--gold);font-weight:700}
+        .locale-switch .active{color:#fff;font-weight:700}
 
         .search-icon{width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;border-radius:6px;cursor:pointer}
         .search-icon svg{fill:#fff}
 
         /* Buttons */
-        .btn{display:inline-block;padding:8px 14px;border-radius:8px;background:var(--gold);color:var(--dark);font-family:Montserrat, sans-serif;font-weight:600;border:none}
+        .btn{display:inline-block;padding:8px 14px;border-radius:8px;background:#fff;color:var(--dark);font-family:Montserrat, sans-serif;font-weight:600;border:none}
         .btn-outline{display:inline-block;padding:8px 14px;border-radius:8px;background:transparent;color:#fff;font-family:Montserrat, sans-serif;border:1px solid rgba(255,255,255,0.18)}
-        .btn-outline:hover{border-color:var(--gold);color:var(--gold)}
+        .btn-outline:hover{border-color:rgba(255,255,255,0.5);color:#fff}
 
         footer{background:var(--dark);color:#fff;padding:40px 0}
         .footer-inner{display:flex;justify-content:space-between;gap:20px;align-items:flex-start}
@@ -60,22 +60,26 @@
         .footer-left p{margin:0;color:#fff;max-width:520px}
         .footer-right{display:flex;flex-direction:column;gap:8px}
         .socials{display:flex;gap:8px;align-items:center}
-        .socials a{display:inline-flex;width:36px;height:36px;border-radius:6px;align-items:center;justify-content:center;color:var(--gold);opacity:0.85}
-        .socials a svg{fill:var(--gold)}
-        .socials a:hover svg{fill:#fff;background:var(--gold);border-radius:6px}
-        .qr-placeholder{width:84px;height:84px;border-radius:8px;background:linear-gradient(180deg,var(--cream),#fff);display:flex;align-items:center;justify-content:center;color:var(--dark);font-weight:700}
+        .socials a{display:inline-flex;width:36px;height:36px;border-radius:6px;align-items:center;justify-content:center;color:#fff;opacity:0.85}
+        .socials a svg{fill:#fff}
+        .socials a:hover svg{fill:var(--olive-light);background:transparent}
+        /* QR image link in footer */
+        .footer-right .qr-link{display:block;align-self:flex-end}
+        .qr-link img{display:block;width:96px;height:96px;border-radius:8px;background:#fff;padding:6px}
+        .qr-caption{font-size:13px;color:rgba(255,255,255,.7);margin-top:8px;display:block}
+        @media(max-width:900px){
+            .footer-right .qr-link{align-self:center}
+        }
 
         /* Activities / cards shared styles (used by home and /activities) */
         .section-title{
             font-size:40px;
             color:var(--green);
-            margin:36px 0 16px;
+            margin:16px 0;
             text-align:center;
             font-weight:800;
             font-family:Montserrat, sans-serif;
-            display:flex;align-items:center;gap:12px;justify-content:center
         }
-        .section-title::before, .section-title::after{content:"";flex:1;height:3px;background:var(--gold);border-radius:3px}
 
         .activities-grid{
             display:grid;
@@ -225,7 +229,7 @@
         .activity-card .icon-circle{width:72px;height:72px;border-radius:50%;background:linear-gradient(180deg,rgba(143,179,90,0.12),rgba(168,201,106,0.06));display:flex;align-items:center;justify-content:center}
         .activity-title{font-family:Montserrat, sans-serif;font-weight:600;color:var(--green);margin-top:8px}
 
-        .opportunity-home{background:rgba(255,255,255,0.03);border:1px solid rgba(199,168,74,0.18);border-radius:12px;padding:14px;color:var(--cream)}
+        .opportunity-home{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:14px;color:var(--cream)}
         .opportunity-home .ua-text{color:var(--cream);font-weight:700}
 
         /* Force 5 columns on very wide screens for activities, 6 for opportunities */
@@ -238,10 +242,10 @@
         /* Dropdown styles for activities menu */
         .has-dropdown{position:relative}
         .has-dropdown .chev svg{transition:transform .18s ease}
-        .dropdown{position:absolute;top:100%;left:0;min-width:280px;background:var(--dark);border:1px solid rgba(199,168,74,.3);border-radius:0 0 10px 10px;box-shadow:0 12px 30px rgba(0,0,0,.35);padding:8px 0;opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .2s, transform .2s;z-index:50}
+        .dropdown{position:absolute;top:100%;left:0;min-width:280px;background:var(--dark);border:1px solid rgba(255,255,255,.06);border-radius:0 0 10px 10px;box-shadow:0 12px 30px rgba(0,0,0,.35);padding:8px 0;opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .2s, transform .2s;z-index:50}
         .has-dropdown:hover .dropdown{opacity:1;visibility:visible;transform:translateY(0)}
         .dropdown a{display:block;padding:10px 18px;color:#fff;font-size:15px;text-decoration:none}
-        .dropdown a:hover{color:var(--gold);background:rgba(255,255,255,.05)}
+        .dropdown a:hover{color:var(--olive-light);background:rgba(255,255,255,.03)}
 
         /* mobile open via .open class */
         .has-dropdown.open .dropdown{position:static;opacity:1;visibility:visible;transform:none}
@@ -325,15 +329,10 @@
                             </div>
 
                             <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
-                                <!-- Inline SVG QR placeholder 90x90 -->
-                                <svg width="90" height="90" viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="QR placeholder">
-                                    <rect width="90" height="90" fill="#fff" rx="6"/>
-                                    <rect x="8" y="8" width="20" height="20" fill="#e6e6e6"/>
-                                    <rect x="62" y="8" width="20" height="20" fill="#e6e6e6"/>
-                                    <rect x="8" y="62" width="20" height="20" fill="#e6e6e6"/>
-                                    <rect x="32" y="32" width="26" height="26" fill="#f4f4f4"/>
-                                </svg>
-                                <div style="font-size:12px;color:#fff">Скануйте для додаткової інформації</div>
+                                <a href="mailto:naukpark@polissiauniver.edu.ua" class="qr-link" title="Написати нам">
+                                    <img src="{{ asset('images/qr-code.png') }}" alt="QR-код — napysaty na naukpark@polissiauniver.edu.ua" width="96" height="96" loading="lazy">
+                                </a>
+                                <span class="qr-caption">Скануй для зв'язку з нами</span>
                             </div>
                         </div>
                 </div>

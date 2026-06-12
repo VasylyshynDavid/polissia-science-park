@@ -28,8 +28,8 @@
         </form>
 
         <div style="margin-bottom:12px;display:flex;gap:8px;flex-wrap:wrap">
-            @foreach($categories as $cat)
-                <a href="{{ route('news.index', ['category' => $cat->slug]) }}" class="btn" style="background: {{ (request('category') == $cat->slug) ? 'var(--gold)' : 'transparent' }}; color: {{ (request('category') == $cat->slug) ? 'var(--dark)' : '#fff' }}; border:1px solid rgba(255,255,255,0.08)">{{ $cat->name_ua }}</a>
+                @foreach($categories as $cat)
+                <a href="{{ route('news.index', ['category' => $cat->slug]) }}" class="btn" style="background: {{ (request('category') == $cat->slug) ? 'var(--green)' : 'transparent' }}; color: {{ (request('category') == $cat->slug) ? 'var(--dark)' : '#fff' }}; border:1px solid rgba(255,255,255,0.08)">{{ $cat->name_ua }}</a>
             @endforeach
         </div>
 

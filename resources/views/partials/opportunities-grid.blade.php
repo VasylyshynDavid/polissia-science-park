@@ -2,7 +2,7 @@
     <div class="opportunities-grid">
         @foreach($opportunities as $idx => $opportunity)
             <div class="opportunity-card opportunity-home" style="padding:16px;display:flex;flex-direction:column;align-items:center;text-align:center;justify-content:space-between;min-height:140px">
-                <div style="width:56px;height:56px;border-radius:50%;background:rgba(199,168,74,0.12);display:flex;align-items:center;justify-content:center;margin-bottom:8px">
+                <div style="width:56px;height:56px;border-radius:50%;background-color: rgba(199,168,74,0.12);display:flex;align-items:center;justify-content:center;margin-bottom:8px">
                     @if($idx == 0)
                         <!-- rocket -->
                         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 22s4-1 6-3 6-6 6-6 2 4 5 6c0 0-5 2-11 3S2 22 2 22z" stroke="var(--gold)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
