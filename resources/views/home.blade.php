@@ -73,19 +73,19 @@
     </section>
 
     <div class="container">
-        <section id="activities" style="margin:34px 0">
+        <section id="activities">
             <h3 class="section-title" style="color:var(--gold);text-transform:uppercase">НАПРЯМИ ДІЯЛЬНОСТІ</h3>
             @include('partials.activities-grid', ['activities' => $activities])
         </section>
 
-        <section id="opportunities" class="opportunities-section" style="margin:34px 0;padding:18px;">
+        <section id="opportunities" class="opportunities-section" style="padding:18px;">
             <h3 class="section-title" style="color:var(--gold);text-transform:uppercase">НАШІ МОЖЛИВОСТІ</h3>
             @include('partials.opportunities-grid', ['opportunities' => $opportunities])
         </section>
 
         @include('partials.home-news')
 
-        <section id="contacts" style="margin:34px 0;padding:18px;background:#ffffff;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,0.06)">
+        <section id="contacts" style="padding:18px;background:#ffffff;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,0.06)">
             <h4 style="margin-top:0;color:var(--green)">Контакти</h4>
             <p style="margin:6px 0">Email: <a href="mailto:naukpark@polissiauniver.edu.ua">naukpark@polissiauniver.edu.ua</a></p>
             <p style="margin:6px 0">Address: 10008, Україна, Житомирська область, м. Житомир, Старий бульвар, 7</p>
@@ -96,7 +96,7 @@
 @section('head')
     <style>
         /* Hero settings */
-        .hero-full{width:100%;background:linear-gradient(135deg, #06351F 0%, #0A4A33 100%);padding:48px 0;color:#fff}
+        .hero-full{width:100%;background:linear-gradient(135deg, #0A4A33 0%, #0F5C40 100%);padding:48px 0;color:#fff}
         .hero-inner{display:grid;grid-template-columns:1fr 480px;gap:28px;align-items:center}
         .hero-left{padding:20px}
         .hero-title{font-family:Montserrat, sans-serif;font-weight:800;font-size:64px;margin:0;color:#fff}
@@ -122,23 +122,23 @@
         .slider-dot{width:10px;height:10px;border-radius:50%;background:var(--gold);opacity:.5;border:none;cursor:pointer}
         .slider-dot.active{opacity:1}
 
-        /* Fixed About section per design spec */
-        .about-full-bleed{width:100%;background:linear-gradient(135deg, #042C22 0%, #06351F 100%);color:#fff;padding:64px 0;margin-top:28px;font-family:'Montserrat', sans-serif}
+        /* About section per updated spec: single clean definition */
+        .about-full-bleed{width:100%;background:var(--dark);color:#fff;padding:64px 0;font-family:'Montserrat', sans-serif}
         .about-full-bleed .about-inner{display:grid;grid-template-columns:1fr 1.1fr;gap:60px;align-items:start;max-width:1200px;margin:0 auto;padding:0 20px}
-        
-        #about .small-label{color:var(--gold);font-weight:600;font-size:14px;letter-spacing:3px;margin-bottom:12px;display:block;text-transform:uppercase}
-        #about .about-title{color:#fff;font-weight:700;font-size:40px;line-height:1.25;margin:0}
-        #about .about-text{color:var(--cream);font-size:17px;line-height:1.75;opacity:.95;margin-top:0}
-        
-        .goal-card{background:rgba(255,255,255,.06);border-left:3px solid var(--gold);border-radius:0 10px 10px 0;padding:20px 24px;margin-top:28px}
+
+        .about-left .small-label{color:var(--gold);font-weight:600;font-size:14px;letter-spacing:3px;margin-bottom:12px;display:block;text-transform:uppercase}
+        .about-title{color:#fff;font-weight:700;font-size:40px;line-height:1.25;margin:0}
+        .about-text{color:var(--cream);font-size:17px;line-height:1.75;opacity:.95;margin-top:0}
+
+        .goal-card{background:rgba(255,255,255,.04);border-left:3px solid var(--gold);border-radius:0;padding:18px 22px;margin-top:0}
         .goal-title{color:var(--gold);font-weight:600;font-size:18px;margin:0 0 8px 0}
         .goal-text{color:var(--cream);font-size:16px;line-height:1.7;margin:0}
 
         @media(max-width:900px){
             .about-full-bleed{padding:40px 0}
             .about-full-bleed .about-inner{grid-template-columns:1fr;gap:32px}
-            #about .about-title{font-size:28px}
-            #about .about-text{font-size:16px}
+            .about-title{font-size:28px}
+            .about-text{font-size:16px}
         }
     </style>
 

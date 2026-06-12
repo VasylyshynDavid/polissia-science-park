@@ -22,8 +22,12 @@
 
         html,body{height:100%;}
         html{scroll-behavior: smooth;}
-        body{margin:0;font-family:Inter, Arial, Helvetica, sans-serif;background:var(--bg);color:var(--text);padding-bottom:40px}
+        body{margin:0;font-family:Inter, Arial, Helvetica, sans-serif;background:var(--bg);color:var(--text);font-size:16px}
         .container{max-width:var(--container);margin:0 auto;padding:20px}
+
+        /* Ensure sections are flush with each other; sections provide their own padding */
+        main > section{margin:0}
+        .container > section{margin:0}
 
         /* Header */
         /* Use literal darkest header color and thin gold bottom border to separate header from hero */

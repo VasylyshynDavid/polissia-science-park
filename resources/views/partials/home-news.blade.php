@@ -1,4 +1,4 @@
-<section id="latest-news" style="margin:34px 0;background:var(--card);padding:18px;border-radius:12px">
+<section id="latest-news" style="background:var(--card);padding:18px;border-radius:12px">
     <div style="display:flex;align-items:center;justify-content:space-between">
         <h3 style="margin:0;font-family:Montserrat, sans-serif;font-weight:700;color:var(--gold);text-transform:uppercase">ОСТАННІ НОВИНИ</h3>
         <a href="{{ route('news.index') }}" style="color:var(--gold);font-weight:600;text-decoration:none">Усі новини →</a>
