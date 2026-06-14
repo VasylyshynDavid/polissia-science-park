@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root{
-            --dark:#042C22;
+        --dark:#042C22;
             --green:#0A4A33;
             --olive:#8FB35A;
             --olive-light:#A8C96A;
@@ -30,24 +30,156 @@
         .container > section{margin:0}
 
         /* Header */
-        /* Use literal darkest header color and subtle bottom border */
-        header{background:#042C22;border-bottom:1px solid rgba(255,255,255,.08);position:sticky;top:0;z-index:50}
-        .header-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
-        .logo-wrap{display:flex;align-items:center;gap:12px}
-        .monogram{width:56px;height:56px;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;border-radius:6px;color:var(--gold);font-weight:800;font-family:Montserrat, sans-serif}
-        .brand-text{display:flex;flex-direction:column;line-height:1}
-        .brand-text .line1{font-family:Montserrat, sans-serif;font-weight:700;color:var(--gold);letter-spacing:1.6px;font-size:14px}
-        .brand-text .line2{font-family:Montserrat, sans-serif;font-weight:600;color:#fff;font-size:12px}
+        header {
+            background: #042C22;
+            border-bottom: 2px solid rgba(199, 168, 74, 0.28);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
 
-        nav{display:flex;gap:20px;align-items:center}
-        nav a{color:#fff;text-decoration:none;font-family:Montserrat, sans-serif;font-weight:600}
-        nav a:hover{color:var(--olive-light);text-decoration:underline}
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+            padding: 12px 0;
+            min-height: 110px;
+        }
 
-        .locale-switch{padding:6px 8px;border-radius:6px;background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.08);font-family:Montserrat, sans-serif}
-        .locale-switch .active{color:#fff;font-weight:700}
+        .logo-wrap {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            flex-shrink: 0;
+            max-height: 88px;
+            padding: 8px 0;
+        }
 
-        .search-icon{width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;border-radius:6px;cursor:pointer}
-        .search-icon svg{fill:#fff}
+        .logo-img {
+            display: block;
+            height: 88px;
+            max-height: 88px;
+            width: auto;
+            object-fit: contain;
+            object-position: left center;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            flex: 1;
+            margin-left: auto;
+            gap: 0;
+        }
+
+        nav a {
+            display: inline-flex;
+            align-items: center;
+            color: #ffffff;
+            text-decoration: none;
+            font-family: Montserrat, sans-serif;
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 1;
+            margin: 0 15px;
+            white-space: nowrap;
+        }
+
+        nav a:hover {
+            color: #C7A84A;
+            text-decoration: none;
+        }
+
+        .has-dropdown > a {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .locale-switch {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+            padding: 0;
+            margin-left: 15px;
+            border: none;
+            background: transparent;
+            color: #ffffff;
+            font-family: Montserrat, sans-serif;
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 1;
+        }
+
+        .locale-switch a,
+        .locale-switch span {
+            display: inline-flex;
+            align-items: center;
+            line-height: 1;
+        }
+
+        .locale-switch .active {
+            color: #C7A84A;
+            border-bottom: 2px solid #C7A84A;
+            padding-bottom: 6px;
+        }
+
+        .search-icon {
+            width: 28px;
+            height: 28px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 15px;
+            flex-shrink: 0;
+        }
+
+        .search-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: #ffffff;
+        }
+
+        .search-icon:hover svg {
+            fill: #C7A84A;
+        }
+
+        .footer-logo { width: auto; height: 48px; display: block; margin-bottom: 8px }
+
+        @media (max-width: 1100px) {
+            .header-inner { gap: 20px; }
+            .logo-img { height: 54px; max-height: 54px; }
+            nav a { font-size: 14px; margin: 0 10px; }
+            .locale-switch { font-size: 14px; margin-left: 10px; }
+        }
+
+        @media (max-width: 900px) {
+            .header-inner { min-height: 72px; padding: 8px 0; }
+            .logo-img { height: 50px; max-height: 50px; }
+            nav { display: none; }
+            .burger { display: block; color: #fff; font-size: 24px; cursor: pointer; }
+            #nav-toggle:checked + label.burger + nav {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 72px;
+                padding: 18px 20px;
+                background: #042C22;
+                gap: 14px;
+                border-top: 1px solid rgba(199, 168, 74, 0.25);
+            }
+
+            #nav-toggle:checked + label.burger + nav a {
+                margin: 0;
+                font-size: 16px;
+            }
+        }
 
         /* Buttons */
         .btn{display:inline-block;padding:8px 14px;border-radius:8px;background:#fff;color:var(--dark);font-family:Montserrat, sans-serif;font-weight:600;border:none}
@@ -219,7 +351,7 @@
         .burger{display:none}
         @media(max-width:900px){
             nav{display:none}
-            .burger{display:block;color:#fff;font-size:22px;cursor:pointer}
+            .burger{display:block;color:#fff;font-size:24px;cursor:pointer}
             /* Checkbox hack to toggle nav */
             #nav-toggle:checked + label.burger + nav{display:flex;flex-direction:column;position:absolute;left:0;right:0;top:72px;padding:12px;background:var(--dark);gap:12px}
         }
@@ -256,13 +388,9 @@
 <body>
     <header>
         <div class="container header-inner">
-            <div class="logo-wrap">
-                <div class="monogram">NP</div>
-                <div class="brand-text">
-                    <div class="line1">НАУКОВИЙ ПАРК</div>
-                    <div class="line2">ПОЛІСЬКИЙ УНІВЕРСИТЕТ</div>
-                </div>
-            </div>
+            <a href="{{ route('home') }}" class="logo-wrap" aria-label="Науковий парк Поліський університет">
+                <img src="{{ asset('images/logo-science-park.png') }}" alt="Науковий парк Поліський університет" class="logo-img">
+            </a>
 
             <input type="checkbox" id="nav-toggle">
             <label for="nav-toggle" class="burger">☰</label>
@@ -307,6 +435,7 @@
         <div class="container">
             <div class="footer-inner">
                 <div class="footer-left">
+                    <img src="{{ asset('images/logo-science-park.png') }}" alt="Науковий парк Поліський університет" class="footer-logo">
                     <h4>Будуємо майбутнє разом</h4>
                     <p>Приєднуйтесь до спільноти інноваторів, дослідників, підприємців та всіх, хто прагне створювати позитивні зміни.</p>
                 </div>
