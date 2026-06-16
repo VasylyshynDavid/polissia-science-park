@@ -44,7 +44,7 @@
             justify-content: space-between;
             gap: 30px;
             padding: 12px 0;
-            min-height: 110px;
+            min-height: 86px;
         }
 
         .logo-wrap {
@@ -52,14 +52,14 @@
             align-items: center;
             text-decoration: none;
             flex-shrink: 0;
-            max-height: 88px;
-            padding: 8px 0;
+            max-height: 70px;
+            padding: 4px 0;
         }
 
         .logo-img {
             display: block;
-            height: 88px;
-            max-height: 88px;
+            height: 70px;
+            max-height: 70px;
             width: auto;
             object-fit: contain;
             object-position: left center;
