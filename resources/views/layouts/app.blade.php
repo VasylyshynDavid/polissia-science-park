@@ -148,6 +148,9 @@
         }
 
         .footer-logo { width: auto; height: 48px; display: block; margin-bottom: 8px }
+        .footer-heading { display: flex; align-items: center; gap: 12px; margin-bottom: 12px }
+        .footer-heading h4 { margin: 0; font-family: Montserrat, sans-serif; font-weight: 800; color: #ffffff }
+        .footer-leaf { width: 34px; height: 34px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0 }
 
         @media (max-width: 1100px) {
             .header-inner { gap: 20px; }
@@ -186,22 +189,287 @@
         .btn-outline{display:inline-block;padding:8px 14px;border-radius:8px;background:transparent;color:#fff;font-family:Montserrat, sans-serif;border:1px solid rgba(255,255,255,0.18)}
         .btn-outline:hover{border-color:rgba(255,255,255,0.5);color:#fff}
 
-        footer{background:var(--dark);color:#fff;padding:40px 0}
-        .footer-inner{display:flex;justify-content:space-between;gap:20px;align-items:flex-start}
-        .footer-left h4{font-family:Montserrat, sans-serif;font-weight:700;color:#fff;margin:0 0 8px}
-        .footer-left p{margin:0;color:#fff;max-width:520px}
-        .footer-right{display:flex;flex-direction:column;gap:8px}
-        .socials{display:flex;gap:8px;align-items:center}
-        .socials a{display:inline-flex;width:36px;height:36px;border-radius:6px;align-items:center;justify-content:center;color:#fff;opacity:0.85}
-        .socials a svg{fill:#fff}
-        .socials a:hover svg{fill:var(--olive-light);background:transparent}
-        /* QR image link in footer */
-        .footer-right .qr-link{display:block;align-self:flex-end}
-        .qr-link img{display:block;width:96px;height:96px;border-radius:8px;background:#fff;padding:6px}
-        .qr-caption{font-size:13px;color:rgba(255,255,255,.7);margin-top:8px;display:block}
-        @media(max-width:900px){
-            .footer-right .qr-link{align-self:center}
+        /* Footer: compact dark card */
+        .site-footer { background: #F8F8F4; padding: 26px 0 34px; }
+        .site-footer .container { max-width: 1200px; }
+
+        .footer-card {
+            position: relative;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1.35fr 1.05fr 120px;
+            align-items: center;
+            gap: 32px;
+            min-height: 132px;
+            padding: 22px 28px;
+            border-radius: 12px;
+            background:
+                radial-gradient(circle at 0% 50%, rgba(143, 179, 90, 0.22), transparent 26%),
+                linear-gradient(135deg, #042C22 0%, #063427 55%, #042C22 100%);
+            color: #ffffff;
+            box-shadow: 0 18px 42px rgba(4, 44, 34, 0.14);
         }
+
+        .footer-left { position: relative; display: flex; align-items: center; gap: 22px; min-width: 0; }
+
+        .footer-leaf-img { width: 92px; height: 92px; object-fit: contain; flex-shrink: 0; opacity: 0.78; mix-blend-mode: screen; }
+
+        .footer-text h4 { margin: 0 0 10px; font-family: Montserrat, sans-serif; font-size: 22px; line-height: 1.15; font-weight: 800; color: #ffffff; }
+
+        .footer-text p { margin: 0; max-width: 520px; font-size: 14px; line-height: 1.45; color: #F3EBDD; }
+
+        .footer-center { display: flex; flex-direction: column; gap: 8px; min-width: 0; border-left: 1px solid rgba(199, 168, 74, 0.28); padding-left: 28px; }
+
+        .footer-contact-line { display: flex; align-items: flex-start; gap: 10px; color: #F3EBDD; font-size: 14px; line-height: 1.35; }
+
+        .footer-contact-line a { color: #F3EBDD; text-decoration: none; }
+        .footer-contact-line a:hover { color: #C7A84A; }
+
+        .footer-contact-icon { width: 20px; height: 20px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+        .footer-socials { display: flex; align-items: center; gap: 10px; margin-top: 4px; }
+        .footer-socials a { width: 26px; height: 26px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: rgba(143, 179, 90, 0.95); color: #042C22; text-decoration: none; font-family: Montserrat, sans-serif; font-weight: 800; font-size: 13px; }
+        .footer-socials a:hover { background: #C7A84A; }
+
+        .footer-qr { display: flex; justify-content: flex-end; align-items: center; }
+        .footer-qr img { width: 96px; height: 96px; display: block; padding: 6px; border-radius: 6px; background: #ffffff; object-fit: contain; }
+
+        /* Обов'язково прибрати старий підпис під QR */
+        .qr-caption { display: none !important; }
+
+        /* Обов'язково прибрати старий логотип у футері, якщо залишився */
+        .footer-logo, .footer-left > img:not(.footer-leaf-img) { display: none !important; }
+
+        @media (max-width: 900px) {
+            .footer-card { grid-template-columns: 1fr; gap: 22px; text-align: left; }
+            .footer-center { border-left: 0; padding-left: 0; }
+            .footer-qr { justify-content: flex-start; }
+        }
+
+        @media (max-width: 560px) {
+            .footer-left { align-items: flex-start; }
+            .footer-leaf-img { width: 62px; height: 62px; }
+            .footer-text h4 { font-size: 19px; }
+        }
+
+        /* Home bottom container to remove extra bottom spacing */
+        .home-bottom-container { padding-bottom: 0 !important; margin-bottom: 0 !important; }
+
+        /* Latest news compact spacing */
+        #latest-news, .latest-news-section { margin-bottom: 16px !important; padding: 18px !important; background: #ffffff; border-radius: 12px; }
+        #latest-news .activities-grid, .latest-news-section .activities-grid { margin-bottom: 0 !important; }
+
+        main { padding-bottom: 0 !important; margin-bottom: 0 !important; }
+        main > .container:last-child { padding-bottom: 0 !important; margin-bottom: 0 !important; }
+
+        .site-footer { padding-top: 0 !important; margin-top: 0 !important; }
+        .site-footer .container { padding-top: 0 !important; margin-top: 0 !important; }
+        .footer-card { margin-top: 0 !important; }
+
+        /* Aggressive overrides to eliminate large gap between latest news and footer */
+        main > .container.home-bottom-container,
+        main > .container.home-bottom-container > * {
+            margin-bottom: 0 !important;
+            padding-bottom: 0 !important;
+        }
+
+        /* Ensure latest news has compact bottom spacing */
+        #latest-news,
+        .latest-news-section { margin-bottom: 16px !important; padding-bottom: 0 !important; }
+
+        #latest-news .activities-grid,
+        .latest-news-section .activities-grid { margin-bottom: 0 !important; }
+
+        /* Neutralize any inline style large bottom paddings/margins */
+        *[style*="margin-bottom: 80px"], *[style*="margin-bottom: 100px"], *[style*="padding-bottom: 80px"], *[style*="padding-bottom: 100px"] {
+            margin-bottom: 0 !important;
+            padding-bottom: 0 !important;
+        }
+
+        /* Tighten main/footer relationship */
+        main { padding-bottom: 0 !important; }
+        main + footer.site-footer, main + footer { margin-top: 16px !important; }
+
+        /* === ICON BACKGROUND REMOVE FIX === */
+
+        .activity-card .icon-circle {
+            background: transparent !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            border: 0 !important;
+            width: 72px !important;
+            height: 72px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+
+        .activity-icon-img {
+            display: block !important;
+            width: 58px !important;
+            height: 58px !important;
+            object-fit: contain !important;
+            background: transparent !important;
+            border: 0 !important;
+            box-shadow: none !important;
+            border-radius: 0 !important;
+        }
+
+        .card img.activity-icon-img {
+            background: transparent !important;
+            border: 0 !important;
+            box-shadow: none !important;
+            border-radius: 0 !important;
+        }
+
+        .opportunity-icon-wrap {
+            background: transparent !important;
+            border-radius: 0 !important;
+            border: 0 !important;
+            box-shadow: none !important;
+            width: 64px !important;
+            height: 64px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            margin-bottom: 14px !important;
+        }
+
+        .opportunity-icon-img {
+            display: block !important;
+            width: 52px !important;
+            height: 52px !important;
+            object-fit: contain !important;
+            background: transparent !important;
+            border: 0 !important;
+            box-shadow: none !important;
+            border-radius: 0 !important;
+        }
+
+        .opportunity-card img.opportunity-icon-img {
+            background: transparent !important;
+            border: 0 !important;
+            box-shadow: none !important;
+            border-radius: 0 !important;
+        }
+
+        /* If PNG has white background inside file, visually blend it for activities only */
+        .activity-icon-img {
+            mix-blend-mode: multiply;
+        }
+
+        /* === OPPORTUNITIES ICON COLOR FIX === */
+
+        .opportunities-section {
+            background: linear-gradient(135deg, #042C22 0%, #0A4A33 100%) !important;
+            border-radius: 24px !important;
+            padding: 34px 28px 28px !important;
+            margin-top: 34px !important;
+            overflow: hidden;
+        }
+
+        .opportunities-section .section-title {
+            position: relative;
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            gap: 22px;
+            color: #ffffff !important;
+            opacity: 1 !important;
+            margin: 0 0 34px !important;
+            font-family: Montserrat, sans-serif;
+            font-size: 34px;
+            line-height: 1.15;
+            font-weight: 800;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        /* decorative lines next to title */
+        .opportunities-section .section-title::before,
+        .opportunities-section .section-title::after {
+            content: "";
+            display: block;
+            width: 96px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #C7A84A);
+            opacity: 0.85;
+        }
+
+        .opportunities-section .section-title::after {
+            background: linear-gradient(90deg, #C7A84A, transparent);
+        }
+
+        .opportunity-card.opportunity-home {
+            background: transparent !important;
+            border: 0 !important;
+            box-shadow: none !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: flex-start !important;
+            text-align: center !important;
+            min-height: auto !important;
+            padding: 0 12px !important;
+            gap: 12px !important;
+        }
+
+        .opportunity-icon-wrap {
+            background: transparent !important;
+            border: 0 !important;
+            box-shadow: none !important;
+            border-radius: 0 !important;
+            width: 68px !important;
+            height: 68px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            margin-bottom: 4px !important;
+        }
+
+        /* main fix: use filter to recolor, not multiply */
+        .opportunity-icon-img {
+            display: block !important;
+            width: 58px !important;
+            height: 58px !important;
+            object-fit: contain !important;
+            background: transparent !important;
+            border: 0 !important;
+            box-shadow: none !important;
+            border-radius: 0 !important;
+
+            mix-blend-mode: normal !important;
+            opacity: 1 !important;
+
+            /* recolor dark/green PNG icon to #C7A84A */
+            filter: brightness(0) saturate(100%) invert(67%) sepia(41%) saturate(548%) hue-rotate(9deg) brightness(92%) contrast(88%) !important;
+        }
+
+        .opportunity-card img.opportunity-icon-img {
+            background: transparent !important;
+            border: 0 !important;
+            box-shadow: none !important;
+            border-radius: 0 !important;
+        }
+
+        .opportunity-card .ua-text {
+            color: #F3EBDD !important;
+            font-family: Inter, sans-serif !important;
+            font-size: 14px !important;
+            line-height: 1.25 !important;
+            font-weight: 700 !important;
+            margin: 0 !important;
+            max-width: 180px;
+        }
+
+        /* ensure no multiply applies inside opportunities */
+        .opportunities-section .opportunity-icon-img,
+        .opportunities-section img.opportunity-icon-img {
+            mix-blend-mode: normal !important;
+            filter: brightness(0) saturate(100%) invert(67%) sepia(41%) saturate(548%) hue-rotate(9deg) brightness(92%) contrast(88%) !important;
+        }
+
+        .opportunities-section img { mix-blend-mode: normal !important; }
 
         /* Activities / cards shared styles (used by home and /activities) */
         .section-title{
@@ -358,7 +626,40 @@
 
         /* Activities and opportunities card tweaks */
         .activity-card{background:#fff;border-radius:14px;box-shadow:0 8px 22px rgba(15,30,18,0.06);padding:20px;display:flex;flex-direction:column}
-        .activity-card .icon-circle{width:72px;height:72px;border-radius:50%;background:linear-gradient(180deg,rgba(143,179,90,0.12),rgba(168,201,106,0.06));display:flex;align-items:center;justify-content:center}
+        .activity-card .icon-circle{
+            width:72px;
+            height:72px;
+            border-radius:50%;
+            background: transparent !important;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            overflow: hidden;
+        }
+
+        /* Icons: ensure PNG white backgrounds blend into circular bg */
+        .activity-icon-img{
+            display:block;
+            width:58px;
+            height:58px;
+            object-fit:contain;
+            background: transparent !important;
+            mix-blend-mode: multiply;
+        }
+
+        .activity-icon-img[src$=".png"]{
+            mix-blend-mode: multiply;
+        }
+
+        /* Prevent global .card img rules from styling activity icons */
+        .card img.activity-icon-img{
+            background: transparent !important;
+            border: 0 !important;
+            box-shadow: none !important;
+            border-radius: 0 !important;
+            padding: 0 !important;
+        }
+
         .activity-title{font-family:Montserrat, sans-serif;font-weight:600;color:var(--green);margin-top:8px}
 
         .opportunity-home{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:14px;color:var(--cream)}
@@ -371,6 +672,19 @@
         }
         .opportunities-grid{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
         .opportunities-section{background:linear-gradient(135deg,var(--dark),var(--green));border-radius:18px;padding:18px}
+        /* Enhanced opportunities section and card styles */
+        .opportunities-section { background: linear-gradient(135deg, #042C22 0%, #0A4A33 100%); border-radius: 24px; padding: 34px 28px !important; margin-top: 34px; }
+
+        .opportunities-section .section-title { color: #ffffff !important; opacity: 1 !important; margin: 0 0 28px !important; font-family: Montserrat, sans-serif; font-size: 36px; line-height: 1.15; font-weight: 800; text-align: center; text-transform: uppercase; }
+
+        /* Ensure opportunity cards stack vertically with icon on top, text below */
+        .opportunity-card.opportunity-home { display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: flex-start !important; text-align: center !important; min-height: 220px !important; padding: 24px 18px !important; gap: 14px !important; background: transparent; box-shadow: none; border: none; }
+
+        .opportunity-icon-wrap { width: 64px; height: 64px; border-radius: 0 !important; background: transparent !important; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
+
+        .opportunity-icon-img { display: block; width: 46px; height: 46px; object-fit: contain; mix-blend-mode: multiply; background: transparent !important; border: 0 !important; box-shadow: none !important; border-radius: 0 !important; }
+
+        .opportunity-card .ua-text { color: #F3EBDD !important; font-family: Inter, sans-serif; font-size: 15px !important; line-height: 1.25; font-weight: 700; margin: 0; }
         /* Dropdown styles for activities menu */
         .has-dropdown{position:relative}
         .has-dropdown .chev svg{transition:transform .18s ease}
@@ -431,39 +745,51 @@
         @yield('content')
     </main>
 
-    <footer id="contacts">
+    <footer id="contacts" class="site-footer">
         <div class="container">
-            <div class="footer-inner">
+            <div class="footer-card">
                 <div class="footer-left">
-                    <img src="{{ asset('images/logo-science-park.png') }}" alt="Науковий парк Поліський університет" class="footer-logo">
-                    <h4>Будуємо майбутнє разом</h4>
-                    <p>Приєднуйтесь до спільноти інноваторів, дослідників, підприємців та всіх, хто прагне створювати позитивні зміни.</p>
+                    <img src="{{ asset('images/icons/image-Photoroom (8).png') }}"
+                         alt=""
+                         class="footer-leaf-img"
+                         aria-hidden="true">
+
+                    <div class="footer-text">
+                        <h4>{{ ($currentLocale ?? 'uk') === 'en' ? 'Building the Future Together' : 'Будуємо майбутнє разом' }}</h4>
+                        <p>{{ ($currentLocale ?? 'uk') === 'en' ? 'Join a community of innovators, researchers, entrepreneurs and everyone striving to create positive change.' : 'Долучайтеся до спільноти інноваторів, дослідників, підприємців та всіх, хто прагне змін на краще!' }}</p>
+                    </div>
                 </div>
 
-                <div class="footer-right">
-                    <div><strong>Електронна пошта:</strong> <a href="mailto:naukpark@polissiauniver.edu.ua" style="color:#fff">naukpark@polissiauniver.edu.ua</a></div>
-                    <div><strong>Адреса:</strong> 10008, Україна, Житомирська область, м. Житомир, Старий бульвар, 7</div>
+                <div class="footer-center">
+                    <div class="footer-contact-line">
+                        <span class="footer-contact-icon" aria-hidden="true">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                                <path d="M4 6h16v12H4V6Z" stroke="#C7A84A" stroke-width="2" stroke-linejoin="round"/>
+                                <path d="M4 7l8 6 8-6" stroke="#C7A84A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                        <a href="mailto:naukpark@polissiauniver.edu.ua">naukpark@polissiauniver.edu.ua</a>
+                    </div>
 
-                        <div style="display:flex;align-items:center;gap:12px;margin-top:8px">
-                            <div class="socials">
-                                <a href="#" aria-label="Facebook">
-                                    <svg width="16" height="16" viewBox="0 0 24 24"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7H8v-3h2.5V9.5c0-2.5 1.5-3.9 3.7-3.9 1.1 0 2.3.2 2.3.2v2.5h-1.3c-1.3 0-1.7.8-1.7 1.6V12H20l-1 3h-2v7A10 10 0 0 0 22 12z"/></svg>
-                                </a>
-                                <a href="#" aria-label="LinkedIn">
-                                    <svg width="16" height="16" viewBox="0 0 24 24"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM0 8h5v16H0zM7.5 8h4.8v2.2h.1c.7-1.3 2.4-2.6 4.9-2.6C22.8 7.6 24 10 24 14.4V24h-5v-8.6c0-2.1 0-4.8-3-4.8-3 0-3.5 2.4-3.5 4.7V24h-5V8z"/></svg>
-                                </a>
-                                <a href="#" aria-label="Telegram">
-                                    <svg width="16" height="16" viewBox="0 0 24 24"><path d="M21.5 3.2L2.6 9.2c-.8.3-.8 1.2.1 1.5l4.4 1.4 1.6 5.1c.2.7 1.1.8 1.5.2L12 15l6.2 3.6c.6.3 1.4-.1 1.5-.8l2.1-18c.1-.7-.6-1.2-1.3-.9z"/></svg>
-                                </a>
-                            </div>
+                    <div class="footer-contact-line">
+                        <span class="footer-contact-icon" aria-hidden="true">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                                <path d="M12 21s7-5.2 7-12a7 7 0 1 0-14 0c0 6.8 7 12 7 12Z" stroke="#C7A84A" stroke-width="2"/>
+                                <circle cx="12" cy="9" r="2.5" stroke="#C7A84A" stroke-width="2"/>
+                            </svg>
+                        </span>
+                        <span>{{ ($currentLocale ?? 'uk') === 'en' ? '7 Staryi Boulevard, Zhytomyr, Zhytomyr Region, 10008, Ukraine' : '10008, Україна, Житомирська обл., м. Житомир, Старий бульвар, 7' }}</span>
+                    </div>
 
-                            <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
-                                <a href="mailto:naukpark@polissiauniver.edu.ua" class="qr-link" title="Написати нам">
-                                    <img src="{{ asset('images/qr-code.png') }}" alt="QR-код — napysaty na naukpark@polissiauniver.edu.ua" width="96" height="96" loading="lazy">
-                                </a>
-                                <span class="qr-caption">Скануй для зв'язку з нами</span>
-                            </div>
-                        </div>
+                    <div class="footer-socials">
+                        <a href="#" aria-label="Facebook">f</a>
+                        <a href="#" aria-label="LinkedIn">in</a>
+                        <a href="#" aria-label="Telegram">➤</a>
+                    </div>
+                </div>
+
+                <div class="footer-qr">
+                    <img src="{{ asset('images/qr-code.png') }}" alt="QR-код">
                 </div>
             </div>
         </div>

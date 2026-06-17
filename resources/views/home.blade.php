@@ -104,19 +104,15 @@
         </div>
     </section>
 
-    <div class="container">
-        <section id="opportunities" class="opportunities-section" style="padding:18px;">
+    <div class="container home-bottom-container">
+        <section id="opportunities" class="opportunities-section">
             <h3 class="section-title" style="text-transform:uppercase">НАШІ МОЖЛИВОСТІ</h3>
             @include('partials.opportunities-grid', ['opportunities' => $opportunities])
         </section>
 
         @include('partials.home-news')
 
-        <section id="contacts" style="padding:18px;background:#ffffff;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,0.06)">
-            <h4 style="margin-top:0;color:var(--green)">Контакти</h4>
-            <p style="margin:6px 0">Email: <a href="mailto:naukpark@polissiauniver.edu.ua">naukpark@polissiauniver.edu.ua</a></p>
-            <p style="margin:6px 0">Address: 10008, Україна, Житомирська область, м. Житомир, Старий бульвар, 7</p>
-        </section>
+        <!-- contacts section removed — footer contains contact information -->
     </div>
 @endsection
 
@@ -926,6 +922,35 @@
             .sp-hero-dots { bottom: 12px !important; }
 
             .sp-hero-dots span { width: 8px !important; height: 8px !important; }
+        }
+    </style>
+    <style>
+        /* FINAL footer/news spacing overrides to remove large gap between latest news and footer */
+        #latest-news {
+            margin-bottom: 0 !important;
+        }
+
+        #latest-news + .site-footer,
+        main + .site-footer {
+            margin-top: 0 !important;
+        }
+
+        .site-footer {
+            padding-top: 24px !important;
+            margin-top: 0 !important;
+        }
+
+        main {
+            padding-bottom: 0 !important;
+        }
+
+        .home-footer-gap,
+        .footer-spacer,
+        .contacts-spacer {
+            display: none !important;
+            height: 0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
         }
     </style>
 @endsection
