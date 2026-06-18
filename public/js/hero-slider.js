@@ -9,14 +9,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const bottomMiddle = hero.querySelector('.sp-photo-bottom-middle img');
     const bottomRight = hero.querySelector('.sp-photo-bottom-right img');
 
-    const bg = hero.querySelector('.sp-hero-bg');
     const prevBtn = hero.querySelector('.sp-hero-arrow-left');
     const nextBtn = hero.querySelector('.sp-hero-arrow-right');
     const dots = Array.from(hero.querySelectorAll('.sp-hero-dots span, .sp-hero-dots button'));
 
     const slides = [
         {
-            bg: '/images/Gemini_Generated_Image_o9b7mfo9b7mfo9b7.png',
             topLeft: '/images/5276117098801340184.png',
             topWide: '/images/5276117098801340186.png',
             bottomLeft: '/images/5276117098801340195.png',
@@ -24,7 +22,6 @@ document.addEventListener('DOMContentLoaded', function () {
             bottomRight: '/images/5276117098801340193.png'
         },
         {
-            bg: '/images/Gemini_Generated_Image_1eakkp1eakkp1eak.png',
             topLeft: '/images/5276117098801340187.png',
             topWide: '/images/5276117098801340199.png',
             bottomLeft: '/images/5276117098801340194.png',
@@ -32,7 +29,6 @@ document.addEventListener('DOMContentLoaded', function () {
             bottomRight: '/images/5276117098801340200.png'
         },
         {
-            bg: '/images/Gemini_Generated_Image_o9b7mfo9b7mfo9b7.png',
             topLeft: '/images/5276117098801340190.png',
             topWide: '/images/5276117098801340191.png',
             bottomLeft: '/images/5276117098801340192.png',
@@ -72,21 +68,11 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 120);
     }
 
-    function setBackground(src) {
-        if (!bg || !src) return;
-
-        bg.style.background =
-            'linear-gradient(90deg, rgba(4, 44, 34, 0.96), rgba(4, 44, 34, 0.84)), url("' + src + '")';
-        bg.style.backgroundSize = 'cover';
-        bg.style.backgroundPosition = 'center';
-    }
-
     function showSlide(index) {
         current = (index + slides.length) % slides.length;
 
         const slide = slides[current];
 
-        setBackground(slide.bg);
         setImage(topLeft, slide.topLeft);
         setImage(topWide, slide.topWide);
         setImage(bottomLeft, slide.bottomLeft);
