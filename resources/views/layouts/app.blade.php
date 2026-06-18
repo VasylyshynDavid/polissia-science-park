@@ -794,26 +794,27 @@
             </div>
         </div>
     </footer>
-</body>
-<script>
-    document.addEventListener('DOMContentLoaded', function(){
-        function isMobile(){ return window.innerWidth < 900 }
-        document.querySelectorAll('.has-dropdown').forEach(function(el){
-            el.addEventListener('click', function(e){
-                if(!isMobile()) return; // only intercept on mobile
-                // toggle open state
-                e.preventDefault();
-                el.classList.toggle('open');
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            function isMobile(){ return window.innerWidth < 900 }
+            document.querySelectorAll('.has-dropdown').forEach(function(el){
+                el.addEventListener('click', function(e){
+                    if(!isMobile()) return; // only intercept on mobile
+                    // toggle open state
+                    e.preventDefault();
+                    el.classList.toggle('open');
+                });
             });
-        });
 
-        // close dropdowns when clicking outside on mobile
-        document.addEventListener('click', function(e){
-            if(!isMobile()) return;
-            document.querySelectorAll('.has-dropdown.open').forEach(function(el){
-                if(!el.contains(e.target)) el.classList.remove('open');
+            // close dropdowns when clicking outside on mobile
+            document.addEventListener('click', function(e){
+                if(!isMobile()) return;
+                document.querySelectorAll('.has-dropdown.open').forEach(function(el){
+                    if(!el.contains(e.target)) el.classList.remove('open');
+                });
             });
         });
-    });
-</script>
+    </script>
+    <script src="{{ asset('js/hero-slider.js') }}" defer></script>
+</body>
 </html>

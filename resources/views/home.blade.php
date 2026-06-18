@@ -953,4 +953,16 @@
             padding: 0 !important;
         }
     </style>
+
+    <style>
+        .sp-hero-dots span,
+        .sp-hero-dots button {
+            cursor: pointer;
+        }
+
+        .sp-hero-dots span.active,
+        .sp-hero-dots button.active {
+            background: #C7A84A !important;
+        }
+    </style>
 @endsection
