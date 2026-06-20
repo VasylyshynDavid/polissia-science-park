@@ -33,14 +33,22 @@ class NewsController extends Controller
         }
 
         if($year){
-            $query->whereYear('published_at', $year);
+            $query->whereBetween('published_at', [
+                \Illuminate\Support\Carbon::create($year, 1, 1, 0, 0, 0),
+                \Illuminate\Support\Carbon::create($year, 12, 31, 23, 59, 59),
+            ]);
         }
 
         $news = $query->orderedForListing()->paginate(9)->withQueryString();
 
         $categories = NewsCategory::query()->ordered()->get();
 
-        $years = News::published()->selectRaw('YEAR(published_at) as year')->distinct()->orderByDesc('year')->pluck('year');
+        $years = News::published()
+            ->pluck('published_at')
+            ->map(fn ($date) => \Illuminate\Support\Carbon::parse($date)->year)
+            ->unique()
+            ->sortDesc()
+            ->values();
 
         return view('news.index', compact('news','categories','years','q','category','year'));
     }
