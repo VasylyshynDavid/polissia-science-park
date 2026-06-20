@@ -162,6 +162,134 @@
             fill: none;
         }
 
+        /* Premium Search Modal Styles */
+        .search-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(4, 44, 34, 0.85);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.25s ease, visibility 0.25s ease;
+        }
+
+        .search-modal-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .search-modal-box {
+            background: #ffffff;
+            width: 100%;
+            max-width: 600px;
+            border-radius: 16px;
+            box-shadow: 0 24px 50px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            transform: translateY(-20px);
+            transition: transform 0.25s ease;
+            border: 2px solid #C7A84A;
+        }
+
+        .search-modal-overlay.open .search-modal-box {
+            transform: translateY(0);
+        }
+
+        .search-modal-header {
+            background: #042C22;
+            color: #ffffff;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid rgba(199, 168, 74, 0.3);
+        }
+
+        .search-modal-header h3 {
+            margin: 0;
+            font-family: Montserrat, sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .search-modal-close {
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            padding: 4px 8px;
+            transition: color 0.15s ease;
+        }
+
+        .search-modal-close:hover {
+            color: #C7A84A;
+        }
+
+        .search-modal-form {
+            padding: 30px 24px;
+            background: #F8F8F4;
+            margin: 0;
+        }
+
+        .search-input-wrapper {
+            display: flex;
+            align-items: center;
+            background: #ffffff;
+            border: 2px solid #0A4A33;
+            border-radius: 10px;
+            padding: 6px 16px;
+            gap: 12px;
+            box-shadow: 0 8px 20px rgba(10, 74, 51, 0.08);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .search-input-wrapper:focus-within {
+            border-color: #C7A84A;
+            box-shadow: 0 8px 25px rgba(199, 168, 74, 0.2);
+        }
+
+        .search-input-wrapper input {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-family: Inter, sans-serif;
+            font-size: 16px;
+            color: #1F2937;
+            padding: 8px 0;
+            background: transparent;
+        }
+
+        .search-input-wrapper input::placeholder {
+            color: #9CA3AF;
+        }
+
+        .search-modal-submit {
+            background: #8FB35A;
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 22px;
+            font-family: Montserrat, sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .search-modal-submit:hover {
+            background: #C7A84A;
+            color: #042C22;
+        }
+
         .footer-logo { width: auto; height: 48px; display: block; margin-bottom: 8px }
         .footer-heading { display: flex; align-items: center; gap: 12px; margin-bottom: 12px }
         .footer-heading h4 { margin: 0; font-family: Montserrat, sans-serif; font-weight: 800; color: #ffffff }
@@ -739,8 +867,8 @@
                 <a href="{{ route('opportunities.index') }}">{{ ($currentLocale ?? 'uk') === 'en' ? 'Our Opportunities' : 'Наші можливості' }}</a>
                 <a href="{{ route('home') }}#contacts">{{ ($currentLocale ?? 'uk') === 'en' ? 'Contacts' : 'Наші контакти' }}</a>
 
-                <div class="search-icon" role="button" aria-label="{{ ($currentLocale ?? 'uk') === 'en' ? 'Search' : 'Пошук' }}" title="{{ ($currentLocale ?? 'uk') === 'en' ? 'Search' : 'Пошук' }}">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <div id="searchToggle" class="search-icon" role="button" tabindex="0" aria-controls="searchModal" aria-expanded="false" aria-label="{{ ($currentLocale ?? 'uk') === 'en' ? 'Search' : 'Пошук' }}" title="{{ ($currentLocale ?? 'uk') === 'en' ? 'Search' : 'Пошук' }}">
+                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="11" cy="11" r="8"></circle>
                         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                     </svg>
@@ -762,6 +890,33 @@
             </nav>
         </div>
     </header>
+
+    <div id="searchModal" class="search-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="searchModalTitle">
+    <div class="search-modal-box">
+        <div class="search-modal-header">
+            <h3 id="searchModalTitle">{{ ($currentLocale ?? 'uk') === 'en' ? 'Search news' : 'Пошук новин' }}</h3>
+            <button id="searchModalClose" class="search-modal-close" type="button" aria-label="{{ ($currentLocale ?? 'uk') === 'en' ? 'Close search' : 'Закрити пошук' }}">×</button>
+        </div>
+
+        <form class="search-modal-form" action="{{ route('news.index') }}" method="get" role="search">
+            <div class="search-input-wrapper">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0A4A33" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+
+                <input id="searchModalInput"
+                       type="search"
+                       name="q"
+                       value="{{ is_string(request('q')) ? request('q') : '' }}"
+                       placeholder="{{ ($currentLocale ?? 'uk') === 'en' ? 'Enter keyword...' : 'Введіть ключове слово...' }}"
+                       autocomplete="off">
+
+                <button class="search-modal-submit" type="submit">{{ ($currentLocale ?? 'uk') === 'en' ? 'Search' : 'Знайти' }}</button>
+            </div>
+        </form>
+    </div>
+</div>
 
     <main>
         @yield('content')
@@ -817,26 +972,94 @@
         </div>
     </footer>
     <script>
-        document.addEventListener('DOMContentLoaded', function(){
-            function isMobile(){ return window.innerWidth < 900 }
-            document.querySelectorAll('.has-dropdown').forEach(function(el){
-                el.addEventListener('click', function(e){
-                    if(!isMobile()) return; // only intercept on mobile
-                    // toggle open state
-                    e.preventDefault();
-                    el.classList.toggle('open');
-                });
-            });
+    document.addEventListener('DOMContentLoaded', function(){
+        function isMobile(){ return window.innerWidth < 900 }
 
-            // close dropdowns when clicking outside on mobile
-            document.addEventListener('click', function(e){
+        document.querySelectorAll('.has-dropdown').forEach(function(el){
+            var trigger = el.querySelector('a');
+
+            if (!trigger) return;
+
+            trigger.addEventListener('click', function(e){
                 if(!isMobile()) return;
-                document.querySelectorAll('.has-dropdown.open').forEach(function(el){
-                    if(!el.contains(e.target)) el.classList.remove('open');
-                });
+                e.preventDefault();
+                e.stopPropagation();
+                el.classList.toggle('open');
             });
         });
-    </script>
+
+        var searchToggle = document.getElementById('searchToggle');
+        var searchModal = document.getElementById('searchModal');
+        var searchClose = document.getElementById('searchModalClose');
+        var searchInput = document.getElementById('searchModalInput');
+
+        function openSearchModal(){
+            if (!searchModal) return;
+
+            searchModal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+
+            if (searchToggle) {
+                searchToggle.setAttribute('aria-expanded', 'true');
+            }
+
+            window.setTimeout(function(){
+                if (searchInput) searchInput.focus();
+            }, 80);
+        }
+
+        function closeSearchModal(){
+            if (!searchModal) return;
+
+            searchModal.classList.remove('open');
+            document.body.style.overflow = '';
+
+            if (searchToggle) {
+                searchToggle.setAttribute('aria-expanded', 'false');
+                searchToggle.focus();
+            }
+        }
+
+        if (searchToggle) {
+            searchToggle.addEventListener('click', openSearchModal);
+            searchToggle.addEventListener('keydown', function(e){
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    openSearchModal();
+                }
+            });
+        }
+
+        if (searchClose) {
+            searchClose.addEventListener('click', closeSearchModal);
+        }
+
+        if (searchModal) {
+            searchModal.addEventListener('click', function(e){
+                if (e.target === searchModal) closeSearchModal();
+            });
+        }
+
+        document.addEventListener('keydown', function(e){
+            if (e.key === 'Escape' && searchModal && searchModal.classList.contains('open')) {
+                closeSearchModal();
+            }
+        });
+
+        document.querySelectorAll('.search-modal-form').forEach(function(form){
+            form.addEventListener('submit', function(){
+                if (searchInput) searchInput.value = searchInput.value.trim();
+            });
+        });
+
+        document.addEventListener('click', function(e){
+            if(!isMobile()) return;
+            document.querySelectorAll('.has-dropdown.open').forEach(function(el){
+                if(!el.contains(e.target)) el.classList.remove('open');
+            });
+        });
+    });
+</script>
     <script src="{{ asset('js/hero-slider.js') }}" defer></script>
 </body>
 </html>
