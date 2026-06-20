@@ -654,7 +654,7 @@
             height:58px;
             object-fit:contain;
             background: transparent !important;
-            mix-blend-mode: multiply;
+            mix-blend-mode: normal !important;
         }
 
         .activity-icon-img[src$=".png"]{
@@ -692,7 +692,7 @@
 
         .opportunity-icon-wrap { width: 64px; height: 64px; border-radius: 0 !important; background: transparent !important; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
 
-        .opportunity-icon-img { display: block; width: 46px; height: 46px; object-fit: contain; mix-blend-mode: multiply; background: transparent !important; border: 0 !important; box-shadow: none !important; border-radius: 0 !important; }
+        .opportunity-icon-img { display: block; width: 46px; height: 46px; object-fit: contain; mix-blend-mode: normal !important; background: transparent !important; border: 0 !important; box-shadow: none !important; border-radius: 0 !important; }
 
         .opportunity-card .ua-text { color: #F3EBDD !important; font-family: Inter, sans-serif; font-size: 15px !important; line-height: 1.25; font-weight: 700; margin: 0; }
         /* Dropdown styles for activities menu */
