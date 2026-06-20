@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Головна — Поліський науковий парк')
+@section('title', ($currentLocale ?? 'uk') === 'en' ? 'Home — Science Park Polissia University' : 'Головна — Поліський науковий парк')
 
 @section('content')
     <section class="sp-hero">
@@ -10,14 +10,25 @@
             <div class="sp-hero-bg"></div>
 
             <div class="sp-hero-copy">
-                <h1>Наука,<br>що працює</h1>
-                <h2>для громад, бізнесу<br>та довкілля</h2>
-                <p>Об’єднуємо науку, освіту, бізнес та громади для створення інноваційних рішень і сталого розвитку Полісся та України.</p>
+                @if(($currentLocale ?? 'uk') === 'en')
+                    <h1>Science<br>That Works</h1>
+                    <h2>for Communities, Business<br>and the Environment</h2>
+                    <p>We unite science, education, business and communities to create innovative solutions and promote the sustainable development of Polissia and Ukraine.</p>
 
-                <div class="sp-hero-buttons">
-                    <a href="#about" class="sp-hero-btn sp-hero-btn-primary">Дізнатись більше</a>
-                    <a href="#latest-news" class="sp-hero-btn sp-hero-btn-secondary">Останні новини</a>
-                </div>
+                    <div class="sp-hero-buttons">
+                        <a href="#about" class="sp-hero-btn sp-hero-btn-primary">Learn More</a>
+                        <a href="#latest-news" class="sp-hero-btn sp-hero-btn-secondary">Latest News</a>
+                    </div>
+                @else
+                    <h1>Наука,<br>що працює</h1>
+                    <h2>для громад, бізнесу<br>та довкілля</h2>
+                    <p>Об’єднуємо науку, освіту, бізнес та громади для створення інноваційних рішень і сталого розвитку Полісся та України.</p>
+
+                    <div class="sp-hero-buttons">
+                        <a href="#about" class="sp-hero-btn sp-hero-btn-primary">Дізнатись більше</a>
+                        <a href="#latest-news" class="sp-hero-btn sp-hero-btn-secondary">Останні новини</a>
+                    </div>
+                @endif
             </div>
         </div>
 
@@ -66,15 +77,13 @@
         <div class="container">
             <div class="about-light-grid">
                 <div class="about-light-heading">
-                    <span class="about-light-label">ПРО НАС</span>
-                    <h2>Інновації для розвитку<br>Полісся та України</h2>
+                    <span class="about-light-label">{{ ($currentLocale ?? 'uk') === 'en' ? 'ABOUT US' : 'ПРО НАС' }}</span>
+                    <h2>{{ ($currentLocale ?? 'uk') === 'en' ? 'Innovation for the Development of Polissia and Ukraine' : 'Інновації для розвитку Полісся та України' }}</h2>
                 </div>
 
                 <div class="about-light-content">
                     <p>
-                        Науковий парк «Поліський університет» — це інноваційна платформа для розвитку науки, технологій та підприємництва.
-                        Ми об’єднуємо науковців, студентів, бізнес, громади та державні інституції для створення і впровадження сучасних
-                        рішень у сферах цифрової трансформації, екології, біоекономіки та сталого розвитку.
+                        {{ ($currentLocale ?? 'uk') === 'en' ? 'The Science Park “Polissia University” is an innovation platform for the development of science, technology and entrepreneurship. We bring together researchers, students, businesses, communities and public institutions to create and implement modern solutions in the fields of digital transformation, ecology, bioeconomy and sustainable development.' : 'Науковий парк «Поліський університет» — це інноваційна платформа для розвитку науки, технологій та підприємництва. Ми об’єднуємо науковців, студентів, бізнес, громади та державні інституції для створення і впровадження сучасних рішень у сферах цифрової трансформації, екології, біоекономіки та сталого розвитку.' }}
                     </p>
 
                     <div class="about-goal-light">
@@ -83,10 +92,9 @@
                         </div>
 
                         <div>
-                            <h3>Наша мета</h3>
+                            <h3>{{ ($currentLocale ?? 'uk') === 'en' ? 'Our Goal' : 'Наша мета' }}</h3>
                             <p>
-                                Формування сучасної інноваційної екосистеми, у якій наука, освіта та бізнес спільно створюють
-                                цифрові та «зелені» рішення для сталого розвитку Полісся та України.
+                                {{ ($currentLocale ?? 'uk') === 'en' ? 'To build a modern innovation ecosystem where science, education and business jointly create digital and green solutions for the sustainable development of Polissia and Ukraine.' : 'Формування сучасної інноваційної екосистеми, у якій наука, освіта та бізнес спільно створюють цифрові та «зелені» рішення для сталого розвитку Полісся та України.' }}
                             </p>
                         </div>
                     </div>
@@ -98,7 +106,7 @@
     <section class="activities-bleed" style="background:var(--bg);width:100%;">
         <div class="container">
             <section id="activities">
-                <h3 class="section-title" style="text-transform:uppercase">НАПРЯМИ ДІЯЛЬНОСТІ</h3>
+                <h3 class="section-title" style="text-transform:uppercase">{{ ($currentLocale ?? 'uk') === 'en' ? 'AREAS OF ACTIVITY' : 'НАПРЯМИ ДІЯЛЬНОСТІ' }}</h3>
                 @include('partials.activities-grid', ['activities' => $activities])
             </section>
         </div>
@@ -106,7 +114,7 @@
 
     <div class="container home-bottom-container">
         <section id="opportunities" class="opportunities-section">
-            <h3 class="section-title" style="text-transform:uppercase">НАШІ МОЖЛИВОСТІ</h3>
+            <h3 class="section-title" style="text-transform:uppercase">{{ ($currentLocale ?? 'uk') === 'en' ? 'OUR OPPORTUNITIES' : 'НАШІ МОЖЛИВОСТІ' }}</h3>
             @include('partials.opportunities-grid', ['opportunities' => $opportunities])
         </section>
 

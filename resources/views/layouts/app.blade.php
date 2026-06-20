@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="{{ $currentLocale ?? 'uk' }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Поліський науковий парк')</title>
+    <title>@yield('title', ($currentLocale ?? 'uk') === 'en' ? 'Science Park Polissia University' : 'Поліський науковий парк')</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
@@ -114,7 +114,17 @@
             line-height: 1;
         }
 
-        .locale-switch a,
+        .locale-switch a {
+            margin: 0 !important;
+            color: #ffffff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .locale-switch a:hover {
+            color: #C7A84A;
+        }
+
         .locale-switch span {
             display: inline-flex;
             align-items: center;
@@ -709,30 +719,36 @@
             <input type="checkbox" id="nav-toggle">
             <label for="nav-toggle" class="burger">☰</label>
             <nav>
-                <a href="{{ route('news.index') }}">Новини</a>
-                <a href="{{ route('home') }}#about">Про нас</a>
+                <a href="{{ route('news.index') }}">{{ ($currentLocale ?? 'uk') === 'en' ? 'News' : 'Новини' }}</a>
+                <a href="{{ route('home') }}#about">{{ ($currentLocale ?? 'uk') === 'en' ? 'About Us' : 'Про нас' }}</a>
                 <div class="nav-item has-dropdown">
-                    <a href="{{ route('activities.index') }}">Напрями діяльності <span class="chev">@include('partials.icons.chev')</span></a>
+                    <a href="{{ route('activities.index') }}">{{ ($currentLocale ?? 'uk') === 'en' ? 'Areas of Activity' : 'Напрями діяльності' }} <span class="chev">@include('partials.icons.chev')</span></a>
                     <div class="dropdown">
                         @if(isset($menuActivities))
                             @foreach($menuActivities as $item)
-                                <a href="{{ route('activities.index') }}#activity-{{ $item->id }}">{{ $item->title_ua }}</a>
+                                <a href="{{ route('activities.index') }}#activity-{{ $item->id }}">{{ ($currentLocale ?? 'uk') === 'en' ? $item->title_en : $item->title_ua }}</a>
                             @endforeach
                         @endif
                     </div>
                 </div>
-                <a href="{{ route('opportunities.index') }}">Наші можливості</a>
-                <a href="{{ route('home') }}#contacts">Наші контакти</a>
+                <a href="{{ route('opportunities.index') }}">{{ ($currentLocale ?? 'uk') === 'en' ? 'Our Opportunities' : 'Наші можливості' }}</a>
+                <a href="{{ route('home') }}#contacts">{{ ($currentLocale ?? 'uk') === 'en' ? 'Contacts' : 'Наші контакти' }}</a>
 
                 <div style="width:8px"></div>
 
-                <div class="locale-switch" aria-hidden>
-                    <span class="active">UA</span>
-                    <span style="opacity:.6"> | </span>
-                    <span>EN</span>
+                <div class="locale-switch">
+                    @if(($currentLocale ?? 'uk') === 'en')
+                        <a href="{{ route('locale.switch', 'uk') }}" title="Українська">UA</a>
+                        <span style="opacity:.6;margin:0 6px">|</span>
+                        <span class="active">EN</span>
+                    @else
+                        <span class="active">UA</span>
+                        <span style="opacity:.6;margin:0 6px">|</span>
+                        <a href="{{ route('locale.switch', 'en') }}" title="English">EN</a>
+                    @endif
                 </div>
 
-                <div class="search-icon" role="button" aria-label="Search">
+                <div class="search-icon" role="button" aria-label="{{ ($currentLocale ?? 'uk') === 'en' ? 'Search' : 'Пошук' }}">
                     <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden>
                         <path d="M21.71 20.29l-3.4-3.39A8 8 0 1 0 18 18.31l3.39 3.4a1 1 0 0 0 1.41-1.42zM4 10a6 6 0 1 1 6 6 6 6 0 0 1-6-6z" />
                     </svg>

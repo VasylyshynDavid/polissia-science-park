@@ -22,6 +22,14 @@ Route::get('/opportunities', [OpportunityController::class, 'index'])->name('opp
 Route::get('/news', [NewsController::class, 'index'])->name('news.index');
 Route::get('/news/{news:slug}', [NewsController::class, 'show'])->name('news.show');
 
+Route::get('/lang/{locale}', function (string $locale) {
+    if (in_array($locale, ['uk', 'en'], true)) {
+        session(['locale' => $locale]);
+        cookie()->queue(cookie()->forever('locale', $locale));
+    }
+    return redirect()->back();
+})->name('locale.switch');
+
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::middleware('guest')->group(function () {
         Route::get('/login', [AdminAuthController::class, 'showLogin'])->name('login');
