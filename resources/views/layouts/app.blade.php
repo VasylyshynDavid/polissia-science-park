@@ -162,132 +162,218 @@
             fill: none;
         }
 
-        /* Premium Search Modal Styles */
-        .search-modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(4, 44, 34, 0.85);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-            z-index: 100;
-            display: flex;
+        header,
+        .header-inner,
+        nav {
+            overflow: visible !important;
+        }
+
+        header {
+            z-index: 9999;
+        }
+
+        .header-search {
+            position: relative;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            margin: 0 15px;
+            flex-shrink: 0;
+            z-index: 100000;
+        }
+
+        .header-search .search-icon {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            background: transparent;
+            color: #ffffff;
+        }
+
+        .header-search .search-icon:hover,
+        .header-search .search-icon:focus-visible,
+        .header-search.is-open .search-icon {
+            color: #C7A84A;
+            outline: none;
+        }
+
+        .header-search .search-icon:hover svg,
+        .header-search.is-open .search-icon svg {
+            stroke: #C7A84A;
+        }
+
+        .header-search-popover {
+            position: fixed;
+            top: var(--site-header-height);
+            left: 50%;
+            z-index: 100001;
+            width: min(460px, calc(100vw - 24px));
+            padding: 14px;
+            border-radius: 16px;
+            border: 1px solid rgba(199, 168, 74, 0.55);
+            background: #ffffff;
+            box-shadow: 0 18px 44px rgba(4, 44, 34, 0.24);
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.25s ease, visibility 0.25s ease;
+            pointer-events: none;
+            transform: translateY(8px);
+            transition: opacity 0.18s ease, visibility 0.18s ease, transform 0.18s ease;
         }
 
-        .search-modal-overlay.open {
+        .header-search.is-open .header-search-popover {
             opacity: 1;
             visibility: visible;
-        }
-
-        .search-modal-box {
-            background: #ffffff;
-            width: 100%;
-            max-width: 600px;
-            border-radius: 16px;
-            box-shadow: 0 24px 50px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-            transform: translateY(-20px);
-            transition: transform 0.25s ease;
-            border: 2px solid #C7A84A;
-        }
-
-        .search-modal-overlay.open .search-modal-box {
+            pointer-events: auto;
             transform: translateY(0);
         }
 
-        .search-modal-header {
-            background: #042C22;
-            color: #ffffff;
-            padding: 16px 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 2px solid rgba(199, 168, 74, 0.3);
-        }
-
-        .search-modal-header h3 {
-            margin: 0;
-            font-family: Montserrat, sans-serif;
-            font-size: 18px;
-            font-weight: 700;
-            color: #ffffff;
-        }
-
-        .search-modal-close {
-            background: transparent;
-            border: none;
-            color: #ffffff;
-            font-size: 20px;
-            font-weight: 700;
-            cursor: pointer;
-            padding: 4px 8px;
-            transition: color 0.15s ease;
-        }
-
-        .search-modal-close:hover {
-            color: #C7A84A;
-        }
-
-        .search-modal-form {
-            padding: 30px 24px;
-            background: #F8F8F4;
-            margin: 0;
-        }
-
-        .search-input-wrapper {
-            display: flex;
-            align-items: center;
+        .header-search-popover::before {
+            content: "";
+            position: absolute;
+            top: -8px;
+            right: 22px;
+            width: 16px;
+            height: 16px;
+            transform: rotate(45deg);
             background: #ffffff;
-            border: 2px solid #0A4A33;
-            border-radius: 10px;
-            padding: 6px 16px;
-            gap: 12px;
-            box-shadow: 0 8px 20px rgba(10, 74, 51, 0.08);
-            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            border-left: 1px solid rgba(199, 168, 74, 0.55);
+            border-top: 1px solid rgba(199, 168, 74, 0.55);
         }
 
-        .search-input-wrapper:focus-within {
-            border-color: #C7A84A;
-            box-shadow: 0 8px 25px rgba(199, 168, 74, 0.2);
+        .header-search-form {
+            margin: 0;
         }
 
-        .search-input-wrapper input {
-            border: none;
-            outline: none;
-            width: 100%;
-            font-family: Inter, sans-serif;
-            font-size: 16px;
+        .header-search-row {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-search-input {
+            flex: 1 1 auto;
+            min-width: 0;
+            height: 42px;
+            padding: 0 14px;
+            border: 1px solid #dfe9e2;
+            border-radius: 999px;
+            background: #F8F8F4;
             color: #1F2937;
-            padding: 8px 0;
-            background: transparent;
+            font-family: Inter, sans-serif;
+            font-size: 15px;
         }
 
-        .search-input-wrapper input::placeholder {
-            color: #9CA3AF;
+        .header-search-input::placeholder {
+            color: #6B7280;
         }
 
-        .search-modal-submit {
+        .header-search-input:focus {
+            outline: 2px solid rgba(199, 168, 74, 0.35);
+            border-color: #C7A84A;
+            background: #ffffff;
+        }
+
+        .header-search-submit {
+            flex: 0 0 auto;
+            height: 42px;
+            padding: 0 18px;
+            border: 0;
+            border-radius: 999px;
             background: #8FB35A;
             color: #ffffff;
-            border: none;
-            border-radius: 6px;
-            padding: 10px 22px;
             font-family: Montserrat, sans-serif;
-            font-weight: 700;
             font-size: 14px;
+            font-weight: 800;
             text-transform: uppercase;
             cursor: pointer;
-            transition: background 0.2s ease, color 0.2s ease;
         }
 
-        .search-modal-submit:hover {
+        .header-search-submit:hover,
+        .header-search-submit:focus-visible {
             background: #C7A84A;
             color: #042C22;
+            outline: none;
+        }
+
+        .header-search-suggestions {
+            position: relative;
+            z-index: 1;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #edf2ef;
+            max-height: 280px;
+            overflow-y: auto;
+        }
+
+        .header-search-suggestion {
+            display: block;
+            padding: 10px 12px;
+            border-radius: 12px;
+            color: #1F2937;
+            text-decoration: none;
+        }
+
+        .header-search-suggestion:hover,
+        .header-search-suggestion:focus-visible {
+            background: #F3EBDD;
+            outline: none;
+        }
+
+        .header-search-suggestion-title {
+            display: block;
+            color: #042C22;
+            font-family: Montserrat, sans-serif;
+            font-size: 14px;
+            font-weight: 800;
+            line-height: 1.25;
+        }
+
+        .header-search-suggestion-meta {
+            display: block;
+            margin-top: 4px;
+            color: #6B7280;
+            font-size: 12px;
+        }
+
+        .header-search-suggestion-excerpt {
+            display: block;
+            margin-top: 4px;
+            color: #374151;
+            font-size: 13px;
+            line-height: 1.35;
+        }
+
+        .header-search-empty {
+            padding: 10px 12px;
+            color: #6B7280;
+            font-size: 14px;
+        }
+
+        @media (max-width: 900px) {
+            #nav-toggle:checked + label.burger + nav .header-search {
+                width: 100%;
+                margin: 0;
+                justify-content: flex-start;
+            }
+
+            #nav-toggle:checked + label.burger + nav .header-search-popover {
+                position: static;
+                width: 100%;
+                max-width: none;
+                margin-top: 8px;
+                box-sizing: border-box;
+                transform: none;
+            }
+
+            #nav-toggle:checked + label.burger + nav .header-search-popover::before {
+                display: none;
+            }
+
+            #nav-toggle:checked + label.burger + nav .header-search-row {
+                width: 100%;
+            }
         }
 
         .footer-logo { width: auto; height: 48px; display: block; margin-bottom: 8px }
@@ -840,6 +926,97 @@
         .has-dropdown.open .dropdown{position:static;opacity:1;visibility:visible;transform:none}
         .has-dropdown.open .chev svg{transform:rotate(180deg)}
     </style>
+    <style>
+    /* === HEADER BAR STABILITY FIX === */
+:root {
+    --site-header-height: 104px;
+}
+
+html {
+    scroll-padding-top: var(--site-header-height);
+}
+
+body {
+    padding-top: var(--site-header-height) !important;
+}
+
+header {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    height: var(--site-header-height) !important;
+    min-height: var(--site-header-height) !important;
+    z-index: 100000 !important;
+    overflow: visible !important;
+    background: #042C22 !important;
+}
+
+.header-inner {
+    height: calc(var(--site-header-height) - 2px) !important;
+    min-height: calc(var(--site-header-height) - 2px) !important;
+    padding: 8px 20px !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+}
+
+.logo-wrap {
+    height: 70px !important;
+    max-height: none !important;
+    overflow: visible !important;
+}
+
+.logo-img {
+    height: 70px !important;
+    max-height: 70px !important;
+    width: auto !important;
+    display: block !important;
+    object-fit: contain !important;
+    object-position: left center !important;
+}
+
+nav {
+    overflow: visible !important;
+}
+
+.header-search,
+.header-search-popover,
+.header-search-dropdown {
+    z-index: 100002 !important;
+}
+
+@media (max-width: 900px) {
+    :root {
+        --site-header-height: 72px;
+    }
+
+    body {
+        padding-top: var(--site-header-height) !important;
+    }
+
+    header {
+        height: var(--site-header-height) !important;
+        min-height: var(--site-header-height) !important;
+    }
+
+    .header-inner {
+        height: var(--site-header-height) !important;
+        min-height: var(--site-header-height) !important;
+        padding: 8px 20px !important;
+    }
+
+    .logo-img {
+        height: 50px !important;
+        max-height: 50px !important;
+    }
+
+    #nav-toggle:checked + label.burger + nav {
+        top: var(--site-header-height) !important;
+        z-index: 100001 !important;
+    }
+}
+</style>
     @yield('head')
 </head>
 <body>
@@ -867,11 +1044,46 @@
                 <a href="{{ route('opportunities.index') }}">{{ ($currentLocale ?? 'uk') === 'en' ? 'Our Opportunities' : 'Наші можливості' }}</a>
                 <a href="{{ route('home') }}#contacts">{{ ($currentLocale ?? 'uk') === 'en' ? 'Contacts' : 'Наші контакти' }}</a>
 
-                <div id="searchToggle" class="search-icon" role="button" tabindex="0" aria-controls="searchModal" aria-expanded="false" aria-label="{{ ($currentLocale ?? 'uk') === 'en' ? 'Search' : 'Пошук' }}" title="{{ ($currentLocale ?? 'uk') === 'en' ? 'Search' : 'Пошук' }}">
-                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
+                <div id="headerSearch"
+                     class="header-search"
+                     data-suggestions-url="{{ route('news.suggestions') }}"
+                     data-empty-text="{{ ($currentLocale ?? 'uk') === 'en' ? 'No suggestions found' : 'Підказок не знайдено' }}">
+                    <button id="searchToggle"
+                            class="search-icon"
+                            type="button"
+                            aria-controls="headerSearchPopover"
+                            aria-expanded="false"
+                            aria-label="{{ ($currentLocale ?? 'uk') === 'en' ? 'Search' : 'Пошук' }}"
+                            title="{{ ($currentLocale ?? 'uk') === 'en' ? 'Search' : 'Пошук' }}">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </button>
+
+                    <div id="headerSearchPopover" class="header-search-popover">
+                        <form id="headerSearchForm"
+                              class="header-search-form"
+                              action="{{ route('news.index') }}"
+                              method="get"
+                              role="search">
+                            <div class="header-search-row">
+                                <input id="headerSearchInput"
+                                       class="header-search-input"
+                                       type="search"
+                                       name="q"
+                                       value="{{ is_string(request('q')) ? request('q') : '' }}"
+                                       placeholder="{{ ($currentLocale ?? 'uk') === 'en' ? 'Search news...' : 'Пошук новин...' }}"
+                                       autocomplete="off">
+
+                                <button class="header-search-submit" type="submit">
+                                    {{ ($currentLocale ?? 'uk') === 'en' ? 'Search' : 'Знайти' }}
+                                </button>
+                            </div>
+                        </form>
+
+                        <div id="headerSearchSuggestions" class="header-search-suggestions" hidden></div>
+                    </div>
                 </div>
 
                 <div style="width:8px"></div>
@@ -890,33 +1102,6 @@
             </nav>
         </div>
     </header>
-
-    <div id="searchModal" class="search-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="searchModalTitle">
-    <div class="search-modal-box">
-        <div class="search-modal-header">
-            <h3 id="searchModalTitle">{{ ($currentLocale ?? 'uk') === 'en' ? 'Search news' : 'Пошук новин' }}</h3>
-            <button id="searchModalClose" class="search-modal-close" type="button" aria-label="{{ ($currentLocale ?? 'uk') === 'en' ? 'Close search' : 'Закрити пошук' }}">×</button>
-        </div>
-
-        <form class="search-modal-form" action="{{ route('news.index') }}" method="get" role="search">
-            <div class="search-input-wrapper">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0A4A33" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                </svg>
-
-                <input id="searchModalInput"
-                       type="search"
-                       name="q"
-                       value="{{ is_string(request('q')) ? request('q') : '' }}"
-                       placeholder="{{ ($currentLocale ?? 'uk') === 'en' ? 'Enter keyword...' : 'Введіть ключове слово...' }}"
-                       autocomplete="off">
-
-                <button class="search-modal-submit" type="submit">{{ ($currentLocale ?? 'uk') === 'en' ? 'Search' : 'Знайти' }}</button>
-            </div>
-        </form>
-    </div>
-</div>
 
     <main>
         @yield('content')
@@ -972,94 +1157,241 @@
         </div>
     </footer>
     <script>
-    document.addEventListener('DOMContentLoaded', function(){
-        function isMobile(){ return window.innerWidth < 900 }
+        document.addEventListener('DOMContentLoaded', function(){
+            function isMobile(){ return window.innerWidth < 900 }
 
-        document.querySelectorAll('.has-dropdown').forEach(function(el){
-            var trigger = el.querySelector('a');
+            document.querySelectorAll('.has-dropdown').forEach(function(el){
+                var trigger = el.querySelector('a');
 
-            if (!trigger) return;
+                if (!trigger) return;
 
-            trigger.addEventListener('click', function(e){
-                if(!isMobile()) return;
-                e.preventDefault();
-                e.stopPropagation();
-                el.classList.toggle('open');
-            });
-        });
-
-        var searchToggle = document.getElementById('searchToggle');
-        var searchModal = document.getElementById('searchModal');
-        var searchClose = document.getElementById('searchModalClose');
-        var searchInput = document.getElementById('searchModalInput');
-
-        function openSearchModal(){
-            if (!searchModal) return;
-
-            searchModal.classList.add('open');
-            document.body.style.overflow = 'hidden';
-
-            if (searchToggle) {
-                searchToggle.setAttribute('aria-expanded', 'true');
-            }
-
-            window.setTimeout(function(){
-                if (searchInput) searchInput.focus();
-            }, 80);
-        }
-
-        function closeSearchModal(){
-            if (!searchModal) return;
-
-            searchModal.classList.remove('open');
-            document.body.style.overflow = '';
-
-            if (searchToggle) {
-                searchToggle.setAttribute('aria-expanded', 'false');
-                searchToggle.focus();
-            }
-        }
-
-        if (searchToggle) {
-            searchToggle.addEventListener('click', openSearchModal);
-            searchToggle.addEventListener('keydown', function(e){
-                if (e.key === 'Enter' || e.key === ' ') {
+                trigger.addEventListener('click', function(e){
+                    if(!isMobile()) return;
                     e.preventDefault();
-                    openSearchModal();
+                    e.stopPropagation();
+                    el.classList.toggle('open');
+                });
+            });
+
+            var headerSearch = document.getElementById('headerSearch');
+            var headerSearchButton = document.getElementById('searchToggle');
+            var headerSearchPopover = document.getElementById('headerSearchPopover');
+            var headerSearchInput = document.getElementById('headerSearchInput');
+            var headerSearchForm = document.getElementById('headerSearchForm');
+            var headerSearchSuggestions = document.getElementById('headerSearchSuggestions');
+            var headerSearchAbort = null;
+            var headerSearchTimer = null;
+
+            function positionHeaderSearchPopover() {
+                if (!headerSearchButton || !headerSearchPopover) return;
+
+                if (isMobile()) {
+                    headerSearchPopover.style.width = '';
+                    headerSearchPopover.style.left = '';
+                    headerSearchPopover.style.top = '';
+                    return;
+                }
+
+                var buttonRect = headerSearchButton.getBoundingClientRect();
+                var popoverWidth = Math.min(460, window.innerWidth - 24);
+                var left = buttonRect.right - popoverWidth + 8;
+
+                left = Math.max(12, Math.min(left, window.innerWidth - popoverWidth - 12));
+
+                headerSearchPopover.style.width = popoverWidth + 'px';
+                headerSearchPopover.style.left = left + 'px';
+                headerSearchPopover.style.top = (buttonRect.bottom + 14) + 'px';
+            }
+
+            function openHeaderSearch() {
+                if (!headerSearch) return;
+
+                headerSearch.classList.add('is-open');
+                positionHeaderSearchPopover();
+
+                if (headerSearchButton) {
+                    headerSearchButton.setAttribute('aria-expanded', 'true');
+                }
+
+                window.setTimeout(function(){
+                    if (headerSearchInput) headerSearchInput.focus();
+                }, 60);
+            }
+
+            function closeHeaderSearch() {
+                if (!headerSearch) return;
+
+                headerSearch.classList.remove('is-open');
+
+                if (headerSearchButton) {
+                    headerSearchButton.setAttribute('aria-expanded', 'false');
+                }
+            }
+
+            function renderHeaderSearchSuggestions(items) {
+                if (!headerSearchSuggestions || !headerSearch) return;
+
+                headerSearchSuggestions.innerHTML = '';
+
+                if (!items || !items.length) {
+                    var empty = document.createElement('div');
+                    empty.className = 'header-search-empty';
+                    empty.textContent = headerSearch.getAttribute('data-empty-text') || 'No suggestions found';
+                    headerSearchSuggestions.appendChild(empty);
+                    headerSearchSuggestions.hidden = false;
+                    return;
+                }
+
+                items.forEach(function(item){
+                    var link = document.createElement('a');
+                    link.className = 'header-search-suggestion';
+                    link.href = item.url || '#';
+
+                    var title = document.createElement('span');
+                    title.className = 'header-search-suggestion-title';
+                    title.textContent = item.title || '';
+
+                    var meta = document.createElement('span');
+                    meta.className = 'header-search-suggestion-meta';
+                    meta.textContent = item.date || '';
+
+                    var excerpt = document.createElement('span');
+                    excerpt.className = 'header-search-suggestion-excerpt';
+                    excerpt.textContent = item.excerpt || '';
+
+                    link.appendChild(title);
+
+                    if (item.date) {
+                        link.appendChild(meta);
+                    }
+
+                    if (item.excerpt) {
+                        link.appendChild(excerpt);
+                    }
+
+                    headerSearchSuggestions.appendChild(link);
+                });
+
+                headerSearchSuggestions.hidden = false;
+            }
+
+            function loadHeaderSearchSuggestions() {
+                if (!headerSearch || !headerSearchInput || !headerSearchSuggestions) return;
+
+                var q = headerSearchInput.value.trim();
+                var url = headerSearch.getAttribute('data-suggestions-url');
+
+                if (!url || q.length < 2) {
+                    headerSearchSuggestions.hidden = true;
+                    headerSearchSuggestions.innerHTML = '';
+                    return;
+                }
+
+                if (headerSearchAbort) {
+                    headerSearchAbort.abort();
+                }
+
+                headerSearchAbort = new AbortController();
+
+                fetch(url + '?q=' + encodeURIComponent(q), {
+                    headers: {
+                        'Accept': 'application/json'
+                    },
+                    signal: headerSearchAbort.signal
+                })
+                    .then(function(response){
+                        if (!response.ok) throw new Error('Search suggestions request failed');
+                        return response.json();
+                    })
+                    .then(function(items){
+                        renderHeaderSearchSuggestions(items);
+                        positionHeaderSearchPopover();
+                    })
+                    .catch(function(error){
+                        if (error.name === 'AbortError') return;
+                        headerSearchSuggestions.hidden = true;
+                    });
+            }
+
+            if (headerSearchButton) {
+                headerSearchButton.addEventListener('click', function(e){
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    if (headerSearch && headerSearch.classList.contains('is-open')) {
+                        closeHeaderSearch();
+                    } else {
+                        openHeaderSearch();
+                    }
+                });
+            }
+
+            if (headerSearchInput) {
+                headerSearchInput.addEventListener('input', function(){
+                    window.clearTimeout(headerSearchTimer);
+                    headerSearchTimer = window.setTimeout(loadHeaderSearchSuggestions, 220);
+                });
+
+                headerSearchInput.addEventListener('focus', function(){
+                    openHeaderSearch();
+
+                    if (headerSearchInput.value.trim().length >= 2) {
+                        loadHeaderSearchSuggestions();
+                    }
+                });
+            }
+
+            if (headerSearchForm) {
+                headerSearchForm.addEventListener('submit', function(){
+                    if (headerSearchInput) {
+                        headerSearchInput.value = headerSearchInput.value.trim();
+                    }
+                });
+
+                headerSearchForm.addEventListener('click', function(e){
+                    e.stopPropagation();
+                });
+            }
+
+            document.addEventListener('keydown', function(e){
+                if (e.key === 'Escape' && headerSearch && headerSearch.classList.contains('is-open')) {
+                    closeHeaderSearch();
+
+                    if (headerSearchButton) {
+                        headerSearchButton.focus();
+                    }
                 }
             });
-        }
 
-        if (searchClose) {
-            searchClose.addEventListener('click', closeSearchModal);
-        }
+            document.addEventListener('click', function(e){
+                if (!headerSearch) return;
 
-        if (searchModal) {
-            searchModal.addEventListener('click', function(e){
-                if (e.target === searchModal) closeSearchModal();
+                if (!headerSearch.contains(e.target)) {
+                    closeHeaderSearch();
+                }
             });
-        }
 
-        document.addEventListener('keydown', function(e){
-            if (e.key === 'Escape' && searchModal && searchModal.classList.contains('open')) {
-                closeSearchModal();
-            }
-        });
+            window.addEventListener('resize', function(){
+                if (headerSearch && headerSearch.classList.contains('is-open')) {
+                    positionHeaderSearchPopover();
+                }
+            });
 
-        document.querySelectorAll('.search-modal-form').forEach(function(form){
-            form.addEventListener('submit', function(){
-                if (searchInput) searchInput.value = searchInput.value.trim();
+            window.addEventListener('scroll', function(){
+                if (headerSearch && headerSearch.classList.contains('is-open')) {
+                    positionHeaderSearchPopover();
+                }
+            }, true);
+
+            // close dropdowns when clicking outside on mobile
+            document.addEventListener('click', function(e){
+                if(!isMobile()) return;
+                document.querySelectorAll('.has-dropdown.open').forEach(function(el){
+                    if(!el.contains(e.target)) el.classList.remove('open');
+                });
             });
         });
-
-        document.addEventListener('click', function(e){
-            if(!isMobile()) return;
-            document.querySelectorAll('.has-dropdown.open').forEach(function(el){
-                if(!el.contains(e.target)) el.classList.remove('open');
-            });
-        });
-    });
-</script>
+    </script>
     <script src="{{ asset('js/hero-slider.js') }}" defer></script>
 </body>
 </html>

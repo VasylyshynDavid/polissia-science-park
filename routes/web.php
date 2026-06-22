@@ -20,6 +20,7 @@ Route::get('/activities', [ActivityController::class, 'index'])->name('activitie
 Route::get('/opportunities', [OpportunityController::class, 'index'])->name('opportunities.index');
 
 Route::get('/news', [NewsController::class, 'index'])->name('news.index');
+Route::get('/news/suggestions', [NewsController::class, 'suggestions'])->name('news.suggestions');
 Route::get('/news/{news:slug}', [NewsController::class, 'show'])->name('news.show');
 
 Route::get('/lang/{locale}', function (string $locale) {

@@ -56,16 +56,40 @@ class News extends Model
 
     public function scopeSearch($query, $term)
     {
-        if(!$term) return $query;
-        $like = '%' . trim($term) . '%';
+        $term = trim((string) $term);
 
-        return $query->where(function($q) use ($like){
-            $q->where('title_ua', 'like', $like)
-              ->orWhere('title_en', 'like', $like)
-              ->orWhere('excerpt_ua', 'like', $like)
-              ->orWhere('excerpt_en', 'like', $like)
-              ->orWhere('body_ua', 'like', $like)
-              ->orWhere('body_en', 'like', $like);
+        if ($term === '') {
+            return $query;
+        }
+
+        $columns = [
+            'title_ua',
+            'title_en',
+            'excerpt_ua',
+            'excerpt_en',
+            'body_ua',
+            'body_en',
+        ];
+
+        $terms = collect(preg_split('/\s+/u', $term, -1, PREG_SPLIT_NO_EMPTY))
+            ->filter(fn (string $item) => mb_strlen($item) >= 2)
+            ->take(6)
+            ->values();
+
+        if ($terms->isEmpty()) {
+            $terms = collect([$term]);
+        }
+
+        return $query->where(function ($outer) use ($terms, $columns) {
+            foreach ($terms as $termPart) {
+                $like = '%' . addcslashes($termPart, '\\%_') . '%';
+
+                $outer->where(function ($inner) use ($columns, $like) {
+                    foreach ($columns as $column) {
+                        $inner->orWhere($column, 'like', $like);
+                    }
+                });
+            }
         });
     }
 
