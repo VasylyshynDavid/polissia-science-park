@@ -3,7 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', ($currentLocale ?? 'uk') === 'en' ? 'Science Park Polissia University' : 'Поліський науковий парк')</title>
+
+    @php
+        $isEn = ($currentLocale ?? 'uk') === 'en';
+
+        $defaultTitle = $isEn
+            ? 'Science Park Polissia University'
+            : 'Поліський науковий парк';
+
+        $defaultDescription = $isEn
+            ? 'Science Park Polissia University unites science, education, business and communities to create innovative solutions and promote sustainable development.'
+            : "Науковий парк «Поліський університет» обʼєднує науку, освіту, бізнес і громади для створення інноваційних рішень та сталого розвитку.";
+
+        $seoTitle = trim($__env->yieldContent('title', $defaultTitle));
+        $seoDescription = trim($__env->yieldContent('meta_description', $defaultDescription));
+        $canonicalUrl = trim($__env->yieldContent('canonical', url()->current()));
+
+        $ogType = trim($__env->yieldContent('og_type', 'website'));
+        $ogTitle = trim($__env->yieldContent('og_title', $seoTitle));
+        $ogDescription = trim($__env->yieldContent('og_description', $seoDescription));
+        $ogImage = trim($__env->yieldContent('og_image', asset('images/logo-science-park.png')));
+    @endphp
+
+    <title>{{ $seoTitle }}</title>
+    <meta name="description" content="{{ $seoDescription }}">
+    <link rel="canonical" href="{{ $canonicalUrl }}">
+
+    <meta property="og:type" content="{{ $ogType }}">
+    <meta property="og:title" content="{{ $ogTitle }}">
+    <meta property="og:description" content="{{ $ogDescription }}">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:image" content="{{ $ogImage }}">
+    <meta property="og:locale" content="{{ $isEn ? 'en_US' : 'uk_UA' }}">
+    <meta property="og:site_name" content="{{ $defaultTitle }}">
+
+    @yield('og_extra')
+
+    {{-- Twitter Card Meta Tags --}}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $ogTitle }}">
+    <meta name="twitter:description" content="{{ $ogDescription }}">
+    <meta name="twitter:image" content="{{ $ogImage }}">
+
+    @yield('schema')
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
@@ -1014,6 +1057,281 @@ nav {
     #nav-toggle:checked + label.burger + nav {
         top: var(--site-header-height) !important;
         z-index: 100001 !important;
+    }
+}
+
+/* === FINAL RESPONSIVE REQUIREMENTS LAYER === */
+
+/* Base safety */
+img,
+svg,
+video {
+    max-width: 100%;
+}
+
+button,
+a,
+input,
+select,
+textarea {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* DESKTOP: wide layout, horizontal menu, cards in row */
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1200px;
+    }
+
+    nav {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: flex-end !important;
+    }
+
+    .burger {
+        display: none !important;
+    }
+
+    .activities-grid {
+        grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    }
+
+    .opportunities-grid {
+        grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+    }
+
+    #latest-news .activities-grid,
+    .latest-news-section .activities-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+}
+
+/* TABLET: two columns */
+@media (min-width: 768px) and (max-width: 1199px) {
+    .container {
+        max-width: 100%;
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+
+    .activities-grid,
+    .opportunities-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 18px !important;
+    }
+
+    #latest-news .activities-grid,
+    .latest-news-section .activities-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .footer-card {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 24px !important;
+    }
+
+    .footer-qr {
+        grid-column: 1 / -1;
+        justify-content: center !important;
+    }
+}
+
+/* SMARTPHONE: burger, one column, touch-friendly */
+@media (max-width: 767px) {
+    .container {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+    }
+
+    .section-title {
+        font-size: 30px !important;
+        line-height: 1.15 !important;
+        word-break: normal;
+    }
+
+    .activities-grid,
+    .opportunities-grid,
+    #latest-news .activities-grid,
+    .latest-news-section .activities-grid {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+    }
+
+    .card,
+    .activity-card,
+    .opportunity-card {
+        border-radius: 14px !important;
+    }
+
+    .btn,
+    .sp-hero-btn,
+    .hero-btn,
+    button {
+        min-height: 44px;
+    }
+
+    nav a {
+        min-height: 40px;
+        display: flex !important;
+        align-items: center !important;
+    }
+
+    .footer-card {
+        grid-template-columns: 1fr !important;
+        gap: 22px !important;
+        padding: 22px 18px !important;
+    }
+
+    .footer-left {
+        align-items: flex-start !important;
+    }
+
+    .footer-center {
+        border-left: 0 !important;
+        padding-left: 0 !important;
+    }
+
+    .footer-qr {
+        justify-content: flex-start !important;
+    }
+
+    .footer-qr img {
+        width: 88px !important;
+        height: 88px !important;
+    }
+}
+
+/* BURGER MENU: smartphone / narrow screens */
+@media (max-width: 900px) {
+    nav {
+        display: none;
+    }
+
+    .burger {
+        display: block !important;
+        color: #fff;
+        font-size: 28px;
+        line-height: 1;
+        cursor: pointer;
+        padding: 8px;
+        margin-left: auto;
+    }
+
+    #nav-toggle:checked + label.burger + nav {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        position: absolute !important;
+        left: 0 !important;
+        right: 0 !important;
+        top: var(--site-header-height, 72px) !important;
+        padding: 18px 20px !important;
+        background: #042C22 !important;
+        gap: 14px !important;
+        z-index: 100001 !important;
+        border-top: 1px solid rgba(199, 168, 74, 0.25);
+        box-shadow: 0 18px 34px rgba(4, 44, 34, 0.28);
+    }
+
+    #nav-toggle:checked + label.burger + nav a,
+    #nav-toggle:checked + label.burger + nav .locale-switch {
+        margin: 0 !important;
+        font-size: 16px !important;
+    }
+}
+
+/* Latest news has its own grid. Do not reuse .activities-grid here. */
+#latest-news .latest-news-head,
+.latest-news-section .latest-news-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+#latest-news .latest-news-title,
+.latest-news-section .latest-news-title {
+    margin: 0;
+    font-family: Montserrat, sans-serif;
+    font-size: 24px;
+    line-height: 1.2;
+    font-weight: 800;
+    color: var(--green);
+    text-transform: uppercase;
+}
+
+#latest-news .latest-news-all,
+.latest-news-section .latest-news-all {
+    color: var(--green);
+    font-family: Montserrat, sans-serif;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+#latest-news .latest-news-all:hover,
+.latest-news-section .latest-news-all:hover {
+    color: var(--gold);
+}
+
+#latest-news .latest-news-grid,
+.latest-news-section .latest-news-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 22px !important;
+    align-items: start !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+#latest-news .news-mini,
+.latest-news-section .news-mini {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    text-decoration: none !important;
+}
+
+#latest-news .news-mini img,
+.latest-news-section .news-mini img {
+    width: 100% !important;
+    height: 170px !important;
+    object-fit: cover !important;
+    border-radius: 12px !important;
+    display: block !important;
+}
+
+@media (min-width: 768px) and (max-width: 1100px) {
+    #latest-news .latest-news-grid,
+    .latest-news-section .latest-news-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+@media (max-width: 767px) {
+    #latest-news .latest-news-head,
+    .latest-news-section .latest-news-head {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    #latest-news .latest-news-title,
+    .latest-news-section .latest-news-title {
+        font-size: 22px;
+    }
+
+    #latest-news .latest-news-grid,
+    .latest-news-section .latest-news-grid {
+        grid-template-columns: 1fr !important;
+        gap: 18px !important;
+    }
+
+    #latest-news .news-mini img,
+    .latest-news-section .news-mini img {
+        height: 190px !important;
     }
 }
 </style>
