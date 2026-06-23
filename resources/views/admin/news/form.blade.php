@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+﻿@extends('admin.layouts.app')
 @section('title', $newsItem->exists ? 'Редагувати новину' : 'Додати новину')
 @section('content')
 <div class="topbar"><h1>{{ $newsItem->exists ? 'Редагувати новину' : 'Додати новину' }}</h1><a class="btn secondary" href="{{ route('admin.news.index') }}">Назад</a></div>

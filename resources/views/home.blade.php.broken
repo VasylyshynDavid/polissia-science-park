@@ -1,89 +1,16 @@
-<?php
-    $isEn = ($currentLocale ?? 'uk') === 'en';
+@extends('layouts.app')
 
-    $pageTitle = $isEn
-        ? "Home вЂ” Science Park Polissia University"
-        : "Р“РѕР»РѕРІРЅР° вЂ” РџРѕР»С–СЃСЊРєРёР№ РЅР°СѓРєРѕРІРёР№ РїР°СЂРє";
+@section('title', ($currentLocale ?? 'uk') === 'en' ? 'Home — Science Park Polissia University' : 'Головна — Поліський науковий парк')
 
-    $pageDescription = $isEn
-        ? "Science Park Polissia University unites science, education, business and communities to create innovative solutions and promote sustainable development of Polissia and Ukraine."
-        : "РџРѕР»С–СЃСЊРєРёР№ РЅР°СѓРєРѕРІРёР№ РїР°СЂРє РїРѕС”РґРЅСѓС” РЅР°СѓРєСѓ, РѕСЃРІС–С‚Сѓ, Р±С–Р·РЅРµСЃ С‚Р° РіСЂРѕРјР°РґРё РґР»СЏ СЃС‚РІРѕСЂРµРЅРЅСЏ С–РЅРЅРѕРІР°С†С–Р№РЅРёС… СЂС–С€РµРЅСЊ С– СЃС‚Р°Р»РѕРіРѕ СЂРѕР·РІРёС‚РєСѓ РџРѕР»С–СЃСЃСЏ С‚Р° РЈРєСЂР°С—РЅРё.";
-
-    $siteName = $isEn
-        ? "Science Park Polissia University"
-        : "РќР°СѓРєРѕРІРёР№ РїР°СЂРє В«РџРѕР»С–СЃСЊРєРёР№ СѓРЅС–РІРµСЂСЃРёС‚РµС‚В»";
-
-    $schema = [
-        '@context' => 'https://schema.org',
-        '@graph' => [
-            [
-                '@type' => 'Organization',
-                'name' => $siteName,
-                'url' => route('home'),
-                'logo' => asset('images/logo-science-park.png'),
-                'email' => 'naukpark@polissiauniver.edu.ua',
-                'address' => [
-                    '@type' => 'PostalAddress',
-                    'streetAddress' => $isEn ? '7 Staryi Boulevard' : 'РЎС‚Р°СЂРёР№ Р±СѓР»СЊРІР°СЂ, 7',
-                    'addressLocality' => $isEn ? 'Zhytomyr' : 'Р–РёС‚РѕРјРёСЂ',
-                    'addressRegion' => $isEn ? 'Zhytomyr Region' : 'Р–РёС‚РѕРјРёСЂСЃСЊРєР° РѕР±Р»Р°СЃС‚СЊ',
-                    'postalCode' => '10008',
-                    'addressCountry' => 'UA',
-                ],
-            ],
-            [
-                '@type' => 'WebSite',
-                'name' => $siteName,
-                'url' => route('home'),
-                'potentialAction' => [
-                    '@type' => 'SearchAction',
-                    'target' => route('news.index') . '?q={search_term_string}',
-                    'query-input' => 'required name=search_term_string',
-                ],
-            ],
-        ],
-    ];
-
-    $heroSlides = ($sliders ?? collect())
-        ->map(function ($slide) use ($isEn) {
-            return [
-                'image' => asset($slide->image_path),
-                'title' => $isEn ? $slide->title_en : $slide->title_ua,
-                'description' => $isEn ? $slide->description_en : $slide->description_ua,
-            ];
-        })
-        ->values()
-        ->all();
-?>
-
-<?php $__env->startSection('title', $pageTitle); ?>
-<?php $__env->startSection('meta_description', $pageDescription); ?>
-<?php $__env->startSection('canonical', route('home')); ?>
-<?php $__env->startSection('og_title', $pageTitle); ?>
-<?php $__env->startSection('og_description', $pageDescription); ?>
-<?php $__env->startSection('og_image', asset('images/logo-science-park.png')); ?>
-
-<?php $__env->startSection('schema'); ?>
-<script type="application/ld+json">
-<?php echo json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT); ?>
-
-</script>
-<?php $__env->stopSection(); ?>
-
-<?php $__env->startSection('content'); ?>
+@section('content')
     <section class="sp-hero">
-        <div class="sp-hero-slides"
-             hidden
-             data-slides="<?php echo e(json_encode($heroSlides, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_APOS | JSON_HEX_QUOT)); ?>">
-        </div>
-
-        <button class="sp-hero-arrow sp-hero-arrow-left" type="button" aria-label="РџРѕРїРµСЂРµРґРЅС–Р№ СЃР»Р°Р№Рґ">вЂ№</button>
+        <button class="sp-hero-arrow sp-hero-arrow-left" type="button" aria-label="Попередній слайд">‹</button>
 
         <div class="sp-hero-text">
             <div class="sp-hero-bg"></div>
 
             <div class="sp-hero-copy">
-                <?php if(($currentLocale ?? 'uk') === 'en'): ?>
+                @if(($currentLocale ?? 'uk') === 'en')
                     <h1>Science<br>That Works</h1>
                     <h2>for Communities, Business<br>and the Environment</h2>
                     <p>We unite science, education, business and communities to create innovative solutions and promote the sustainable development of Polissia and Ukraine.</p>
@@ -92,38 +19,38 @@
                         <a href="#about" class="sp-hero-btn sp-hero-btn-primary">Learn More</a>
                         <a href="#latest-news" class="sp-hero-btn sp-hero-btn-secondary">Latest News</a>
                     </div>
-                <?php else: ?>
-                    <h1>РќР°СѓРєР°,<br>С‰Рѕ РїСЂР°С†СЋС”</h1>
-                    <h2>РґР»СЏ РіСЂРѕРјР°Рґ, Р±С–Р·РЅРµСЃСѓ<br>С‚Р° РґРѕРІРєС–Р»Р»СЏ</h2>
-                    <p>РћР±вЂ™С”РґРЅСѓС”РјРѕ РЅР°СѓРєСѓ, РѕСЃРІС–С‚Сѓ, Р±С–Р·РЅРµСЃ С‚Р° РіСЂРѕРјР°РґРё РґР»СЏ СЃС‚РІРѕСЂРµРЅРЅСЏ С–РЅРЅРѕРІР°С†С–Р№РЅРёС… СЂС–С€РµРЅСЊ С– СЃС‚Р°Р»РѕРіРѕ СЂРѕР·РІРёС‚РєСѓ РџРѕР»С–СЃСЃСЏ С‚Р° РЈРєСЂР°С—РЅРё.</p>
+                @else
+                    <h1>Наука,<br>що працює</h1>
+                    <h2>для громад, бізнесу<br>та довкілля</h2>
+                    <p>Об’єднуємо науку, освіту, бізнес та громади для створення інноваційних рішень і сталого розвитку Полісся та України.</p>
 
                     <div class="sp-hero-buttons">
-                        <a href="#about" class="sp-hero-btn sp-hero-btn-primary">Р”С–Р·РЅР°С‚РёСЃСЊ Р±С–Р»СЊС€Рµ</a>
-                        <a href="#latest-news" class="sp-hero-btn sp-hero-btn-secondary">РћСЃС‚Р°РЅРЅС– РЅРѕРІРёРЅРё</a>
+                        <a href="#about" class="sp-hero-btn sp-hero-btn-primary">Дізнатись більше</a>
+                        <a href="#latest-news" class="sp-hero-btn sp-hero-btn-secondary">Останні новини</a>
                     </div>
-                <?php endif; ?>
+                @endif
             </div>
         </div>
 
         <div class="sp-hero-collage">
             <div class="sp-photo sp-photo-top-left">
-                <img src="<?php echo e(asset('images/5276117098801340184.png')); ?>" alt="Р›Р°Р±РѕСЂР°С‚РѕСЂС–СЏ Р· РєРѕРјРївЂ™СЋС‚РµСЂР°РјРё">
+                <img src="{{ asset('images/5276117098801340184.png') }}" alt="Лабораторія з комп’ютерами">
             </div>
 
             <div class="sp-photo sp-photo-top-wide">
-                <img src="<?php echo e(asset('images/5276117098801340186.png')); ?>" alt="Р’РёСЃРѕРєРѕС‚РµС…РЅРѕР»РѕРіС–С‡РЅР° С‚РµС…РЅС–РєР°">
+                <img src="{{ asset('images/5276117098801340186.png') }}" alt="Високотехнологічна техніка">
             </div>
 
             <div class="sp-photo sp-photo-bottom-left">
-                <img src="<?php echo e(asset('images/5276117098801340195.png')); ?>" alt="Р РѕР±РѕС‚РѕС‚РµС…РЅС–РєР°">
+                <img src="{{ asset('images/5276117098801340195.png') }}" alt="Робототехніка">
             </div>
 
             <div class="sp-photo sp-photo-bottom-middle">
-                <img src="<?php echo e(asset('images/5276117098801340197.png')); ?>" alt="Р¦РёС„СЂРѕРІРµ РѕР±Р»Р°РґРЅР°РЅРЅСЏ">
+                <img src="{{ asset('images/5276117098801340197.png') }}" alt="Цифрове обладнання">
             </div>
 
             <div class="sp-photo sp-photo-bottom-right">
-                <img src="<?php echo e(asset('images/5276117098801340193.png')); ?>" alt="Р•РєРѕР»РѕРіС–С‡РЅС– С‚РµС…РЅРѕР»РѕРіС–С—">
+                <img src="{{ asset('images/5276117098801340193.png') }}" alt="Екологічні технології">
             </div>
 
             <svg class="sp-collage-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
@@ -137,7 +64,7 @@
             <path d="M40 0 L34.5 100"></path>
         </svg>
 
-        <button class="sp-hero-arrow sp-hero-arrow-right" type="button" aria-label="РќР°СЃС‚СѓРїРЅРёР№ СЃР»Р°Р№Рґ">вЂє</button>
+        <button class="sp-hero-arrow sp-hero-arrow-right" type="button" aria-label="Наступний слайд">›</button>
 
         <div class="sp-hero-dots">
             <span class="active"></span>
@@ -150,26 +77,24 @@
         <div class="container">
             <div class="about-light-grid">
                 <div class="about-light-heading">
-                    <span class="about-light-label"><?php echo e(($currentLocale ?? 'uk') === 'en' ? 'ABOUT US' : 'РџР Рћ РќРђРЎ'); ?></span>
-                    <h2><?php echo e(($currentLocale ?? 'uk') === 'en' ? 'Innovation for the Development of Polissia and Ukraine' : 'Р†РЅРЅРѕРІР°С†С–С— РґР»СЏ СЂРѕР·РІРёС‚РєСѓ РџРѕР»С–СЃСЃСЏ С‚Р° РЈРєСЂР°С—РЅРё'); ?></h2>
+                    <span class="about-light-label">{{ ($currentLocale ?? 'uk') === 'en' ? 'ABOUT US' : 'ПРО НАС' }}</span>
+                    <h2>{{ ($currentLocale ?? 'uk') === 'en' ? 'Innovation for the Development of Polissia and Ukraine' : 'Інновації для розвитку Полісся та України' }}</h2>
                 </div>
 
                 <div class="about-light-content">
                     <p>
-                        <?php echo e(($currentLocale ?? 'uk') === 'en' ? 'The Science Park вЂњPolissia UniversityвЂќ is an innovation platform for the development of science, technology and entrepreneurship. We bring together researchers, students, businesses, communities and public institutions to create and implement modern solutions in the fields of digital transformation, ecology, bioeconomy and sustainable development.' : 'РќР°СѓРєРѕРІРёР№ РїР°СЂРє В«РџРѕР»С–СЃСЊРєРёР№ СѓРЅС–РІРµСЂСЃРёС‚РµС‚В» вЂ” С†Рµ С–РЅРЅРѕРІР°С†С–Р№РЅР° РїР»Р°С‚С„РѕСЂРјР° РґР»СЏ СЂРѕР·РІРёС‚РєСѓ РЅР°СѓРєРё, С‚РµС…РЅРѕР»РѕРіС–Р№ С‚Р° РїС–РґРїСЂРёС”РјРЅРёС†С‚РІР°. РњРё РѕР±вЂ™С”РґРЅСѓС”РјРѕ РЅР°СѓРєРѕРІС†С–РІ, СЃС‚СѓРґРµРЅС‚С–РІ, Р±С–Р·РЅРµСЃ, РіСЂРѕРјР°РґРё С‚Р° РґРµСЂР¶Р°РІРЅС– С–РЅСЃС‚РёС‚СѓС†С–С— РґР»СЏ СЃС‚РІРѕСЂРµРЅРЅСЏ С– РІРїСЂРѕРІР°РґР¶РµРЅРЅСЏ СЃСѓС‡Р°СЃРЅРёС… СЂС–С€РµРЅСЊ Сѓ СЃС„РµСЂР°С… С†РёС„СЂРѕРІРѕС— С‚СЂР°РЅСЃС„РѕСЂРјР°С†С–С—, РµРєРѕР»РѕРіС–С—, Р±С–РѕРµРєРѕРЅРѕРјС–РєРё С‚Р° СЃС‚Р°Р»РѕРіРѕ СЂРѕР·РІРёС‚РєСѓ.'); ?>
-
+                        {{ ($currentLocale ?? 'uk') === 'en' ? 'The Science Park “Polissia University” is an innovation platform for the development of science, technology and entrepreneurship. We bring together researchers, students, businesses, communities and public institutions to create and implement modern solutions in the fields of digital transformation, ecology, bioeconomy and sustainable development.' : 'Науковий парк «Поліський університет» — це інноваційна платформа для розвитку науки, технологій та підприємництва. Ми об’єднуємо науковців, студентів, бізнес, громади та державні інституції для створення і впровадження сучасних рішень у сферах цифрової трансформації, екології, біоекономіки та сталого розвитку.' }}
                     </p>
 
                     <div class="about-goal-light">
                         <div class="about-goal-icon" aria-hidden="true">
-                            <img src="<?php echo e(asset('images/target-icon.png')); ?>" alt="" class="about-goal-img">
+                            <img src="{{ asset('images/target-icon.png') }}" alt="" class="about-goal-img">
                         </div>
 
                         <div>
-                            <h3><?php echo e(($currentLocale ?? 'uk') === 'en' ? 'Our Goal' : 'РќР°С€Р° РјРµС‚Р°'); ?></h3>
+                            <h3>{{ ($currentLocale ?? 'uk') === 'en' ? 'Our Goal' : 'Наша мета' }}</h3>
                             <p>
-                                <?php echo e(($currentLocale ?? 'uk') === 'en' ? 'To build a modern innovation ecosystem where science, education and business jointly create digital and green solutions for the sustainable development of Polissia and Ukraine.' : 'Р¤РѕСЂРјСѓРІР°РЅРЅСЏ СЃСѓС‡Р°СЃРЅРѕС— С–РЅРЅРѕРІР°С†С–Р№РЅРѕС— РµРєРѕСЃРёСЃС‚РµРјРё, Сѓ СЏРєС–Р№ РЅР°СѓРєР°, РѕСЃРІС–С‚Р° С‚Р° Р±С–Р·РЅРµСЃ СЃРїС–Р»СЊРЅРѕ СЃС‚РІРѕСЂСЋСЋС‚СЊ С†РёС„СЂРѕРІС– С‚Р° В«Р·РµР»РµРЅС–В» СЂС–С€РµРЅРЅСЏ РґР»СЏ СЃС‚Р°Р»РѕРіРѕ СЂРѕР·РІРёС‚РєСѓ РџРѕР»С–СЃСЃСЏ С‚Р° РЈРєСЂР°С—РЅРё.'); ?>
-
+                                {{ ($currentLocale ?? 'uk') === 'en' ? 'To build a modern innovation ecosystem where science, education and business jointly create digital and green solutions for the sustainable development of Polissia and Ukraine.' : 'Формування сучасної інноваційної екосистеми, у якій наука, освіта та бізнес спільно створюють цифрові та «зелені» рішення для сталого розвитку Полісся та України.' }}
                             </p>
                         </div>
                     </div>
@@ -181,25 +106,25 @@
     <section class="activities-bleed" style="background:var(--bg);width:100%;">
         <div class="container">
             <section id="activities">
-                <h3 class="section-title" style="text-transform:uppercase"><?php echo e(($currentLocale ?? 'uk') === 'en' ? 'AREAS OF ACTIVITY' : 'РќРђРџР РЇРњР Р”Р†РЇР›Р¬РќРћРЎРўР†'); ?></h3>
-                <?php echo $__env->make('partials.activities-grid', ['activities' => $activities], array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+                <h3 class="section-title" style="text-transform:uppercase">{{ ($currentLocale ?? 'uk') === 'en' ? 'AREAS OF ACTIVITY' : 'НАПРЯМИ ДІЯЛЬНОСТІ' }}</h3>
+                @include('partials.activities-grid', ['activities' => $activities])
             </section>
         </div>
     </section>
 
     <div class="container home-bottom-container">
         <section id="opportunities" class="opportunities-section">
-            <h3 class="section-title" style="text-transform:uppercase"><?php echo e(($currentLocale ?? 'uk') === 'en' ? 'OUR OPPORTUNITIES' : 'РќРђРЁР† РњРћР–Р›РР’РћРЎРўР†'); ?></h3>
-            <?php echo $__env->make('partials.opportunities-grid', ['opportunities' => $opportunities], array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+            <h3 class="section-title" style="text-transform:uppercase">{{ ($currentLocale ?? 'uk') === 'en' ? 'OUR OPPORTUNITIES' : 'НАШІ МОЖЛИВОСТІ' }}</h3>
+            @include('partials.opportunities-grid', ['opportunities' => $opportunities])
         </section>
 
-        <?php echo $__env->make('partials.home-news', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+        @include('partials.home-news')
 
-        <!-- contacts section removed вЂ” footer contains contact information -->
+        <!-- contacts section removed — footer contains contact information -->
     </div>
-<?php $__env->stopSection(); ?>
+@endsection
 
-<?php $__env->startSection('head'); ?>
+@section('head')
     <style>
         /* Hero banner styles */
         .hero-banner {
@@ -231,7 +156,7 @@
             inset: 0;
             background:
                 linear-gradient(90deg, rgba(4, 44, 34, 0.94), rgba(4, 44, 34, 0.82)),
-                url("<?php echo e(asset('images/Gemini_Generated_Image_o9b7mfo9b7mfo9b7.png')); ?>");
+                url("{{ asset('images/Gemini_Generated_Image_o9b7mfo9b7mfo9b7.png') }}");
             background-size: cover;
             background-position: center;
             opacity: 0.95;
@@ -314,7 +239,7 @@
             isolation: isolate;
         }
 
-        /* Р—Р°РіР°Р»СЊРЅРёР№ СЃС‚РёР»СЊ С„РѕС‚Рѕ-РїРѕР»С–РіРѕРЅС–РІ */
+        /* Загальний стиль фото-полігонів */
         .hero-photo {
             position: absolute;
             overflow: hidden;
@@ -333,8 +258,8 @@
         }
 
         /* 
-           Р’РµСЂС…РЅС–Р№ Р»С–РІРёР№ Р±Р»РѕРє.
-           РњР°С” РїСЂР°РІСѓ РјРµР¶Сѓ РЅР°РІСЃРєС–СЃ.
+           Верхній лівий блок.
+           Має праву межу навскіс.
         */
         .hero-photo-top-left {
             left: -3%;
@@ -346,9 +271,9 @@
         }
 
         /*
-           Р’РµСЂС…РЅС–Р№ С€РёСЂРѕРєРёР№ Р±Р»РѕРє.
-           Р¦Рµ merged-cell: Р·Р°Р№РјР°С” РїСЂР°РІСѓ РІРµСЂС…РЅСЋ С‡Р°СЃС‚РёРЅСѓ РЅР°Рґ РґРІРѕРјР° РЅРёР¶РЅС–РјРё С„РѕС‚Рѕ.
-           Р›С–РІР° РјРµР¶Р° РЅР°РІСЃРєС–СЃ С– Р·Р°С…РѕРґРёС‚СЊ РїС–Рґ РїРµСЂС€Рµ С„РѕС‚Рѕ.
+           Верхній широкий блок.
+           Це merged-cell: займає праву верхню частину над двома нижніми фото.
+           Ліва межа навскіс і заходить під перше фото.
         */
         .hero-photo-top-wide {
             left: 30%;
@@ -360,8 +285,8 @@
         }
 
         /*
-           РќРёР¶РЅС–Р№ РїРµСЂС€РёР№ Р±Р»РѕРє.
-           РџС–Рґ РІРµСЂС…РЅС–Рј Р»С–РІРёРј, Р°Р»Рµ РјРµР¶С– С‚Р°РєРѕР¶ РЅР°РІСЃРєС–СЃ.
+           Нижній перший блок.
+           Під верхнім лівим, але межі також навскіс.
         */
         .hero-photo-bottom-1 {
             left: -2%;
@@ -373,8 +298,8 @@
         }
 
         /*
-           РќРёР¶РЅС–Р№ СЃРµСЂРµРґРЅС–Р№ Р±Р»РѕРє.
-           Р™РѕРіРѕ Р»С–РІР° С– РїСЂР°РІР° РјРµР¶С– РЅР°РІСЃРєС–СЃ.
+           Нижній середній блок.
+           Його ліва і права межі навскіс.
         */
         .hero-photo-bottom-2 {
             left: 30%;
@@ -386,8 +311,8 @@
         }
 
         /*
-           РќРёР¶РЅС–Р№ РїСЂР°РІРёР№ Р±Р»РѕРє.
-           Р’С–РЅ РїС–Рґ РїСЂР°РІРѕСЋ С‡Р°СЃС‚РёРЅРѕСЋ РІРµСЂС…РЅСЊРѕС— merged-РєР°СЂС‚РёРЅРєРё.
+           Нижній правий блок.
+           Він під правою частиною верхньої merged-картинки.
         */
         .hero-photo-bottom-3 {
             left: 62%;
@@ -398,7 +323,7 @@
             z-index: 1;
         }
 
-        /* Р’РђР–Р›РР’Рћ: РїСЂРёР±СЂР°С‚Рё СЃС‚Р°СЂС– grid/border РїСЂР°РІРёР»Р° */
+        /* ВАЖЛИВО: прибрати старі grid/border правила */
         .hero-photo,
         .hero-photo-top-left,
         .hero-photo-top-wide,
@@ -410,7 +335,7 @@
             margin-left: 0 !important;
         }
 
-        /* РќР° С„РѕС‚Рѕ object-fit cover РґРѕРїСѓСЃС‚РёРјРёР№, Р°Р»Рµ С‚С–Р»СЊРєРё РґР»СЏ С„РѕС‚Рѕ, РЅРµ РґР»СЏ Р»РѕРіРѕС‚РёРїР° */
+        /* На фото object-fit cover допустимий, але тільки для фото, не для логотипа */
         .hero-photo img { object-fit: cover; }
 
         .hero-arrow {
@@ -523,7 +448,7 @@
             background: #042C22;
         }
 
-        /* Р›С–РІР° С‚РµРєСЃС‚РѕРІР° С‡Р°СЃС‚РёРЅР° Р· РєРѕСЃРѕСЋ РјРµР¶РµСЋ */
+        /* Ліва текстова частина з косою межею */
         .sp-hero-text {
             position: absolute;
             left: 0;
@@ -536,7 +461,7 @@
             clip-path: polygon(0 0, 100% 0, 87% 100%, 0 100%);
         }
 
-        /* Р‘С–Р»Р° Р»С–РЅС–СЏ РјС–Р¶ С‚РµРєСЃС‚РѕРј С– С„РѕС‚Рѕ */
+        /* Біла лінія між текстом і фото */
         .sp-hero-text::after {
             content: "";
             position: absolute;
@@ -551,7 +476,7 @@
             border-radius: 4px;
         }
 
-        /* Р¤РѕС‚РѕРєРѕР»Р°Р¶ СЃРїСЂР°РІР° */
+        /* Фотоколаж справа */
         .sp-hero-collage {
             position: absolute !important;
             top: 0;
@@ -564,7 +489,7 @@
             display: block !important;
         }
 
-        /* Р¤РѕС‚Рѕ вЂ” Р±РµР· padding, border, margin */
+        /* Фото — без padding, border, margin */
         .sp-photo {
             position: absolute !important;
             overflow: hidden;
@@ -583,7 +508,7 @@
             transform: scale(1.02);
         }
 
-        /* Р’РµСЂС…РЅС” Р»С–РІРµ С„РѕС‚Рѕ */
+        /* Верхнє ліве фото */
         .sp-photo-top-left {
             left: 0;
             top: 0;
@@ -593,7 +518,7 @@
             clip-path: polygon(0 0, 100% 0, 84% 100%, 0 100%);
         }
 
-        /* Р’РµСЂС…РЅС” РїСЂР°РІРµ merged-С„РѕС‚Рѕ: Р·Р°Р№РјР°С” С€РёСЂРёРЅСѓ РґРІРѕС… РЅРёР¶РЅС–С… Р±Р»РѕРєС–РІ */
+        /* Верхнє праве merged-фото: займає ширину двох нижніх блоків */
         .sp-photo-top-wide {
             left: 29%;
             top: 0;
@@ -603,7 +528,7 @@
             clip-path: polygon(8% 0, 100% 0, 100% 100%, 0 100%);
         }
 
-        /* РќРёР¶РЅС” Р»С–РІРµ */
+        /* Нижнє ліве */
         .sp-photo-bottom-left {
             left: 0;
             top: 50%;
@@ -613,7 +538,7 @@
             clip-path: polygon(0 0, 100% 0, 84% 100%, 0 100%);
         }
 
-        /* РќРёР¶РЅС” СЃРµСЂРµРґРЅС” */
+        /* Нижнє середнє */
         .sp-photo-bottom-middle {
             left: 29%;
             top: 50%;
@@ -623,7 +548,7 @@
             clip-path: polygon(13% 0, 100% 0, 84% 100%, 0 100%);
         }
 
-        /* РќРёР¶РЅС” РїСЂР°РІРµ */
+        /* Нижнє праве */
         .sp-photo-bottom-right {
             left: 61.5%;
             top: 50%;
@@ -633,7 +558,7 @@
             clip-path: polygon(13% 0, 100% 0, 100% 100%, 0 100%);
         }
 
-        /* Р‘Р†Р›Р† Р›Р†РќР†Р‡ РџРћР’Р•Р РҐ Р¤РћРўРћ */
+        /* БІЛІ ЛІНІЇ ПОВЕРХ ФОТО */
         .sp-cut-line {
             position: absolute;
             z-index: 30;
@@ -644,7 +569,7 @@
             box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04);
         }
 
-        /* Р”С–Р°РіРѕРЅР°Р»СЊРЅР° Р»С–РЅС–СЏ РјС–Р¶ РІРµСЂС…РЅС–Рј Р»С–РІРёРј С– РІРµСЂС…РЅС–Рј С€РёСЂРѕРєРёРј С„РѕС‚Рѕ */
+        /* Діагональна лінія між верхнім лівим і верхнім широким фото */
         .sp-cut-top {
             left: 30.5%;
             top: -3%;
@@ -654,7 +579,7 @@
             transform-origin: top center;
         }
 
-        /* Р“РѕСЂРёР·РѕРЅС‚Р°Р»СЊРЅР° Р»С–РЅС–СЏ РјС–Р¶ РІРµСЂС…РЅС–Рј С– РЅРёР¶РЅС–Рј СЂСЏРґРѕРј */
+        /* Горизонтальна лінія між верхнім і нижнім рядом */
         .sp-cut-middle {
             left: 0;
             right: 0;
@@ -663,7 +588,7 @@
             width: auto;
         }
 
-        /* Р”С–Р°РіРѕРЅР°Р»СЊРЅР° Р»С–РЅС–СЏ РјС–Р¶ РЅРёР¶РЅС–Рј Р»С–РІРёРј С– РЅРёР¶РЅС–Рј СЃРµСЂРµРґРЅС–Рј */
+        /* Діагональна лінія між нижнім лівим і нижнім середнім */
         .sp-cut-bottom-left {
             left: 30.5%;
             top: 49.4%;
@@ -673,7 +598,7 @@
             transform-origin: top center;
         }
 
-        /* Р”С–Р°РіРѕРЅР°Р»СЊРЅР° Р»С–РЅС–СЏ РјС–Р¶ РЅРёР¶РЅС–Рј СЃРµСЂРµРґРЅС–Рј С– РЅРёР¶РЅС–Рј РїСЂР°РІРёРј */
+        /* Діагональна лінія між нижнім середнім і нижнім правим */
         .sp-cut-bottom-right {
             left: 63.5%;
             top: 49.4%;
@@ -683,7 +608,7 @@
             transform-origin: top center;
         }
 
-        /* Р—Р°Р±РѕСЂРѕРЅРёС‚Рё СЃС‚Р°СЂС– grid/border РїСЂР°РІРёР»Р° */
+        /* Заборонити старі grid/border правила */
         .sp-hero-collage .sp-photo,
         .sp-hero-collage .sp-photo-top-left,
         .sp-hero-collage .sp-photo-top-wide,
@@ -741,7 +666,7 @@
             inset: 0;
             background:
                 linear-gradient(90deg, rgba(4, 44, 34, 0.96), rgba(4, 44, 34, 0.84)),
-                url("<?php echo e(asset('images/Gemini_Generated_Image_o9b7mfo9b7mfo9b7.png')); ?>");
+                url("{{ asset('images/Gemini_Generated_Image_o9b7mfo9b7mfo9b7.png') }}");
             background-size: cover;
             background-position: center;
             opacity: 1;
@@ -831,7 +756,7 @@
             background: #042C22;
         }
 
-        /* Р›С–РІР° С‚РµРєСЃС‚РѕРІР° С‡Р°СЃС‚РёРЅР° */
+        /* Ліва текстова частина */
         .sp-hero-text {
             position: absolute !important;
             left: 0;
@@ -844,10 +769,10 @@
             clip-path: polygon(0 0, 100% 0, 86.25% 100%, 0 100%);
         }
 
-        /* Р’РёРјРєРЅСѓС‚Рё СЃС‚Р°СЂСѓ Р±С–Р»Сѓ Р»С–РЅС–СЋ, СЏРєС‰Рѕ Р±СѓР»Р° */
+        /* Вимкнути стару білу лінію, якщо була */
         .sp-hero-text::after { display: none !important; }
 
-        /* Р“РѕР»РѕРІРЅР° РґС–Р°РіРѕРЅР°Р»СЊРЅР° Р»С–РЅС–СЏ РјС–Р¶ С‚РµРєСЃС‚РѕРј С– РєРѕР»Р°Р¶РµРј */
+        /* Головна діагональна лінія між текстом і колажем */
         .sp-hero-main-divider {
             position: absolute;
             inset: 0;
@@ -865,10 +790,10 @@
             stroke-linecap: round;
         }
 
-        /* Р¤РѕС‚РѕРєРѕР»Р°Р¶ СЃРїСЂР°РІР° */
+        /* Фотоколаж справа */
         .sp-hero-collage { position: absolute !important; top: 0; right: 0; bottom: 0; left: 34.5%; z-index: 2; overflow: hidden; background: #042C22; display: block !important; }
 
-        /* Р¤РѕС‚Рѕ Р±РµР· border/padding/margin */
+        /* Фото без border/padding/margin */
         .sp-photo { position: absolute !important; overflow: hidden; padding: 0 !important; margin: 0 !important; border: 0 !important; background: transparent !important; }
 
         .sp-photo img { width: 100%; height: 100%; display: block; object-fit: cover; object-position: center; transform: scale(1.02); }
@@ -879,15 +804,15 @@
         .sp-photo-bottom-middle { left: 24%; top: 50%; width: 42%; height: 50%; z-index: 3; clip-path: polygon(14.286% 0, 100% 0, 85.714% 100%, 0 100%); }
         .sp-photo-bottom-right { left: 60%; top: 50%; width: 40%; height: 50%; z-index: 2; clip-path: polygon(15% 0, 100% 0, 100% 100%, 0 100%); }
 
-        /* SVG-Р»С–РЅС–С— С‚РѕС‡РЅРѕ РїРѕ РєРѕРѕСЂРґРёРЅР°С‚Р°С… clip-path */
+        /* SVG-лінії точно по координатах clip-path */
         .sp-collage-lines { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 40; pointer-events: none; }
 
         .sp-collage-lines path { fill: none; stroke: #ffffff; stroke-width: 5; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-linejoin: round; }
 
-        /* РџРѕРІРЅС–СЃС‚СЋ РІРёРјРєРЅСѓС‚Рё СЃС‚Р°СЂС– span-Р»С–РЅС–С—, СЏРєС‰Рѕ РІРѕРЅРё Р·Р°Р»РёС€РёР»РёСЃСЊ */
+        /* Повністю вимкнути старі span-лінії, якщо вони залишились */
         .sp-cut-line, .sp-cut-top, .sp-cut-middle, .sp-cut-bottom-left, .sp-cut-bottom-right { display: none !important; }
 
-        /* Р—Р°Р±РѕСЂРѕРЅРёС‚Рё СЃС‚Р°СЂСѓ grid-Р»РѕРіС–РєСѓ */
+        /* Заборонити стару grid-логіку */
         .sp-hero-collage .sp-photo, .sp-hero-collage .sp-photo-top-left, .sp-hero-collage .sp-photo-top-wide, .sp-hero-collage .sp-photo-bottom-left, .sp-hero-collage .sp-photo-bottom-middle, .sp-hero-collage .sp-photo-bottom-right { grid-column: auto !important; grid-row: auto !important; border-left: 0 !important; border-bottom: 0 !important; padding: 0 !important; margin-left: 0 !important; }
 
         @media (max-width: 900px) {
@@ -1018,6 +943,4 @@
             background: #C7A84A !important;
         }
     </style>
-<?php $__env->stopSection(); ?>
-
-<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\laragon\www\polissia-science-park\resources\views/home.blade.php ENDPATH**/ ?>
+@endsection

@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
 Disallow: /admin
+Disallow: /login
 
+# Production sitemap URL (update for local dev if needed)
 Sitemap: https://naukpark.polissiauniver.edu.ua/sitemap.xml

@@ -1,9 +1,83 @@
 @extends('layouts.app')
 
-@section('title', ($currentLocale ?? 'uk') === 'en' ? 'Home — Science Park Polissia University' : 'Головна — Поліський науковий парк')
+@php
+    $isEn = ($currentLocale ?? 'uk') === 'en';
+
+    $pageTitle = $isEn
+        ? "Home — Science Park Polissia University"
+        : "Головна — Поліський науковий парк";
+
+    $pageDescription = $isEn
+        ? "Science Park Polissia University unites science, education, business and communities to create innovative solutions and promote sustainable development of Polissia and Ukraine."
+        : "Поліський науковий парк поєднує науку, освіту, бізнес та громади для створення інноваційних рішень і сталого розвитку Полісся та України.";
+
+    $siteName = $isEn
+        ? "Science Park Polissia University"
+        : "Науковий парк «Поліський університет»";
+
+    $schema = [
+        '@context' => 'https://schema.org',
+        '@graph' => [
+            [
+                '@type' => 'Organization',
+                'name' => $siteName,
+                'url' => route('home'),
+                'logo' => asset('images/logo-science-park.png'),
+                'email' => 'naukpark@polissiauniver.edu.ua',
+                'address' => [
+                    '@type' => 'PostalAddress',
+                    'streetAddress' => $isEn ? '7 Staryi Boulevard' : 'Старий бульвар, 7',
+                    'addressLocality' => $isEn ? 'Zhytomyr' : 'Житомир',
+                    'addressRegion' => $isEn ? 'Zhytomyr Region' : 'Житомирська область',
+                    'postalCode' => '10008',
+                    'addressCountry' => 'UA',
+                ],
+            ],
+            [
+                '@type' => 'WebSite',
+                'name' => $siteName,
+                'url' => route('home'),
+                'potentialAction' => [
+                    '@type' => 'SearchAction',
+                    'target' => route('news.index') . '?q={search_term_string}',
+                    'query-input' => 'required name=search_term_string',
+                ],
+            ],
+        ],
+    ];
+
+    $heroSlides = ($sliders ?? collect())
+        ->map(function ($slide) use ($isEn) {
+            return [
+                'image' => asset($slide->image_path),
+                'title' => $isEn ? $slide->title_en : $slide->title_ua,
+                'description' => $isEn ? $slide->description_en : $slide->description_ua,
+            ];
+        })
+        ->values()
+        ->all();
+@endphp
+
+@section('title', $pageTitle)
+@section('meta_description', $pageDescription)
+@section('canonical', route('home'))
+@section('og_title', $pageTitle)
+@section('og_description', $pageDescription)
+@section('og_image', asset('images/logo-science-park.png'))
+
+@section('schema')
+<script type="application/ld+json">
+{!! json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
+</script>
+@endsection
 
 @section('content')
     <section class="sp-hero">
+        <div class="sp-hero-slides"
+             hidden
+             data-slides="{{ json_encode($heroSlides, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_APOS | JSON_HEX_QUOT) }}">
+        </div>
+
         <button class="sp-hero-arrow sp-hero-arrow-left" type="button" aria-label="Попередній слайд">‹</button>
 
         <div class="sp-hero-text">

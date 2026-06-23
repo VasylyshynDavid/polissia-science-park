@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+﻿@extends('admin.layouts.app')
 @section('title','Панель керування')
 @section('content')
 <div class="topbar"><h1>Панель керування</h1><a class="btn secondary" href="{{ route('home') }}" target="_blank">Переглянути сайт</a></div>

@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+﻿@extends('admin.layouts.app')
 @section('title','Слайдер')
 @section('content')
 <div class="topbar"><h1>Слайдер головного екрану</h1><a class="btn" href="{{ route('admin.sliders.create') }}">+ Додати слайд</a></div>

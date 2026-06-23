@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+﻿@extends('admin.layouts.app')
 @section('title','Напрями діяльності')
 @section('content')
 <div class="topbar"><h1>Напрями діяльності</h1><a class="btn" href="{{ route('admin.activities.create') }}">+ Додати напрям</a></div>

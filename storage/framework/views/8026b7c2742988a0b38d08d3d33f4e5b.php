@@ -1,4 +1,4 @@
-<?php
+﻿<?php
     $isEn = ($currentLocale ?? 'uk') === 'en';
 ?>
 <a href="<?php echo e(route('news.show', $item)); ?>" class="news-mini" style="display:block;text-decoration:none">

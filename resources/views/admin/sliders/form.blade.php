@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+﻿@extends('admin.layouts.app')
 @section('title', $slider->exists ? 'Редагувати слайд' : 'Додати слайд')
 @section('content')
 <div class="topbar"><h1>{{ $slider->exists ? 'Редагувати слайд' : 'Додати слайд' }}</h1><a class="btn secondary" href="{{ route('admin.sliders.index') }}">Назад</a></div>

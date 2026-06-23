@@ -1,4 +1,4 @@
-@php
+﻿@php
     $isEn = ($currentLocale ?? 'uk') === 'en';
 @endphp
 

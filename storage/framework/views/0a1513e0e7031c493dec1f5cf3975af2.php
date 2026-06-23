@@ -1,3 +1,4 @@
+﻿
 <?php $__env->startSection('title','Панель керування'); ?>
 <?php $__env->startSection('content'); ?>
 <div class="topbar"><h1>Панель керування</h1><a class="btn secondary" href="<?php echo e(route('home')); ?>" target="_blank">Переглянути сайт</a></div>

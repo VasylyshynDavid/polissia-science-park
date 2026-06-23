@@ -22,6 +22,12 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         \Illuminate\Support\Carbon::setLocale('uk');
+
+        // Force HTTPS in production if configured
+        if (config('app.env') === 'production' && config('app.force_https', false)) {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+        }
+
         View::composer('layouts.app', function ($view) {
             $view->with('menuActivities', Activity::query()->active()->ordered()->limit(10)->get());
         });

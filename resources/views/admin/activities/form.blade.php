@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+﻿@extends('admin.layouts.app')
 @section('title', $activity->exists ? 'Редагувати напрям' : 'Додати напрям')
 @section('content')
 <div class="topbar"><h1>{{ $activity->exists ? 'Редагувати напрям' : 'Додати напрям' }}</h1><a class="btn secondary" href="{{ route('admin.activities.index') }}">Назад</a></div>

@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+﻿@extends('admin.layouts.app')
 @section('title','Наші можливості')
 @section('content')
 <div class="topbar"><h1>Наші можливості</h1><a class="btn" href="{{ route('admin.opportunities.create') }}">+ Додати можливість</a></div>

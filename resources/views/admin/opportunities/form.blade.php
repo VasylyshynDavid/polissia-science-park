@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+﻿@extends('admin.layouts.app')
 @section('title', $opportunity->exists ? 'Редагувати можливість' : 'Додати можливість')
 @section('content')
 <div class="topbar"><h1>{{ $opportunity->exists ? 'Редагувати можливість' : 'Додати можливість' }}</h1><a class="btn secondary" href="{{ route('admin.opportunities.index') }}">Назад</a></div>

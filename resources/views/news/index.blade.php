@@ -10,6 +10,18 @@
 
 @section('title', $isEn ? 'News — Science Park Polissia University' : 'Новини — Поліський науковий парк')
 
+@section('meta_description', $isEn 
+    ? 'Latest news, events, and achievements from Science Park Polissia University. Stay informed about innovations, projects, and sustainable development initiatives.' 
+    : 'Останні новини, події та досягнення Поліського наукового парку. Інновації, проєкти та ініціативи сталого розвитку.')
+
+@section('canonical', route('news.index'))
+
+@section('og_title', $isEn ? 'News — Science Park Polissia University' : 'Новини — Поліський науковий парк')
+
+@section('og_description', $isEn 
+    ? 'Latest news, events, and achievements from Science Park Polissia University.' 
+    : 'Останні новини, події та досягнення Поліського наукового парку.')
+
 @section('content')
     <div class="container news-index" style="padding-top:30px">
         <h1 class="section-title" style="margin-top:0">{{ $isEn ? 'News' : 'Новини' }}</h1>
@@ -62,7 +74,7 @@
         </div>
 
         @if($news->count())
-            <div class="activities-grid">
+            <div class="news-list-grid">
                 @foreach($news as $n)
                     @include('partials.news-card', ['news' => $n])
                 @endforeach

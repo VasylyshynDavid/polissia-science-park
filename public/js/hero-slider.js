@@ -3,14 +3,9 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!hero) return;
 
     const slidesEl = hero.querySelector('.sp-hero-slides');
-    if (!slidesEl) return;
-
     const prevBtn = hero.querySelector('.sp-hero-arrow-left');
     const nextBtn = hero.querySelector('.sp-hero-arrow-right');
     const dotsContainer = hero.querySelector('.sp-hero-dots');
-
-    const slides = JSON.parse(slidesEl.getAttribute('data-slides') || '[]');
-    if (!slides.length) return;
 
     const collageSlots = [
         hero.querySelector('.sp-photo-top-left img'),
@@ -18,49 +13,75 @@ document.addEventListener('DOMContentLoaded', function () {
         hero.querySelector('.sp-photo-bottom-left img'),
         hero.querySelector('.sp-photo-bottom-middle img'),
         hero.querySelector('.sp-photo-bottom-right img'),
-    ];
+    ].filter(Boolean);
 
-    // Group slides into collage sets (5 images per set)
-    // If less than 5, repeat them; if more, cycle through
-    function getCollageSet(index) {
-        const set = [];
-        for (let i = 0; i < 5; i++) {
-            const slideIndex = (index + i) % slides.length;
-            set.push(slides[slideIndex].image);
+    const initialImages = collageSlots
+        .map(img => img.getAttribute('src'))
+        .filter(Boolean);
+
+    let slides = [];
+
+    if (slidesEl) {
+        try {
+            slides = JSON.parse(slidesEl.getAttribute('data-slides') || '[]');
+        } catch (e) {
+            slides = [];
         }
-        return set;
     }
+
+    const slideImages = slides
+        .map(slide => slide && slide.image)
+        .filter(Boolean);
+
+    const uniqueImages = Array.from(new Set([...slideImages, ...initialImages]));
+
+    if (!uniqueImages.length || !collageSlots.length) return;
 
     let current = 0;
     let timer = null;
     const delay = 4500;
 
     function preloadImages() {
-        slides.forEach(function (s) {
+        uniqueImages.forEach(function (src) {
             const img = new Image();
-            img.src = s.image;
+            img.src = src;
         });
     }
 
+    function getCollageSet(index) {
+        const rotated = uniqueImages.slice(index).concat(uniqueImages.slice(0, index));
+        return rotated.slice(0, collageSlots.length);
+    }
+
     function setImage(img, src) {
-        if (!img || !src) return;
+        if (!img || !src || img.getAttribute('src') === src) return;
+
         img.style.opacity = '0';
-        setTimeout(function () {
+
+        window.setTimeout(function () {
             img.src = src;
+
             if (img.complete) {
                 img.style.opacity = '1';
             } else {
-                img.onload = function () { img.style.opacity = '1'; };
+                img.onload = function () {
+                    img.style.opacity = '1';
+                };
             }
         }, 120);
     }
 
     function showSlide(index) {
-        current = (index + slides.length) % slides.length;
+        current = (index + uniqueImages.length) % uniqueImages.length;
+
         const set = getCollageSet(current);
+
         collageSlots.forEach(function (img, i) {
-            if (img) setImage(img, set[i] || set[0]);
+            if (set[i]) {
+                setImage(img, set[i]);
+            }
         });
+
         if (dotsContainer) {
             const dots = dotsContainer.querySelectorAll('span, button');
             dots.forEach(function (dot, i) {
@@ -69,50 +90,99 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    function nextSlide() { showSlide(current + 1); }
-    function prevSlide() { showSlide(current - 1); }
+    function nextSlide() {
+        showSlide(current + 1);
+    }
+
+    function prevSlide() {
+        showSlide(current - 1);
+    }
 
     function startAutoplay() {
         stopAutoplay();
-        if (slides.length > 1) timer = setInterval(nextSlide, delay);
+
+        if (uniqueImages.length > 1) {
+            timer = window.setInterval(nextSlide, delay);
+        }
     }
 
     function stopAutoplay() {
-        if (timer) { clearInterval(timer); timer = null; }
+        if (timer) {
+            window.clearInterval(timer);
+            timer = null;
+        }
     }
 
-    if (nextBtn) nextBtn.addEventListener('click', function () { nextSlide(); startAutoplay(); });
-    if (prevBtn) prevBtn.addEventListener('click', function () { prevSlide(); startAutoplay(); });
-
-    if (dotsContainer) {
-        dotsContainer.querySelectorAll('span, button').forEach(function (dot, index) {
-            dot.style.cursor = 'pointer';
-            dot.addEventListener('click', function () { showSlide(index); startAutoplay(); });
+    if (nextBtn) {
+        nextBtn.addEventListener('click', function () {
+            nextSlide();
+            startAutoplay();
         });
     }
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', function () {
+            prevSlide();
+            startAutoplay();
+        });
+    }
+
+    if (dotsContainer) {
+        dotsContainer.innerHTML = '';
+
+        if (uniqueImages.length > 1) {
+            uniqueImages.forEach(function (_, index) {
+                const dot = document.createElement('span');
+                if (index === 0) dot.classList.add('active');
+                dot.style.cursor = 'pointer';
+                dot.addEventListener('click', function () {
+                    showSlide(index);
+                    startAutoplay();
+                });
+                dotsContainer.appendChild(dot);
+            });
+        }
+    }
+
+    collageSlots.forEach(function (img) {
+        img.style.transition = 'opacity 0.25s ease';
+    });
+
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    hero.addEventListener('touchstart', function (e) {
+        if (!e.touches || !e.touches.length) return;
+
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    hero.addEventListener('touchend', function (e) {
+        if (!e.changedTouches || !e.changedTouches.length) return;
+
+        const touchEndX = e.changedTouches[0].clientX;
+        const touchEndY = e.changedTouches[0].clientY;
+
+        const diffX = touchEndX - touchStartX;
+        const diffY = touchEndY - touchStartY;
+
+        if (Math.abs(diffY) > Math.abs(diffX)) return;
+        if (Math.abs(diffX) < 45) return;
+
+        if (diffX < 0) {
+            nextSlide();
+        } else {
+            prevSlide();
+        }
+
+        startAutoplay();
+    }, { passive: true });
 
     hero.addEventListener('mouseenter', stopAutoplay);
     hero.addEventListener('mouseleave', startAutoplay);
 
-    collageSlots.forEach(function (img) {
-        if (!img) return;
-        img.style.transition = 'opacity 0.25s ease';
-    });
-
     preloadImages();
     showSlide(0);
-
-    // Build dots dynamically
-    if (dotsContainer && slides.length > 1) {
-        dotsContainer.innerHTML = '';
-        for (let i = 0; i < slides.length; i++) {
-            const dot = document.createElement('span');
-            if (i === 0) dot.classList.add('active');
-            dot.style.cursor = 'pointer';
-            dot.addEventListener('click', function () { showSlide(i); startAutoplay(); });
-            dotsContainer.appendChild(dot);
-        }
-    }
-
     startAutoplay();
 });

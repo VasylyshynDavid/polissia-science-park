@@ -1,2 +1,2 @@
-<svg width="12" height="12" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle"><path d="M6 9l6 6 6-6" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+﻿<svg width="12" height="12" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle"><path d="M6 9l6 6 6-6" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
 <?php /**PATH C:\laragon\www\polissia-science-park\resources\views/partials/icons/chev.blade.php ENDPATH**/ ?>

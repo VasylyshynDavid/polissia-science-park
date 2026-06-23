@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+﻿@extends('admin.layouts.app')
 @section('title', $category->exists ? 'Редагувати категорію' : 'Додати категорію')
 @section('content')
 <div class="topbar"><h1>{{ $category->exists ? 'Редагувати категорію' : 'Додати категорію' }}</h1><a class="btn secondary" href="{{ route('admin.categories.index') }}">Назад</a></div>
