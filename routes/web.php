@@ -23,11 +23,23 @@ Route::get('/news', [NewsController::class, 'index'])->name('news.index');
 Route::get('/news/suggestions', [NewsController::class, 'suggestions'])->name('news.suggestions');
 Route::get('/news/{news:slug}', [NewsController::class, 'show'])->name('news.show');
 
+Route::get('/login', function () {
+    return redirect()->route('admin.login');
+})->name('login');
+
 Route::get('/lang/{locale}', function (string $locale) {
-    if (in_array($locale, ['uk', 'en'], true)) {
-        session(['locale' => $locale]);
-        cookie()->queue(cookie()->forever('locale', $locale));
+    if (!in_array($locale, ['uk', 'en'], true)) {
+        $locale = 'uk';
     }
+
+    session(['locale' => $locale]);
+
+    if ($locale === 'uk') {
+        cookie()->queue(cookie()->forget('locale'));
+    } else {
+        cookie()->queue(cookie('locale', 'en', 60 * 24));
+    }
+
     return redirect()->back();
 })->name('locale.switch');
 

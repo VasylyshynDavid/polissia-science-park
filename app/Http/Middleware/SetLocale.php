@@ -5,18 +5,33 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Carbon;
 
 class SetLocale
 {
-    /**
-     * Handle an incoming request.
-     */
     public function handle(Request $request, Closure $next)
     {
-        $locale = session('locale', $request->cookie('locale', config('app.locale', 'uk')));
-        if (!in_array($locale, ['uk', 'en'], true)) {
+        $allowedLocales = ['uk', 'en'];
+
+        $localeFromQuery = $request->query('locale');
+
+        if (in_array($localeFromQuery, $allowedLocales, true)) {
+            $locale = $localeFromQuery;
+            session(['locale' => $locale]);
+
+            if ($locale === 'uk') {
+                cookie()->queue(cookie()->forget('locale'));
+            } else {
+                cookie()->queue(cookie('locale', 'en', 60 * 24));
+            }
+        } else {
+            $locale = session('locale')
+                ?? $request->cookie('locale')
+                ?? config('app.locale', 'uk');
+        }
+
+        if (!in_array($locale, $allowedLocales, true)) {
             $locale = 'uk';
         }
 
