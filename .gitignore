@@ -107,3 +107,11 @@ Homestead.yaml
 *.msi
 *.iso
 *.bin
+
+# Laravel compiled Blade views
+/storage/framework/views/*.php
+/storage/framework/views/*.tmp
+!/storage/framework/views/.gitignore
+
+# Database backups
+/storage/app/backups/*.sql
