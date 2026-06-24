@@ -46,16 +46,33 @@
         ],
     ];
 
-    $heroSlides = ($sliders ?? collect())
-        ->map(function ($slide) use ($isEn) {
-            return [
-                'image' => asset($slide->image_path),
-                'title' => $isEn ? $slide->title_en : $slide->title_ua,
-                'description' => $isEn ? $slide->description_en : $slide->description_ua,
-            ];
-        })
-        ->values()
-        ->all();
+    // Hero banner: exactly 3 curated collage slides, 5 different photos in each.
+    // Do not build 6 small steps from the DB slider records here: that caused visual duplicates.
+    $heroSlideGroups = [
+        [
+            ['image' => asset('images/5276117098801340188.png'), 'title' => $isEn ? 'Practical Work in the Lab' : 'Практична робота в лабораторії'],
+            ['image' => asset('images/5276117098801340190.png'), 'title' => $isEn ? 'Learning Space' : 'Навчальна аудиторія'],
+            ['image' => asset('images/5276117098801340191.png'), 'title' => $isEn ? 'Student Team' : 'Студентська команда'],
+            ['image' => asset('images/5276117098801340192.png'), 'title' => $isEn ? 'Robotics' : 'Робототехніка'],
+            ['image' => asset('images/5276117098801340200.png'), 'title' => $isEn ? 'Digital Modelling' : 'Цифрове моделювання'],
+        ],
+        [
+            ['image' => asset('images/5276117098801340184.png'), 'title' => $isEn ? 'Computer Systems Lab' : 'Лабораторія комп’ютерних систем'],
+            ['image' => asset('images/5276117098801340185.png'), 'title' => $isEn ? 'Monitoring Equipment' : 'Обладнання для моніторингу'],
+            ['image' => asset('images/5276117098801340187.png'), 'title' => $isEn ? 'Innovation Meeting' : 'Інноваційна зустріч'],
+            ['image' => asset('images/5276117098801340193.png'), 'title' => $isEn ? 'Automation Training' : 'Навчання з автоматизації'],
+            ['image' => asset('images/5276117098801340199.png'), 'title' => $isEn ? 'Engineering Lab' : 'Інженерна лабораторія'],
+        ],
+        [
+            ['image' => asset('images/5276117098801340186.png'), 'title' => $isEn ? 'High-tech Equipment' : 'Високотехнологічна техніка'],
+            ['image' => asset('images/5276117098801340194.png'), 'title' => $isEn ? 'Industrial Automation' : 'Промислова автоматизація'],
+            ['image' => asset('images/5276117098801340195.png'), 'title' => $isEn ? 'Control Panel' : 'Панель керування'],
+            ['image' => asset('images/5276117098801340196.png'), 'title' => $isEn ? 'Automation Stand' : 'Стенд автоматизації'],
+            ['image' => asset('images/5276117098801340198.png'), 'title' => $isEn ? 'Digital Stand' : 'Цифровий стенд'],
+        ],
+    ];
+
+    $heroCollageImages = $heroSlideGroups[0];
 @endphp
 
 @section('title', $pageTitle)
@@ -75,7 +92,7 @@
     <section class="sp-hero">
         <div class="sp-hero-slides"
              hidden
-             data-slides="{{ json_encode($heroSlides, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_APOS | JSON_HEX_QUOT) }}">
+             data-slide-groups='{{ json_encode($heroSlideGroups, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_APOS) }}'>
         </div>
 
         <button class="sp-hero-arrow sp-hero-arrow-left" type="button" aria-label="Попередній слайд">‹</button>
@@ -107,25 +124,14 @@
         </div>
 
         <div class="sp-hero-collage">
-            <div class="sp-photo sp-photo-top-left">
-                <img src="{{ asset('images/5276117098801340184.png') }}" alt="Лабораторія з комп’ютерами">
-            </div>
-
-            <div class="sp-photo sp-photo-top-wide">
-                <img src="{{ asset('images/5276117098801340186.png') }}" alt="Високотехнологічна техніка">
-            </div>
-
-            <div class="sp-photo sp-photo-bottom-left">
-                <img src="{{ asset('images/5276117098801340195.png') }}" alt="Робототехніка">
-            </div>
-
-            <div class="sp-photo sp-photo-bottom-middle">
-                <img src="{{ asset('images/5276117098801340197.png') }}" alt="Цифрове обладнання">
-            </div>
-
-            <div class="sp-photo sp-photo-bottom-right">
-                <img src="{{ asset('images/5276117098801340193.png') }}" alt="Екологічні технології">
-            </div>
+            @foreach(['top-left', 'top-wide', 'bottom-left', 'bottom-middle', 'bottom-right'] as $index => $slot)
+                @php($heroImage = $heroCollageImages[$index] ?? null)
+                <div class="sp-photo sp-photo-{{ $slot }}{{ $heroImage ? '' : ' is-empty' }}">
+                    @if($heroImage)
+                        <img src="{{ $heroImage['image'] }}" alt="{{ $heroImage['title'] ?? (($currentLocale ?? 'uk') === 'en' ? 'Science Park slide' : 'Слайд Наукового парку') }}">
+                    @endif
+                </div>
+            @endforeach
 
             <svg class="sp-collage-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
                 <path d="M36 0 L30 50 L24 100"></path>
@@ -739,10 +745,8 @@
             position: absolute;
             inset: 0;
             background:
-                linear-gradient(90deg, rgba(4, 44, 34, 0.96), rgba(4, 44, 34, 0.84)),
-                url("{{ asset('images/Gemini_Generated_Image_o9b7mfo9b7mfo9b7.png') }}");
-            background-size: cover;
-            background-position: center;
+                radial-gradient(circle at 18% 20%, rgba(143, 179, 90, 0.20), transparent 34%),
+                linear-gradient(135deg, rgba(4, 44, 34, 1) 0%, rgba(6, 52, 39, 1) 58%, rgba(4, 44, 34, 1) 100%);
             opacity: 1;
         }
 
@@ -869,6 +873,7 @@
 
         /* Фото без border/padding/margin */
         .sp-photo { position: absolute !important; overflow: hidden; padding: 0 !important; margin: 0 !important; border: 0 !important; background: transparent !important; }
+        .sp-photo.is-empty { display: none !important; }
 
         .sp-photo img { width: 100%; height: 100%; display: block; object-fit: cover; object-position: center; transform: scale(1.02); }
 
@@ -906,8 +911,8 @@
     <style>
         /* Desktop scale override for very wide screens */
         @media (min-width: 1600px) {
-            /* Slight upscale to better utilize very large screens */
-            .sp-hero { transform: scale(1.02); transform-origin: top left; }
+            /* Do not scale the hero: scaling creates horizontal overflow in Chrome/Laragon preview. */
+            .sp-hero { transform: none !important; width: 100% !important; }
             /* Keep text panel proportional on very large displays */
             .sp-hero-text { width: 40%; }
             /* Header/logo size hints for layouts that read these overrides (removed duplicate - kept in layouts/app.blade.php) */
@@ -1015,6 +1020,12 @@
         .sp-hero-dots span.active,
         .sp-hero-dots button.active {
             background: #C7A84A !important;
+        }
+
+        .sp-hero-arrow,
+        .sp-hero-dots {
+            z-index: 1000 !important;
+            pointer-events: auto !important;
         }
     </style>
 @endsection

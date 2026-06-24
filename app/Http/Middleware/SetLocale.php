@@ -13,26 +13,38 @@ class SetLocale
     public function handle(Request $request, Closure $next)
     {
         $allowedLocales = ['uk', 'en'];
+        $localeSessionVersion = 'uk-default-2026-06-24';
 
         $localeFromQuery = $request->query('locale');
 
         if (in_array($localeFromQuery, $allowedLocales, true)) {
             $locale = $localeFromQuery;
-            session(['locale' => $locale]);
-
-            if ($locale === 'uk') {
-                cookie()->queue(cookie()->forget('locale'));
-            } else {
-                cookie()->queue(cookie('locale', 'en', 60 * 24));
-            }
+            session([
+                'locale' => $locale,
+                'locale_session_version' => $localeSessionVersion,
+            ]);
+        } elseif (session('locale_session_version') === $localeSessionVersion) {
+            $locale = session('locale', 'uk');
         } else {
-            $locale = session('locale')
-                ?? $request->cookie('locale')
-                ?? config('app.locale', 'uk');
+            // Ukrainian is the required primary language. Ignore stale EN cookies/sessions
+            // from previous local testing so the home page opens in Ukrainian by default.
+            $locale = 'uk';
+            session([
+                'locale' => 'uk',
+                'locale_session_version' => $localeSessionVersion,
+            ]);
+            cookie()->queue(cookie()->forget('locale'));
         }
 
         if (!in_array($locale, $allowedLocales, true)) {
             $locale = 'uk';
+            session(['locale' => 'uk']);
+        }
+
+        if ($locale === 'uk') {
+            cookie()->queue(cookie()->forget('locale'));
+        } else {
+            cookie()->queue(cookie('locale', 'en', 60 * 24));
         }
 
         App::setLocale($locale);

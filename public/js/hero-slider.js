@@ -1,65 +1,80 @@
 document.addEventListener('DOMContentLoaded', function () {
+    window.__SP_HERO_VERSION = 'sp-hero-3-groups-fixed-2026-06-24';
+
     const hero = document.querySelector('.sp-hero');
     if (!hero) return;
 
-    const slidesEl = hero.querySelector('.sp-hero-slides');
     const prevBtn = hero.querySelector('.sp-hero-arrow-left');
     const nextBtn = hero.querySelector('.sp-hero-arrow-right');
     const dotsContainer = hero.querySelector('.sp-hero-dots');
 
     const collageSlots = [
-        hero.querySelector('.sp-photo-top-left img'),
-        hero.querySelector('.sp-photo-top-wide img'),
-        hero.querySelector('.sp-photo-bottom-left img'),
-        hero.querySelector('.sp-photo-bottom-middle img'),
-        hero.querySelector('.sp-photo-bottom-right img'),
+        hero.querySelector('.sp-photo-top-left'),
+        hero.querySelector('.sp-photo-top-wide'),
+        hero.querySelector('.sp-photo-bottom-left'),
+        hero.querySelector('.sp-photo-bottom-middle'),
+        hero.querySelector('.sp-photo-bottom-right'),
     ].filter(Boolean);
 
-    const initialImages = collageSlots
-        .map(img => img.getAttribute('src'))
-        .filter(Boolean);
+    if (!collageSlots.length) return;
 
-    let slides = [];
-
-    if (slidesEl) {
-        try {
-            slides = JSON.parse(slidesEl.getAttribute('data-slides') || '[]');
-        } catch (e) {
-            slides = [];
-        }
-    }
-
-    const slideImages = slides
-        .map(slide => slide && slide.image)
-        .filter(Boolean);
-
-    const uniqueImages = Array.from(new Set([...slideImages, ...initialImages]));
-
-    if (!uniqueImages.length || !collageSlots.length) return;
+    // Exactly 3 prepared collage slides. Each slide contains 5 different photos.
+    // Do not generate 6 shifted states from DB records: it creates visual duplicates.
+    const slideGroups = [
+        [
+            { image: '/images/5276117098801340184.png', title: 'Лабораторія компʼютерних систем' },
+            { image: '/images/5276117098801340188.png', title: 'Практична робота в лабораторії' },
+            { image: '/images/5276117098801340190.png', title: 'Навчальна аудиторія' },
+            { image: '/images/5276117098801340191.png', title: 'Студентська команда' },
+            { image: '/images/5276117098801340192.png', title: 'Робототехніка' },
+        ],
+        [
+            { image: '/images/5276117098801340200.png', title: 'Цифрове моделювання' },
+            { image: '/images/5276117098801340187.png', title: 'Інноваційна зустріч' },
+            { image: '/images/5276117098801340193.png', title: 'Навчання з автоматизації' },
+            { image: '/images/5276117098801340199.png', title: 'Інженерна лабораторія' },
+            { image: '/images/5276117098801340194.png', title: 'Промислова автоматизація' },
+        ],
+        [
+            { image: '/images/5276117098801340185.png', title: 'Обладнання для моніторингу' },
+            { image: '/images/5276117098801340186.png', title: 'Високотехнологічна техніка' },
+            { image: '/images/5276117098801340195.png', title: 'Панель керування' },
+            { image: '/images/5276117098801340196.png', title: 'Стенд автоматизації' },
+            { image: '/images/5276117098801340198.png', title: 'Цифровий стенд' },
+        ],
+    ];
 
     let current = 0;
     let timer = null;
-    const delay = 4500;
+    const delay = 6500;
 
-    function preloadImages() {
-        uniqueImages.forEach(function (src) {
-            const img = new Image();
-            img.src = src;
-        });
+    function ensureImageElement(slot) {
+        let img = slot.querySelector('img');
+
+        if (!img) {
+            img = document.createElement('img');
+            slot.appendChild(img);
+        }
+
+        img.style.transition = 'opacity 0.22s ease';
+        return img;
     }
 
-    function getCollageSet(index) {
-        const rotated = uniqueImages.slice(index).concat(uniqueImages.slice(0, index));
-        return rotated.slice(0, collageSlots.length);
-    }
+    function setImage(slot, item) {
+        if (!slot || !item || !item.image) return;
 
-    function setImage(img, src) {
-        if (!img || !src || img.getAttribute('src') === src) return;
+        const img = ensureImageElement(slot);
+
+        if (img.getAttribute('src') === item.image) {
+            img.alt = item.title || '';
+            return;
+        }
 
         img.style.opacity = '0';
 
         window.setTimeout(function () {
-            img.src = src;
+            img.src = item.image;
+            img.alt = item.title || '';
 
             if (img.complete) {
                 img.style.opacity = '1';
@@ -67,43 +82,39 @@ document.addEventListener('DOMContentLoaded', function () {
                 img.onload = function () {
                     img.style.opacity = '1';
                 };
+                img.onerror = function () {
+                    img.style.opacity = '1';
+                };
             }
-        }, 120);
+        }, 90);
     }
 
-    function showSlide(index) {
-        current = (index + uniqueImages.length) % uniqueImages.length;
+    function updateDots() {
+        if (!dotsContainer) return;
 
-        const set = getCollageSet(current);
+        const dots = dotsContainer.querySelectorAll('span, button');
+        dots.forEach(function (dot, index) {
+            dot.classList.toggle('active', index === current);
+        });
+    }
 
-        collageSlots.forEach(function (img, i) {
-            if (set[i]) {
-                setImage(img, set[i]);
-            }
+    function showGroup(index) {
+        current = (index + slideGroups.length) % slideGroups.length;
+        const group = slideGroups[current];
+
+        collageSlots.forEach(function (slot, slotIndex) {
+            setImage(slot, group[slotIndex]);
         });
 
-        if (dotsContainer) {
-            const dots = dotsContainer.querySelectorAll('span, button');
-            dots.forEach(function (dot, i) {
-                dot.classList.toggle('active', i === current);
-            });
-        }
+        updateDots();
     }
 
-    function nextSlide() {
-        showSlide(current + 1);
+    function nextGroup() {
+        showGroup(current + 1);
     }
 
-    function prevSlide() {
-        showSlide(current - 1);
-    }
-
-    function startAutoplay() {
-        stopAutoplay();
-
-        if (uniqueImages.length > 1) {
-            timer = window.setInterval(nextSlide, delay);
-        }
+    function prevGroup() {
+        showGroup(current - 1);
     }
 
     function stopAutoplay() {
@@ -113,76 +124,117 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    if (nextBtn) {
-        nextBtn.addEventListener('click', function () {
-            nextSlide();
+    function startAutoplay() {
+        stopAutoplay();
+        timer = window.setInterval(nextGroup, delay);
+    }
+
+    function bindButton(button, handler) {
+        if (!button) return;
+
+        button.style.display = 'flex';
+        button.style.pointerEvents = 'auto';
+        button.style.zIndex = '1000';
+
+        button.addEventListener('click', function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            handler();
             startAutoplay();
         });
     }
 
-    if (prevBtn) {
-        prevBtn.addEventListener('click', function () {
-            prevSlide();
-            startAutoplay();
-        });
-    }
+    // Visual requirement: arrows switch groups in the opposite order.
+    bindButton(prevBtn, nextGroup);
+    bindButton(nextBtn, prevGroup);
 
     if (dotsContainer) {
+        dotsContainer.style.display = 'flex';
+        dotsContainer.style.pointerEvents = 'auto';
+        dotsContainer.style.zIndex = '1000';
         dotsContainer.innerHTML = '';
 
-        if (uniqueImages.length > 1) {
-            uniqueImages.forEach(function (_, index) {
-                const dot = document.createElement('span');
-                if (index === 0) dot.classList.add('active');
-                dot.style.cursor = 'pointer';
-                dot.addEventListener('click', function () {
-                    showSlide(index);
-                    startAutoplay();
-                });
-                dotsContainer.appendChild(dot);
+        slideGroups.forEach(function (_, index) {
+            const dot = document.createElement('span');
+            dot.style.cursor = 'pointer';
+            dot.addEventListener('click', function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+                showGroup(index);
+                startAutoplay();
             });
-        }
+            dotsContainer.appendChild(dot);
+        });
     }
 
-    collageSlots.forEach(function (img) {
-        img.style.transition = 'opacity 0.25s ease';
-    });
+    // Extra event delegation: works even if another script replaces buttons after load.
+    hero.addEventListener('click', function (event) {
+        const prev = event.target.closest('.sp-hero-arrow-left');
+        const next = event.target.closest('.sp-hero-arrow-right');
+        const dot = event.target.closest('.sp-hero-dots span, .sp-hero-dots button');
+
+        if (prev) {
+            event.preventDefault();
+            nextGroup();
+            startAutoplay();
+            return;
+        }
+
+        if (next) {
+            event.preventDefault();
+            prevGroup();
+            startAutoplay();
+            return;
+        }
+
+        if (dot && dotsContainer) {
+            const dots = Array.prototype.slice.call(dotsContainer.querySelectorAll('span, button'));
+            const index = dots.indexOf(dot);
+
+            if (index >= 0) {
+                event.preventDefault();
+                showGroup(index);
+                startAutoplay();
+            }
+        }
+    }, true);
 
     let touchStartX = 0;
     let touchStartY = 0;
 
-    hero.addEventListener('touchstart', function (e) {
-        if (!e.touches || !e.touches.length) return;
-
-        touchStartX = e.touches[0].clientX;
-        touchStartY = e.touches[0].clientY;
+    hero.addEventListener('touchstart', function (event) {
+        if (!event.touches || !event.touches.length) return;
+        touchStartX = event.touches[0].clientX;
+        touchStartY = event.touches[0].clientY;
     }, { passive: true });
 
-    hero.addEventListener('touchend', function (e) {
-        if (!e.changedTouches || !e.changedTouches.length) return;
+    hero.addEventListener('touchend', function (event) {
+        if (!event.changedTouches || !event.changedTouches.length) return;
 
-        const touchEndX = e.changedTouches[0].clientX;
-        const touchEndY = e.changedTouches[0].clientY;
+        const diffX = event.changedTouches[0].clientX - touchStartX;
+        const diffY = event.changedTouches[0].clientY - touchStartY;
 
-        const diffX = touchEndX - touchStartX;
-        const diffY = touchEndY - touchStartY;
-
-        if (Math.abs(diffY) > Math.abs(diffX)) return;
-        if (Math.abs(diffX) < 45) return;
+        if (Math.abs(diffY) > Math.abs(diffX) || Math.abs(diffX) < 45) return;
 
         if (diffX < 0) {
-            nextSlide();
+            prevGroup();
         } else {
-            prevSlide();
+            nextGroup();
         }
 
         startAutoplay();
     }, { passive: true });
 
+    slideGroups.forEach(function (group) {
+        group.forEach(function (item) {
+            const img = new Image();
+            img.src = item.image;
+        });
+    });
+
     hero.addEventListener('mouseenter', stopAutoplay);
     hero.addEventListener('mouseleave', startAutoplay);
 
-    preloadImages();
-    showSlide(0);
+    showGroup(0);
     startAutoplay();
 });

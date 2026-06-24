@@ -1856,6 +1856,6 @@ textarea {
             });
         });
     </script>
-    <script src="{{ asset('js/hero-slider.js') }}" defer></script>
+    <script src="{{ asset('js/hero-slider.js') }}?v={{ filemtime(public_path('js/hero-slider.js')) }}" defer></script>
 </body>
 </html>

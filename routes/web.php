@@ -35,7 +35,10 @@ Route::get('/lang/{locale}', function (string $locale) {
         $locale = 'uk';
     }
 
-    session(['locale' => $locale]);
+    session([
+        'locale' => $locale,
+        'locale_session_version' => 'uk-default-2026-06-24',
+    ]);
 
     if ($locale === 'uk') {
         cookie()->queue(cookie()->forget('locale'));
