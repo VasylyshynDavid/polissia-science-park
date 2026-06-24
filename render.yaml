@@ -19,8 +19,6 @@ services:
         value: uk
       - key: APP_FAKER_LOCALE
         value: uk_UA
-      - key: APP_KEY
-        generateValue: true
       - key: DB_CONNECTION
         value: sqlite
       - key: DB_DATABASE

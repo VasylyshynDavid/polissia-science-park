@@ -1,16 +1,18 @@
-FROM php:8.3-apache
+FROM php:8.3-apache-bookworm
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         git \
         unzip \
+        ca-certificates \
         libzip-dev \
         libicu-dev \
         libpng-dev \
-        libjpeg-dev \
+        libjpeg62-turbo-dev \
         libfreetype6-dev \
+        libsqlite3-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) \
+    && docker-php-ext-install -j"$(nproc)" \
         bcmath \
         gd \
         intl \
@@ -35,7 +37,9 @@ RUN composer dump-autoload --optimize \
 
 COPY docker/apache.conf /etc/apache2/sites-available/000-default.conf
 COPY docker/start.sh /usr/local/bin/start-render.sh
-RUN chmod +x /usr/local/bin/start-render.sh
+
+RUN sed -i 's/\r$//' /usr/local/bin/start-render.sh \
+    && chmod +x /usr/local/bin/start-render.sh
 
 EXPOSE 10000
 
