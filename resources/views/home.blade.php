@@ -745,8 +745,10 @@
             position: absolute;
             inset: 0;
             background:
-                radial-gradient(circle at 18% 20%, rgba(143, 179, 90, 0.20), transparent 34%),
-                linear-gradient(135deg, rgba(4, 44, 34, 1) 0%, rgba(6, 52, 39, 1) 58%, rgba(4, 44, 34, 1) 100%);
+                linear-gradient(90deg, rgba(4, 44, 34, 0.96), rgba(4, 44, 34, 0.84)),
+                url("{{ asset('images/Gemini_Generated_Image_o9b7mfo9b7mfo9b7.png') }}");
+            background-size: cover;
+            background-position: center;
             opacity: 1;
         }
 
